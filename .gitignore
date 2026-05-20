@@ -1,5 +1,8 @@
 node_modules
 
+drizzle/
+*.db*
+
 .output
 .wrangler
 /.svelte-kit
@@ -25,5 +28,3 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 .eslintcache
 .cache
 *.tsbuildinfo
-
-*.db
