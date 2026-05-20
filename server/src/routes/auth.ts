@@ -1,12 +1,12 @@
 import { Hono } from "hono";
 import type { AppVariables } from "../lib/types";
 import { loginSchema, registerSchema } from "../db/schema/validators";
-import { zValidator } from "@hono/zod-validator";
 import { users, type PublicUser } from "../db/schema";
 import { eq, or } from "drizzle-orm";
 import { db } from "../db";
 import { err, ok } from "../lib/response";
 import { requireAuth } from "../middleware/require-auth";
+import { zValidator } from "../lib/validate";
 
 export const authRouter = new Hono<{ Variables: AppVariables }>()
 
