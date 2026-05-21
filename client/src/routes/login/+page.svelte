@@ -4,7 +4,7 @@
 	import Noise from '$lib/assets/noise.png';
 	import type { ActionData } from './$types';
 
-    let { form }: { form: ActionData } = $props();
+	let { form }: { form: ActionData } = $props();
 </script>
 
 <div class="backdrop" style="--noise: url({Noise})">

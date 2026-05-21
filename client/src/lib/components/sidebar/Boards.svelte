@@ -5,7 +5,7 @@
 <h1>Your Boards</h1>
 
 <div class="boards cluster">
-    <!--
+	<!--
 	{#each boards as board}
 		<BoardLink {board} />
 	{/each}

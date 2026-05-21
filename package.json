@@ -1,0 +1,19 @@
+{
+	"name": "lemuria",
+	"type": "module",
+	"private": "true",
+	"workspaces": [
+		"packages/*",
+		"client",
+		"server"
+	],
+	"scripts": {
+		"dev:server": "cd server && bun dev",
+		"dev:client": "cd client && bun dev",
+		"format": "prettier --write ."
+	},
+	"devDependencies": {
+		"prettier": "^3.8.3",
+		"prettier-plugin-svelte": "^4.0.0"
+	}
+}

@@ -1,14 +1,12 @@
-import { sql } from "drizzle-orm";
-import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { sql } from 'drizzle-orm';
+import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
-export const users = sqliteTable("users", {
-    id: integer("id").primaryKey({ autoIncrement: true }),
-    email: text("email").notNull().unique(),
-    username: text("username").notNull().unique(),
-    passwordHash: text("password_hash").notNull(),
-    createdAt: integer("created_at", { mode: "timestamp" })
-        .notNull()
-        .default(sql`(unixepoch())`),
+export const users = sqliteTable('users', {
+	id: integer('id').primaryKey({ autoIncrement: true }),
+	email: text('email').notNull().unique(),
+	username: text('username').notNull().unique(),
+	passwordHash: text('password_hash').notNull(),
+	createdAt: integer('created_at', { mode: 'timestamp' })
+		.notNull()
+		.default(sql`(unixepoch())`)
 });
-
-export type PublicUser = Omit<typeof users.$inferSelect, "passwordHash">;

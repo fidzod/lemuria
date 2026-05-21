@@ -1,0 +1,5 @@
+{
+	"name": "@lemuria/types",
+	"module": "src/index.ts",
+	"types": "src/index.ts"
+}

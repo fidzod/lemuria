@@ -4,7 +4,7 @@
 <h1>Friends</h1>
 
 <ul>
-    <!--
+	<!--
 	{#each friends as friend}
 		<li class:offline={!friend.online}>
 			<a href="/">@{friend.username}</a>
