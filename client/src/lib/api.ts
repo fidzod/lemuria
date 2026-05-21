@@ -5,7 +5,7 @@ type SvelteKitFetch = typeof globalThis.fetch;
 const BASE_URL = '/api/v1';
 
 type ApiSuccess<T> = { success: true; data: T };
-type ApiError = { success: false; error: string };
+type ApiError = { success: false; error: string; details?: Record<string, string[]> };
 type ApiResponse<T> = ApiSuccess<T> | ApiError;
 
 const request = async <T>(

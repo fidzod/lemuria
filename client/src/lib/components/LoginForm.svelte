@@ -14,7 +14,7 @@
 {#if formMode === 'login'}
 	<form class="col" method="POST" action="?/login" use:enhance>
 		{#if form?.error && form.action === 'login'}
-			<p role="alert">{form.error}</p>
+			<p role="alert">{form.error}, please try again.</p>
 		{/if}
 		<div class="form-row row">
 			<label for="identifier">username or email:</label>
@@ -134,11 +134,11 @@
 
 		&:focus {
 			outline: none;
-			border-bottom: 2px solid var(--text-secondary);
+			border-bottom: 1px solid var(--text-secondary);
 		}
 	}
 	button[type='submit'] {
-		margin-top: var(--space-xl);
+		margin-block-start: var(--space-xl);
 		color: var(--text-primary);
 
 		&:hover {
@@ -173,4 +173,8 @@
 		visibility: hidden;
 		pointer-events: none;
 	}
+    p[role="alert"] {
+		margin-block-end: var(--space-xl);
+        color: var(--red-bright);
+    }
 </style>

@@ -1,6 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { api } from '$lib/api';
+import { formatApiError } from '$lib/utils';
 
 export const load: PageServerLoad = async ({ parent }) => {
 	const { user } = await parent();
@@ -48,7 +49,10 @@ export const actions: Actions = {
 		const result = await api.auth.register(fetch, email.trim(), username.trim(), password);
 
 		if (!result.success) {
-			return fail(400, { action: 'register', error: result.error });
+			return fail(400, {
+                action: 'register',
+                error: formatApiError(result.error, result.details),
+            });
 		}
 
 		redirect(302, '/');
