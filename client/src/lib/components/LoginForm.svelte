@@ -1,42 +1,114 @@
 <script lang="ts">
-	let formMode: 'Log In' | 'Sign Up' = $state('Log In');
-	let username_or_email = $state('');
+    import { enhance } from "$app/forms";
+	import type { ActionData } from "../../routes/login/$types";
+
+    let { form }: { form: ActionData } = $props();
+
+	let formMode: 'login' | 'signup' = $state('login');
+	let identifier = $state('');
+	let username = $state('');
+	let email = $state('');
 	let password = $state('');
 </script>
 
-<form class="col">
+{#if formMode === "login"}
+<form class="col" method="POST" action="?/login" use:enhance>
+    {#if form?.error && form.action === "login"}
+        <p role="alert">{form.error}</p>
+    {/if}
 	<div class="form-row row">
-		<label for="username_or_email">username or email:</label>
+		<label for="identifier">username or email:</label>
 		<div class="input-sizer">
 			<input
 				type="text"
-				name="username_or_email"
+				name="identifier"
 				placeholder="kaworu"
-				bind:value={username_or_email}
+				bind:value={identifier}
+                required
 				size="1"
 			/>
-			<span aria-hidden="true">{username_or_email || 'kaworu'}</span>
+			<span aria-hidden="true">{identifier || 'kaworu'}</span>
 		</div>
 	</div>
 
 	<div class="form-row row">
 		<label for="password">password:</label>
 		<div class="input-sizer">
-			<input type="password" name="password" placeholder="•••••••" bind:value={password} size="1" />
+			<input
+                type="password"
+                name="password"
+                placeholder="•••••••"
+                bind:value={password}
+                required
+                size="1"
+            />
 			<span aria-hidden="true">{password || '•••••••'}</span>
 		</div>
 	</div>
 
-	<button type="submit">{formMode}</button>
+	<button type="submit">Log In</button>
 </form>
+{:else}
+<form class="col" method="POST" action="?/register" use:enhance>
+    {#if form?.error && form.action === "register"}
+        <p role="alert">{form.error}</p>
+    {/if}
+	<div class="form-row row">
+		<label for="email">email:</label>
+		<div class="input-sizer">
+			<input
+				type="email"
+				name="email"
+				placeholder="kaworu@tokyo3.jp"
+				bind:value={email}
+                required
+				size="1"
+			/>
+			<span aria-hidden="true">{email || 'kaworu@tokyo3.jp'}</span>
+		</div>
+	</div>
+
+	<div class="form-row row">
+		<label for="username">username:</label>
+		<div class="input-sizer">
+			<input
+				type="text"
+				name="username"
+				placeholder="kaworu"
+				bind:value={username}
+                required
+				size="1"
+			/>
+			<span aria-hidden="true">{username || 'kaworu'}</span>
+		</div>
+	</div>
+
+	<div class="form-row row">
+		<label for="password">password:</label>
+		<div class="input-sizer">
+			<input
+                type="password"
+                name="password"
+                placeholder="•••••••"
+                bind:value={password}
+                required
+                size="1"
+            />
+			<span aria-hidden="true">{password || '•••••••'}</span>
+		</div>
+	</div>
+
+	<button type="submit">Register</button>
+</form>
+{/if}
 
 <span class="switch-form-mode">
-	{#if formMode === 'Log In'}
+	{#if formMode === 'login'}
 		<span>New here? </span>
-		<button class="unset" onclick={() => (formMode = 'Sign Up')}>Sign Up</button>
+		<button class="unset" onclick={() => (formMode = 'signup')}>Sign Up</button>
 	{:else}
 		<span>Already have an account? </span>
-		<button class="unset" onclick={() => (formMode = 'Log In')}>Log In</button>
+		<button class="unset" onclick={() => (formMode = 'login')}>Log In</button>
 	{/if}
 </span>
 

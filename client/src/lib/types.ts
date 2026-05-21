@@ -1,3 +1,10 @@
+export type PublicUser = {
+    id: number;
+    email: string;
+    username: string;
+    createdAt: string;
+}
+
 export interface Post {
 	displayName: string;
 	username: string;

@@ -1,4 +1,7 @@
 <script lang="ts">
+	import type { LayoutData } from './$types';
+	import type { Snippet } from 'svelte';
+
 	import '@fontsource/jetbrains-mono/400.css';
 	import '@fontsource/jetbrains-mono/700.css';
 	import '@fontsource/open-sans/400.css';
@@ -8,7 +11,7 @@
 	import LeftSidebar from '$lib/components/LeftSidebar.svelte';
 	import RightSidebar from '$lib/components/RightSidebar.svelte';
 
-	let { children } = $props();
+	let { data, children }: { data: LayoutData; children: Snippet } = $props();
 </script>
 
 <svelte:head>
@@ -45,7 +48,7 @@
 		width: var(--sidebar-width);
 	}
 	main {
-		max-width: var(--page-max-width);
+		width: var(--page-max-width);
 		flex: 1;
 	}
 

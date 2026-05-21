@@ -2,6 +2,9 @@
 	import GreenOrbs from '$lib/assets/green-orbs.png';
 	import LoginForm from '$lib/components/LoginForm.svelte';
 	import Noise from '$lib/assets/noise.png';
+	import type { ActionData } from './$types';
+
+    let { form }: { form: ActionData } = $props();
 </script>
 
 <div class="backdrop" style="--noise: url({Noise})">
@@ -18,7 +21,7 @@
 					<span>tuned to a dead channel.</span>
 				</p>
 			</div>
-			<LoginForm />
+			<LoginForm {form} />
 		</div>
 	</div>
 </div>
