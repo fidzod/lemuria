@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import type { AppVariables } from '../lib/types';
-import { loginSchema, registerSchema } from '../db/schema/validators';
-import { users } from '../db/schema';
+import { loginSchema, registerSchema } from '../schema/validators';
+import { users } from '../schema';
 import { eq, or } from 'drizzle-orm';
 import { db } from '../db';
 import { err, ok } from '../lib/response';

@@ -1,7 +1,7 @@
 import { Database } from 'bun:sqlite';
 import { drizzle } from 'drizzle-orm/bun-sqlite';
 import * as schema from './schema/index.ts';
-import { env } from '../lib/env.ts';
+import { env } from './lib/env.ts';
 
 export const sqlite = new Database(env.DATABASE_URL, { create: true });
 
