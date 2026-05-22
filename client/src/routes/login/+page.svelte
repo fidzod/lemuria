@@ -103,8 +103,8 @@
 		.illustration {
 			width: 30%;
 			margin: var(--space-lg) auto;
-            padding: 0;
-            border: 1px solid var(--border-subtle);
+			padding: 0;
+			border: 1px solid var(--border-subtle);
 		}
 		.content {
 			width: 100%;

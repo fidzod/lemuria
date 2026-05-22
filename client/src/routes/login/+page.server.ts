@@ -50,9 +50,9 @@ export const actions: Actions = {
 
 		if (!result.success) {
 			return fail(400, {
-                action: 'register',
-                error: formatApiError(result.error, result.details),
-            });
+				action: 'register',
+				error: formatApiError(result.error, result.details)
+			});
 		}
 
 		redirect(302, '/');

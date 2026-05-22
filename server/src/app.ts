@@ -7,6 +7,9 @@ import { Hono, type Context } from 'hono';
 import { errorHandler } from './middleware/error-handler';
 import { session } from './lib/session';
 import { authRouter } from './routes/auth';
+import { friendsRouter } from './routes/friends';
+import { notificationsRouter } from './routes/notifications';
+import { usersRouter } from './routes/users';
 
 export const app = new Hono()
 	.use('*', logger())
@@ -20,8 +23,11 @@ export const app = new Hono()
 
 	.use('*', session)
 
-	.route('/api/v1/health', healthRouter)
 	.route('/api/v1/auth', authRouter)
+	.route('/api/v1/friends', friendsRouter)
+	.route('/api/v1/health', healthRouter)
+	.route('/api/v1/notifications', notificationsRouter)
+	.route('/api/v1/users', usersRouter)
 
 	.notFound((c: Context) => err(c, 'Not found', 404))
 

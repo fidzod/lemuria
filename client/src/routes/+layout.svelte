@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { LayoutData } from './$types';
-	import type { Snippet } from 'svelte';
+	import { setContext, type Snippet } from 'svelte';
 
 	import '@fontsource/jetbrains-mono/400.css';
 	import '@fontsource/jetbrains-mono/700.css';
@@ -10,8 +10,12 @@
 	import PageHead from '$lib/components/PageHead.svelte';
 	import LeftSidebar from '$lib/components/LeftSidebar.svelte';
 	import RightSidebar from '$lib/components/RightSidebar.svelte';
+	import { SIDEBAR_FRIENDS_KEY, UNREAD_NOTIFICATIONS_COUNT_KEY } from '$lib/context';
 
 	let { data, children }: { data: LayoutData; children: Snippet } = $props();
+
+	setContext(UNREAD_NOTIFICATIONS_COUNT_KEY, () => data.unreadNotificationsCount);
+    setContext(SIDEBAR_FRIENDS_KEY, () => data.sidebarFriends);
 </script>
 
 <svelte:head>

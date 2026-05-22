@@ -10,3 +10,5 @@ export const users = sqliteTable('users', {
 		.notNull()
 		.default(sql`(unixepoch())`)
 });
+
+export type UserRow = typeof users.$inferSelect;

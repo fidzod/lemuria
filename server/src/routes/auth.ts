@@ -8,6 +8,7 @@ import { err, ok } from '../lib/response';
 import { requireAuth } from '../middleware/require-auth';
 import { zValidator } from '../lib/validate';
 import type { PublicUser } from '@lemuria/types';
+import { userRowToPublicUser } from '../lib/users';
 
 export const authRouter = new Hono<{ Variables: AppVariables }>()
 
@@ -36,11 +37,7 @@ export const authRouter = new Hono<{ Variables: AppVariables }>()
 		const session = c.get('session');
 		session.set('userId', user.id);
 
-		return ok<PublicUser>(
-			c,
-			(({ passwordHash, ...publicUser }) => ({ ...publicUser }) satisfies PublicUser)(user),
-			201
-		);
+		return ok<PublicUser>(c, userRowToPublicUser(user), 201);
 	})
 
 	// POST /api/v1/auth/login
@@ -61,10 +58,7 @@ export const authRouter = new Hono<{ Variables: AppVariables }>()
 		const session = c.get('session');
 		session.set('userId', user.id);
 
-		return ok<PublicUser>(
-			c,
-			(({ passwordHash, ...publicUser }) => ({ ...publicUser }) satisfies PublicUser)(user)
-		);
+		return ok<PublicUser>(c, userRowToPublicUser(user));
 	})
 
 	// POST /api/v1/auth/logout
@@ -87,8 +81,5 @@ export const authRouter = new Hono<{ Variables: AppVariables }>()
 			return err(c, 'User not found', 404);
 		}
 
-		return ok<PublicUser>(
-			c,
-			(({ passwordHash, ...publicUser }) => ({ ...publicUser }) satisfies PublicUser)(user)
-		);
+		return ok<PublicUser>(c, userRowToPublicUser(user));
 	});

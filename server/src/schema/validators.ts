@@ -1,3 +1,4 @@
+import { FRIEND_REQUEST_STATUSES } from '@lemuria/types';
 import { z } from 'zod';
 
 export const usernameSchema = z
@@ -22,4 +23,12 @@ export const registerSchema = z.object({
 export const loginSchema = z.object({
 	identifier: z.string().min(1, 'Username or email is required'),
 	password: z.string().min(1, 'Password is required')
+});
+
+export const createFriendRequestSchema = z.object({
+	toUserId: z.number()
+});
+
+export const respondToFriendRequestSchema = z.object({
+	status: z.enum(FRIEND_REQUEST_STATUSES).exclude(['pending'])
 });

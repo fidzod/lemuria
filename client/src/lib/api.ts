@@ -1,4 +1,12 @@
-import type { PublicUser } from '@lemuria/types';
+import type {
+	Notification,
+	UnreadNotifications,
+	PublicUser,
+	UserProfile,
+	FriendRequest,
+	Friendship,
+    Friends
+} from '@lemuria/types';
 
 type SvelteKitFetch = typeof globalThis.fetch;
 
@@ -7,6 +15,16 @@ const BASE_URL = '/api/v1';
 type ApiSuccess<T> = { success: true; data: T };
 type ApiError = { success: false; error: string; details?: Record<string, string[]> };
 type ApiResponse<T> = ApiSuccess<T> | ApiError;
+
+export const withCookies = (fetch: SvelteKitFetch, request: Request): SvelteKitFetch => {
+	const cookie = request.headers.get('cookie');
+
+	return (input, init) =>
+		fetch(input, {
+			...init,
+			headers: { ...init?.headers, ...(cookie !== null ? { cookie } : {}) }
+		});
+};
 
 const request = async <T>(
 	fetch: SvelteKitFetch,
@@ -43,5 +61,39 @@ export const api = {
 			}),
 
 		logout: (fetch: SvelteKitFetch) => request(fetch, '/auth/logout', { method: 'POST' })
+	},
+	notifications: {
+		unreadCount: (fetch: SvelteKitFetch) =>
+			request<UnreadNotifications>(fetch, '/notifications/unread-count'),
+		get: (fetch: SvelteKitFetch) => request<Notification[]>(fetch, '/notifications')
+	},
+	users: {
+		byId: (fetch: SvelteKitFetch, userId: number) => request<UserProfile>(fetch, `/users/${userId}`)
+	},
+	friends: {
+		request: (fetch: SvelteKitFetch, toUserId: number) =>
+			request<FriendRequest | Friendship>(fetch, '/friends/requests', {
+				method: 'POST',
+				body: JSON.stringify({ toUserId })
+			}),
+		respondToRequest: (
+			fetch: SvelteKitFetch,
+			friendRequestId: number,
+			response: 'accepted' | 'rejected'
+		) =>
+			request<FriendRequest>(fetch, `/friends/requests/${friendRequestId}`, {
+				method: 'PATCH',
+				body: JSON.stringify({ status: response })
+			}),
+        removeFriendship: (
+            fetch: SvelteKitFetch,
+            friendshipId: number
+        ) =>
+            request<Friendship>(fetch, `/friends/${friendshipId}`, { method: 'DELETE' }),
+        get: (
+            fetch: SvelteKitFetch,
+            limit: number
+        ) =>
+            request<{ friends: PublicUser[] }>(fetch, `/friends?limit=${limit}`),
 	}
 } as const;

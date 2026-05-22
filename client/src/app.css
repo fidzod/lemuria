@@ -128,6 +128,10 @@ button:not(.unset) {
 	}
 }
 
+button[disabled] {
+    pointer-events: none;
+}
+
 ul {
 	width: 100%;
 	margin: 0;

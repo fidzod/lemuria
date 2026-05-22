@@ -1,8 +1,15 @@
+<script lang="ts">
+	import { UNREAD_NOTIFICATIONS_COUNT_KEY } from '$lib/context';
+	import { getContext } from 'svelte';
+
+	const getUnreadNotificationsCount = getContext<() => number>(UNREAD_NOTIFICATIONS_COUNT_KEY);
+</script>
+
 <h1>Menu</h1>
 
 <ul>
 	<li id="active"><a href="/">Home</a></li>
-	<li><a href="/">Notifications</a></li>
+	<li><a href="/notifications">Notifications ({getUnreadNotificationsCount()})</a></li>
 	<li><a href="/">Search</a></li>
 	<li><a href="/">Boards</a></li>
 	<div class="separator"></div>

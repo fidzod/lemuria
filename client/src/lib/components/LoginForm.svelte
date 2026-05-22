@@ -173,8 +173,8 @@
 		visibility: hidden;
 		pointer-events: none;
 	}
-    p[role="alert"] {
+	p[role='alert'] {
 		margin-block-end: var(--space-xl);
-        color: var(--red-bright);
-    }
+		color: var(--red-bright);
+	}
 </style>
