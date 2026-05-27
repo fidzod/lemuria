@@ -1,7 +1,7 @@
 export const timeAgo = (timestamp: number | Date | string): string => {
-    const ms = timestamp instanceof Date ? timestamp.getTime() : new Date(timestamp).getTime();
-    const now = Date.now();
-    const secondsAgo = Math.floor((now - ms) / 1000);
+	const ms = timestamp instanceof Date ? timestamp.getTime() : new Date(timestamp).getTime();
+	const now = Date.now();
+	const secondsAgo = Math.floor((now - ms) / 1000);
 	const intervals: { [key: string]: number } = {
 		year: 31536000,
 		month: 2592000,

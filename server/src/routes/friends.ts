@@ -4,10 +4,15 @@ import { requireAuth } from '../middleware/require-auth';
 import { zValidator } from '../lib/validate';
 import { createFriendRequestSchema, respondToFriendRequestSchema } from '../schema/validators';
 import { users } from '../schema';
-import { and, eq, or, } from 'drizzle-orm';
+import { and, eq, or } from 'drizzle-orm';
 import { db } from '../db';
 import { err, ok } from '../lib/response';
-import { friendRequests, friendships, type FriendRequestRow, type FriendshipRow } from '../schema/friends';
+import {
+	friendRequests,
+	friendships,
+	type FriendRequestRow,
+	type FriendshipRow
+} from '../schema/friends';
 import type { FriendRequest, Friendship, PublicUser } from '@lemuria/types';
 import { createNotification } from '../lib/notifications';
 import { userRowToPublicUser } from '../lib/users';
@@ -229,64 +234,64 @@ export const friendsRouter = new Hono<{ Variables: AppVariables }>()
 
 	// DELETE /api/v1/friends/:id - delete a friendship
 	.delete('/:id', requireAuth, async (c) => {
-        const friendshipId = Number(c.req.param('id'));
+		const friendshipId = Number(c.req.param('id'));
 
-        if (isNaN(friendshipId)) {
-            return err(c, 'Invalid request Id.');
-        }
+		if (isNaN(friendshipId)) {
+			return err(c, 'Invalid request Id.');
+		}
 
-        const session = c.get('session');
-        const sessionUserId = session.get('userId') as number;
+		const session = c.get('session');
+		const sessionUserId = session.get('userId') as number;
 
-        const [friendship] = await db
-            .select()
-            .from(friendships)
-            .where(eq(friendships.id, friendshipId));
+		const [friendship] = await db
+			.select()
+			.from(friendships)
+			.where(eq(friendships.id, friendshipId));
 
-        if (friendship === undefined) {
-            return err(c, 'No friendship to delete.', 404);
-        }
+		if (friendship === undefined) {
+			return err(c, 'No friendship to delete.', 404);
+		}
 
-        if (friendship.userAId !== sessionUserId && friendship.userBId !== sessionUserId) {
-            return err(c, 'Unauthorised.', 401);
-        }
+		if (friendship.userAId !== sessionUserId && friendship.userBId !== sessionUserId) {
+			return err(c, 'Unauthorised.', 401);
+		}
 
-        const [deleted] = await db
-            .delete(friendships)
-            .where(eq(friendships.id, friendshipId))
-            .returning();
+		const [deleted] = await db
+			.delete(friendships)
+			.where(eq(friendships.id, friendshipId))
+			.returning();
 
-        if (deleted === undefined) {
-            return err(c, 'Failed to unfriend user.');
-        }
+		if (deleted === undefined) {
+			return err(c, 'Failed to unfriend user.');
+		}
 
-        return ok<FriendshipRow>(c, { ...deleted });
-    })
+		return ok<FriendshipRow>(c, { ...deleted });
+	})
 
-    // GET /api/v1/friends - get session user's friends
-    .get('/', requireAuth, async (c) => {
-        const session = c.get('session');
-        const sessionUserId = session.get('userId') as number;
+	// GET /api/v1/friends - get session user's friends
+	.get('/', requireAuth, async (c) => {
+		const session = c.get('session');
+		const sessionUserId = session.get('userId') as number;
 
-        const limit = Number(c.req.query('limit'));
+		const limit = Number(c.req.query('limit'));
 
-        const friends = await db
-            .select({
-                id: users.id,
-                email: users.email,
-                username: users.username,
-                createdAt: users.createdAt,
-            })
-            .from(friendships)
-            .innerJoin(users, or(
-                and(eq(friendships.userAId, sessionUserId), eq(friendships.userBId, users.id)),
-                and(eq(friendships.userBId, sessionUserId), eq(friendships.userAId, users.id))
-            ))
-            .where(or(
-                eq(friendships.userAId, sessionUserId),
-                eq(friendships.userBId, sessionUserId)
-            ))
-            .limit(limit || 1000);
+		const friends = await db
+			.select({
+				id: users.id,
+				email: users.email,
+				username: users.username,
+				createdAt: users.createdAt
+			})
+			.from(friendships)
+			.innerJoin(
+				users,
+				or(
+					and(eq(friendships.userAId, sessionUserId), eq(friendships.userBId, users.id)),
+					and(eq(friendships.userBId, sessionUserId), eq(friendships.userAId, users.id))
+				)
+			)
+			.where(or(eq(friendships.userAId, sessionUserId), eq(friendships.userBId, sessionUserId)))
+			.limit(limit || 1000);
 
-        return ok<{ friends: PublicUser[] }>(c, { friends });
-    });
+		return ok<{ friends: PublicUser[] }>(c, { friends });
+	});

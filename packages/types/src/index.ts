@@ -49,3 +49,13 @@ export type AppNotification = {
 export type UnreadNotifications = {
 	count: number;
 };
+
+export type Post = {
+	textContent: string | null;
+	createdAt: Date;
+	author: PublicUser;
+	likeCount: number;
+	dislikeCount: number;
+	reshareCount: number;
+	replyCount: number;
+};

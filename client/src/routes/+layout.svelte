@@ -15,7 +15,7 @@
 	let { data, children }: { data: LayoutData; children: Snippet } = $props();
 
 	setContext(UNREAD_NOTIFICATIONS_COUNT_KEY, () => data.unreadNotificationsCount);
-    setContext(SIDEBAR_FRIENDS_KEY, () => data.sidebarFriends);
+	setContext(SIDEBAR_FRIENDS_KEY, () => data.sidebarFriends);
 </script>
 
 <svelte:head>

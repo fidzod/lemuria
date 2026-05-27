@@ -9,14 +9,14 @@ export const load: LayoutServerLoad = async ({ fetch, request }) => {
 	if (meResult.success) user = meResult.data;
 
 	let unreadNotificationsCount: number | undefined;
-    let sidebarFriends: PublicUser[] | undefined;
+	let sidebarFriends: PublicUser[] | undefined;
 
 	if (user !== null) {
 		const unreadCountResult = await api.notifications.unreadCount(withCookies(fetch, request));
-        const sidebarFriendsResult = await api.friends.get(withCookies(fetch, request), 10);
+		const sidebarFriendsResult = await api.friends.get(withCookies(fetch, request), 10);
 
 		if (unreadCountResult.success) unreadNotificationsCount = unreadCountResult.data.count;
-        if (sidebarFriendsResult.success) sidebarFriends = sidebarFriendsResult.data.friends;
+		if (sidebarFriendsResult.success) sidebarFriends = sidebarFriendsResult.data.friends;
 	}
 
 	return { user, unreadNotificationsCount, sidebarFriends };

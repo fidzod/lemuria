@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { PageData } from './$types';
+	import Post from '$lib/components/Post.svelte';
+	import PostForm from '$lib/components/PostForm.svelte';
+	import type { ActionData, PageData } from './$types';
 
-	// import Post from '$lib/components/Post.svelte';
-
-	let { data }: { data: PageData } = $props();
+	let { data, form }: { data: PageData; form: ActionData } = $props();
 </script>
 
 <h1>Recent Posts</h1>
@@ -17,11 +17,12 @@
 	{:else}
 		<a href="/login">[ Log In ]</a>
 	{/if}
-	<!--
-	{#each posts as post}
-		<Post {post} />
+
+    <PostForm {form} />
+
+	{#each data.posts as post}
+        <Post {post} />
 	{/each}
-    -->
 </div>
 
 <style>

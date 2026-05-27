@@ -8,5 +8,5 @@
 
 <h1>Notifications</h1>
 {#each notifications as notification}
-    <Notification {notification} />
+	<Notification {notification} />
 {/each}

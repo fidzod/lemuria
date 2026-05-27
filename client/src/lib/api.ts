@@ -1,11 +1,12 @@
-import type {
-	Notification,
-	UnreadNotifications,
-	PublicUser,
-	UserProfile,
-	FriendRequest,
-	Friendship,
-    Friends
+import {
+	type Notification,
+	type UnreadNotifications,
+	type PublicUser,
+	type UserProfile,
+	type FriendRequest,
+	type Friendship,
+	type Friends,
+    Post
 } from '@lemuria/types';
 
 type SvelteKitFetch = typeof globalThis.fetch;
@@ -85,15 +86,17 @@ export const api = {
 				method: 'PATCH',
 				body: JSON.stringify({ status: response })
 			}),
-        removeFriendship: (
-            fetch: SvelteKitFetch,
-            friendshipId: number
-        ) =>
-            request<Friendship>(fetch, `/friends/${friendshipId}`, { method: 'DELETE' }),
-        get: (
-            fetch: SvelteKitFetch,
-            limit: number
-        ) =>
-            request<{ friends: PublicUser[] }>(fetch, `/friends?limit=${limit}`),
-	}
+		removeFriendship: (fetch: SvelteKitFetch, friendshipId: number) =>
+			request<Friendship>(fetch, `/friends/${friendshipId}`, { method: 'DELETE' }),
+		get: (fetch: SvelteKitFetch, limit: number) =>
+			request<{ friends: PublicUser[] }>(fetch, `/friends?limit=${limit}`)
+	},
+    posts: {
+        createPost: (fetch: SvelteKitFetch, textContent: string) =>
+            request<Post>(fetch, '/posts', {
+                method: 'POST',
+                body: JSON.stringify({ textContent })
+            }),
+		all: (fetch: SvelteKitFetch) => request<{ posts: Post[] }>(fetch, '/posts'),
+    },
 } as const;

@@ -117,10 +117,7 @@ export const notificationsRouter = new Hono<{ Variables: AppVariables }>()
 			return base;
 		});
 
-        await db
-            .update(notifications)
-            .set({ read: true })
-            .where(eq(notifications.userId, userId));
+		await db.update(notifications).set({ read: true }).where(eq(notifications.userId, userId));
 
 		return ok<AppNotification[]>(c, mapped);
 	})

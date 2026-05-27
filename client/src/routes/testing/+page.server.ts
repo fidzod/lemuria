@@ -76,7 +76,7 @@ export const actions: Actions = {
 
 		return;
 	},
-    removeFriend: async ({ fetch, request }) => {
+	removeFriend: async ({ fetch, request }) => {
 		const form = await request.formData();
 		const friendshipId = form.get('friendship-id');
 
@@ -92,7 +92,7 @@ export const actions: Actions = {
 
 		const result = await api.friends.removeFriendship(
 			withCookies(fetch, request),
-			friendshipIdNumber,
+			friendshipIdNumber
 		);
 
 		if (!result.success) {
@@ -100,5 +100,5 @@ export const actions: Actions = {
 		}
 
 		return;
-    },
+	}
 };

@@ -1,109 +1,89 @@
 <script lang="ts">
-	import type { Post } from '$lib/types';
+    import PlaceholderAvatar from '$lib/assets/placeholder-avatar.jpg';
+	import { timeAgo } from '$lib/timeago';
+	import type { Post } from '@lemuria/types';
 	let { post }: { post: Post } = $props();
-
-	const accentMap: Record<string, { bright: string; dark: string }> = {
-		red: { bright: 'var(--red-bright)', dark: 'var(--red-dark)' },
-		yellow: { bright: 'var(--yel-bright)', dark: 'var(--yel-dark)' },
-		green: { bright: 'var(--gre-bright)', dark: 'var(--gre-dark)' },
-		cyan: { bright: 'var(--cya-bright)', dark: 'var(--cya-dark)' },
-		magenta: { bright: 'var(--mag-bright)', dark: 'var(--mag-dark)' }
-	};
 </script>
 
-<div
-	class="post"
-	style="
-        --user-accent: {accentMap[post.color].bright};
-        --user-accent-dark: {accentMap[post.color].dark}
-    "
->
-	<div class="head">
-		<img class="avatar" src={post.avatar} alt="{post.displayName}'s avatar" />
-		<div class="meta">
-			<div class="details accent-text-gradient">
-				<span>{post.displayName}</span>
-				<span class="mono">@{post.username}</span>
-				<span class="timestamp">{post.createdAt}</span>
-			</div>
-			<div class="stats accent-text-gradient">
-				<span><span class="mono">{post.votes}</span> votes</span>
-				<span><span class="mono">{post.reshares}</span> reshares</span>
-				<span><span class="mono">{post.replies}</span> replies</span>
-			</div>
-		</div>
-	</div>
-	<div class="body">{post.body}</div>
-	<div class="interactions">
-		<span class="vote-button">
-			<button aria-label="Upvote">+</button>
-			/
-			<button aria-label="Downvote">-</button>
-		</span>
-		<button aria-label="Reshare">r</button>
-		<button aria-label="Comment">c</button>
-		<div class="secondary-actions">
-			<button aria-label="Save">sv</button>
-			<button aria-label="Share">sh</button>
-		</div>
-	</div>
+<div class="post">
+    <div class="head">
+        <img src={PlaceholderAvatar} alt="{post.author.username}'s Avatar" class="avatar">
+        <div class="details-and-stats">
+            <div class="details">
+                <span class="username">@{post.author.username}</span>
+                <span class="date">{timeAgo(post.createdAt)}</span>
+            </div>
+            <div class="stats">
+                <span><span>{post.reshareCount}</span> reposts</span>
+                <span><span>{post.replyCount}</span> replies</span>
+            </div>
+        </div>
+    </div>
+    <div class="body">{post.textContent}</div>
+    <div class="footer">
+        <div class="group likes">
+            <button>-</button>
+            <span>{ post.likeCount }</span>
+            <button>+</button>
+        </div>
+        <div class="group main">
+            <button>r</button>
+            <button>c</button>
+        </div>
+        <div class="group aside">
+            <button>sv</button>
+            <button>sh</button>
+        </div>
+    </div>
 </div>
 
 <style>
-	.post {
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-xs);
-	}
-	.head {
-		display: flex;
-		gap: var(--space-sm);
-		align-items: center;
-	}
-	.avatar {
-		flex-shrink: 0;
-		width: 2rem;
-		height: 2rem;
-		margin: 4px 3px 3px;
-		box-shadow:
-			0 0 0 2px var(--bg),
-			0 0 0 3px var(--user-accent);
-	}
-	.meta {
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-	}
-	.details {
-		display: flex;
-		align-items: center;
-		gap: var(--space-xs);
-	}
-	.timestamp {
-		margin-left: auto;
-	}
-	.stats {
-		display: flex;
-		gap: var(--space-sm);
-	}
-	.body {
-		color: var(--text-primary);
-		margin-bottom: var(--space-xs);
-	}
-	.interactions {
-		display: flex;
-		gap: var(--space-sm);
-		color: var(--text-muted);
-	}
-	.secondary-actions {
-		margin-left: auto;
-	}
-	.accent-text-gradient {
-		background: linear-gradient(145deg, var(--user-accent-dark), var(--user-accent));
-		background-size: 50px 50px;
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
+    .post {
+        width: 100%;
+        overflow-x: hidden;
+        text-wrap: wrap;
+        word-break: break-all;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+    .head {
+        width: 100%;
+        display: flex;
+        gap: var(--space-sm);
+    }
+    .avatar {
+        width: 2rem;
+        height: 2rem;
+        margin: 3px;
+        margin-top: 0.4rem;
+        box-shadow:
+            0 0 0 2px var(--bg),
+            0 0 0 3px var(--red-bright);
+    }
+    .details-and-stats {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .details {
+        width: 100%;
+        display: flex;
+    }
+    .date {
+        margin-left: auto;
+    }
+    .footer {
+        width: 100%;
+        display: flex;
+        gap: var(--space-sm);
+    }
+    .group {
+        display: flex;
+        align-items: flex-end;
+        gap: var(--space-xs);
+    }
+    .aside {
+        margin-left: auto;
+    }
 </style>

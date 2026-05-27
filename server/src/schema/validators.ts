@@ -32,3 +32,7 @@ export const createFriendRequestSchema = z.object({
 export const respondToFriendRequestSchema = z.object({
 	status: z.enum(FRIEND_REQUEST_STATUSES).exclude(['pending'])
 });
+
+export const postSchema = z.object({
+	textContent: z.string()
+});
