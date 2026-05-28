@@ -27,7 +27,6 @@
 
 <style>
 	.feed {
-		padding-top: var(--space-xs);
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-lg);

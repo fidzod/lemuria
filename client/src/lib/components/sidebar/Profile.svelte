@@ -21,7 +21,6 @@
 
 <style>
 	#your-profile {
-		padding-top: var(--space-xs);
 		display: flex;
 		flex-direction: column;
 		align-items: center;

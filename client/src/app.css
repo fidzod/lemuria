@@ -64,26 +64,9 @@ body {
 	box-sizing: border-box;
 }
 
-.cluster {
-	width: 100%;
-	display: flex;
-	flex-wrap: wrap;
-	gap: var(--space-sm);
-	justify-content: center;
-}
-
-.tag {
-	&:before {
-		content: '[';
-	}
-	&:after {
-		content: ']';
-	}
-}
-
 h1 {
 	width: 100%;
-	margin: 0 0 var(--space-xs);
+	margin: 0 0 var(--space-sm);
 
 	font-size: var(--text-md);
 	font-weight: normal;
