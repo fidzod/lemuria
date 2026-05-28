@@ -55,7 +55,7 @@
 		background-position: center;
 		font-size: var(--text-sm);
 	}
-    .cards {
+	.cards {
 		position: absolute;
 		left: var(--space-sm);
 		bottom: var(--space-sm);
@@ -63,7 +63,7 @@
 		display: flex;
 		align-items: center;
 		gap: var(--space-xs);
-    }
+	}
 	.card {
 		padding: var(--space-sm) var(--space-lg);
 
@@ -74,10 +74,10 @@
 		background-color: var(--bg);
 		border: 1px solid var(--red-bright);
 	}
-    .user {
-        padding-left: var(--space-sm);
-        gap: var(--space-lg);
-    }
+	.user {
+		padding-left: var(--space-sm);
+		gap: var(--space-lg);
+	}
 	.avatar {
 		flex: 0;
 		width: 2rem;
@@ -86,10 +86,10 @@
 			0 0 0 2px var(--bg),
 			0 0 0 3px var(--red-bright);
 	}
-    .name {
-        display: flex;
-        flex-direction: column;
-    }
+	.name {
+		display: flex;
+		flex-direction: column;
+	}
 	.stats {
 		display: flex;
 		gap: var(--space-md);
@@ -106,7 +106,7 @@
 		font-size: var(--text-sm);
 		margin-bottom: 2rem; /* TODO: this should be a var */
 	}
-    h1 {
-        margin-top: 2rem;
-    }
+	h1 {
+		margin-top: 2rem;
+	}
 </style>

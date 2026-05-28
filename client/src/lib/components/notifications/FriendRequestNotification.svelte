@@ -30,11 +30,11 @@
 			Friend request from @{friendRequest.from.username}
 			<button disabled>Rejected</button>
 		{/if}
-		{date}
+		<span>{date}</span>
 	</div>
 {:else}
 	<div class="notification" class:read={notification.read}>
-		New friend request from a deleted user {date}
+		New friend request from a deleted user <span>{date}</span>
 	</div>
 {/if}
 
@@ -42,9 +42,5 @@
 	.notification {
 		display: flex;
 		gap: var(--space-sm);
-	}
-
-	.notification.read {
-		color: var(--text-muted);
 	}
 </style>

@@ -14,7 +14,7 @@
 
 	let { data, children }: { data: LayoutData; children: Snippet } = $props();
 
-    setContext(USER_KEY, () => data.user);
+	setContext(USER_KEY, () => data.user);
 	setContext(UNREAD_NOTIFICATIONS_COUNT_KEY, () => data.unreadNotificationsCount);
 	setContext(SIDEBAR_FRIENDS_KEY, () => data.sidebarFriends);
 </script>

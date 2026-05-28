@@ -10,16 +10,16 @@
 	import { getContext } from 'svelte';
 	import type { PublicUser } from '@lemuria/types';
 
-    const getUser = getContext<() => PublicUser>(USER_KEY);
-    let user = $derived(getUser());
+	const getUser = getContext<() => PublicUser>(USER_KEY);
+	let user = $derived(getUser());
 </script>
 
 <div class="section"><Nav /></div>
 
 {#if user}
-<div class="section right-sidebar"><Profile /></div>
-<div class="section"><Friends /></div>
-<div class="section right-sidebar"><Boards /></div>
+	<div class="section right-sidebar"><Profile /></div>
+	<div class="section"><Friends /></div>
+	<div class="section right-sidebar"><Boards /></div>
 {/if}
 
 <div class="section right-sidebar"><Tags /></div>

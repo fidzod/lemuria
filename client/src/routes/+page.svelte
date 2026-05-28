@@ -9,12 +9,12 @@
 <h1>Recent Posts</h1>
 
 <div class="feed">
-    {#if data.user}
-        <PostForm {form} />
-    {/if}
+	{#if data.user}
+		<PostForm {form} />
+	{/if}
 
 	{#each data.posts as post}
-        <Post {post} />
+		<Post {post} />
 	{/each}
 </div>
 

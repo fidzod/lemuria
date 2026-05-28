@@ -7,7 +7,7 @@
 	--text-muted: #545454;
 
 	--border-subtle: var(--text-muted);
-    --border-strong: var(--text-secondary);
+	--border-strong: var(--text-secondary);
 
 	--red-bright: #84304d;
 	--red-dark: #3c0a2d;
@@ -100,7 +100,8 @@ button {
 	}
 }
 
-button:not(.unset), .btn {
+button:not(.unset),
+.btn {
 	font-family: var(--monospace);
 	font-size: var(--text-sm);
 
@@ -118,22 +119,22 @@ button[disabled] {
 }
 
 textarea {
-    font-family: var(--monospace);
-    font-size: inherit;
-    color: var(--text-primary);
-    background-color: var(--bg);
-    border: none;
-    border-bottom: 1px solid var(--border-subtle);
-    transition: border-bottom-color 0.25s;
-    resize: none;
-    min-height: 2rem;
-    max-height: 16rem;
-    overflow-y: auto;
+	font-family: var(--monospace);
+	font-size: inherit;
+	color: var(--text-primary);
+	background-color: var(--bg);
+	border: none;
+	border-bottom: 1px solid var(--border-subtle);
+	transition: border-bottom-color 0.25s;
+	resize: none;
+	min-height: 2rem;
+	max-height: 16rem;
+	overflow-y: auto;
 
-    &:focus {
-        outline: none;
-        border-bottom-color: var(--border-strong);
-    }
+	&:focus {
+		outline: none;
+		border-bottom-color: var(--border-strong);
+	}
 }
 
 ul {
@@ -175,12 +176,12 @@ a {
 }
 
 .lucide {
-    width: 1em;
-    height: 1em;
-    margin-top: 1px;
+	width: 1em;
+	height: 1em;
+	margin-top: 1px;
 }
 
 button:has(.lucide) {
-    display: flex;
-    align-items: flex-start;
+	display: flex;
+	align-items: flex-start;
 }

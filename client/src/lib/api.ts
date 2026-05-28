@@ -6,7 +6,7 @@ import {
 	type FriendRequest,
 	type Friendship,
 	type Friends,
-    Post
+	Post
 } from '@lemuria/types';
 
 type SvelteKitFetch = typeof globalThis.fetch;
@@ -69,7 +69,8 @@ export const api = {
 		get: (fetch: SvelteKitFetch) => request<Notification[]>(fetch, '/notifications')
 	},
 	users: {
-		get: (fetch: SvelteKitFetch, username: string) => request<UserProfile>(fetch, `/users/${username}`)
+		get: (fetch: SvelteKitFetch, username: string) =>
+			request<UserProfile>(fetch, `/users/${username}`)
 	},
 	friends: {
 		request: (fetch: SvelteKitFetch, toUserId: number) =>
@@ -91,12 +92,12 @@ export const api = {
 		get: (fetch: SvelteKitFetch, limit: number) =>
 			request<{ friends: PublicUser[] }>(fetch, `/friends?limit=${limit}`)
 	},
-    posts: {
-        createPost: (fetch: SvelteKitFetch, textContent: string) =>
-            request<Post>(fetch, '/posts', {
-                method: 'POST',
-                body: JSON.stringify({ textContent })
-            }),
-		all: (fetch: SvelteKitFetch) => request<Post[]>(fetch, '/posts'),
-    },
+	posts: {
+		createPost: (fetch: SvelteKitFetch, textContent: string) =>
+			request<Post>(fetch, '/posts', {
+				method: 'POST',
+				body: JSON.stringify({ textContent })
+			}),
+		all: (fetch: SvelteKitFetch) => request<Post[]>(fetch, '/posts')
+	}
 } as const;

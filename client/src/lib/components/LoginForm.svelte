@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import type { ActionData } from '../../routes/login/$types';
 
-	let { form }: { form: ActionData } = $props();
+	let { form, redirectTo }: { form: ActionData; redirectTo: string | null } = $props();
 
 	let formMode: 'login' | 'signup' = $state('login');
 	let identifier = $state('');
@@ -13,6 +13,7 @@
 
 {#if formMode === 'login'}
 	<form class="col" method="POST" action="?/login" use:enhance>
+		<input type="hidden" name="redirectTo" value={form?.redirectTo ?? redirectTo ?? ''} />
 		{#if form?.error && form.action === 'login'}
 			<p role="alert">{form.error}, please try again.</p>
 		{/if}

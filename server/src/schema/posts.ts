@@ -4,7 +4,9 @@ import { sql } from 'drizzle-orm';
 
 export const posts = sqliteTable('posts', {
 	id: integer('id').primaryKey({ autoIncrement: true }),
-	authorId: integer('author_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+	authorId: integer('author_id')
+		.notNull()
+		.references(() => users.id, { onDelete: 'cascade' }),
 	textContent: text('text_content'),
 	createdAt: integer('created_at', { mode: 'timestamp' })
 		.notNull()

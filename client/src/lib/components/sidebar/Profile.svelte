@@ -1,39 +1,39 @@
 <script lang="ts">
 	import PlaceholderAvatar from '$lib/assets/placeholder-avatar.jpg';
-    
+
 	import { USER_KEY } from '$lib/context';
 	import { getContext } from 'svelte';
-    import type { PublicUser } from '@lemuria/types';
+	import type { PublicUser } from '@lemuria/types';
 
-    const getUser = getContext<() => PublicUser>(USER_KEY);
-    let user = $derived(getUser());
+	const getUser = getContext<() => PublicUser>(USER_KEY);
+	let user = $derived(getUser());
 </script>
 
 <h1>Your Profile</h1>
 
 {#if user}
-<div id="your-profile">
-	<img class="avatar" src={PlaceholderAvatar} alt="Avatar" />
-    <div class="name">
-        <p class="name">Display Name</p>
-        <p class="name">@{user.username}</p>
-    </div>
-	<div class="stats">
-		<button class="stat unset">
-			<span class="value mono">15</span>
-			<span>Friends</span>
-		</button>
-		<a class="stat" href="/">
-			<span class="value mono">37</span>
-			<span>Posts</span>
-		</a>
+	<div id="your-profile">
+		<img class="avatar" src={PlaceholderAvatar} alt="Avatar" />
+		<div class="name">
+			<p class="name">Display Name</p>
+			<p class="name">@{user.username}</p>
+		</div>
+		<div class="stats">
+			<button class="stat unset">
+				<span class="value mono">15</span>
+				<span>Friends</span>
+			</button>
+			<a class="stat" href="/">
+				<span class="value mono">37</span>
+				<span>Posts</span>
+			</a>
+		</div>
+		<div class="logout">
+			<form method="POST" action="/login?/logout">
+				<button type="submit">Log Out</button>
+			</form>
+		</div>
 	</div>
-    <div class="logout">
-		<form method="POST" action="/login?/logout">
-			<button type="submit">Log Out</button>
-		</form>
-    </div>
-</div>
 {:else}
 	<a href="/login" class="btn">Log In</a>
 {/if}
@@ -44,7 +44,7 @@
 		flex-direction: column;
 		gap: var(--space-sm);
 		align-items: center;
-        text-align: center;
+		text-align: center;
 		font-size: var(--text-sm);
 	}
 	.avatar {

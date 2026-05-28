@@ -14,14 +14,14 @@
 	.shelves {
 		width: 100%;
 		padding: var(--space-lg);
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-xl);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xl);
 		border: 1px solid var(--border-subtle);
 	}
 	.shelf {
-        --depth: 3rem;
-        --thickness: 1rem;
+		--depth: 3rem;
+		--thickness: 1rem;
 		height: 80px;
 		position: relative;
 
@@ -31,17 +31,17 @@
 			width: 1px;
 			height: var(--depth);
 			position: absolute;
-            bottom: 0.8rem;
+			bottom: 0.8rem;
 			background-color: var(--border-strong);
 		}
-        &:before {
-            left: 11px;
-            transform: rotate(30deg);
-        }
-        &:after {
-            right: 11px;
-            transform: rotate(-30deg);
-        }
+		&:before {
+			left: 11px;
+			transform: rotate(30deg);
+		}
+		&:after {
+			right: 11px;
+			transform: rotate(-30deg);
+		}
 		.front {
 			width: 100%;
 			height: var(--thickness);

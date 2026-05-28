@@ -39,26 +39,27 @@ export const postsRouter = new Hono<{ Variables: AppVariables }>()
 
 	// POST /api/v1/posts - create post
 	.post('/', zValidator('json', postSchema), requireAuth, async (c) => {
-        const { textContent } = c.req.valid('json');
+		const { textContent } = c.req.valid('json');
 
 		const session = c.get('session');
 		const userId = session.get('userId') as number;
 
-        const [inserted] = await db
-            .insert(posts)
-            .values({ textContent, authorId: userId })
-            .returning();
+		const [inserted] = await db.insert(posts).values({ textContent, authorId: userId }).returning();
 
-        if (inserted === undefined) {
-            return err(c, "Failed to post.");
-        }
+		if (inserted === undefined) {
+			return err(c, 'Failed to post.');
+		}
 
 		const [user] = await db.select().from(users).where(eq(users.id, userId));
 
-        const { authorId, ...post } = inserted;
+		const { authorId, ...post } = inserted;
 
-		return ok<Post>(c, {
-            ...post,
-            author: userRowToPublicUser(user!)
-        }, 201);
+		return ok<Post>(
+			c,
+			{
+				...post,
+				author: userRowToPublicUser(user!)
+			},
+			201
+		);
 	});

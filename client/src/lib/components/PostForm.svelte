@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Image as AddImages } from '@lucide/svelte/icons';
+	import { Image as AddImages } from '@lucide/svelte/icons';
 	import { enhance } from '$app/forms';
 	import type { ActionData } from '../../routes/$types';
 
@@ -14,44 +14,44 @@
 </script>
 
 <form method="POST" action="?/post" use:enhance>
-    {#if form?.error}
-        <p role="alert">{form.error}, please try again.</p>
-    {/if}
-    <textarea
-        name="text-content"
-        placeholder="Share something..."
+	{#if form?.error}
+		<p role="alert">{form.error}, please try again.</p>
+	{/if}
+	<textarea
+		name="text-content"
+		placeholder="Share something..."
 		bind:this={textarea}
-        oninput={handleInput}
-    ></textarea>
-    <div class="row">
-        <button onclick={e => e.preventDefault()}><AddImages/></button>
-        <button type="submit">Post</button>
-    </div>
+		oninput={handleInput}
+	></textarea>
+	<div class="row">
+		<button onclick={(e) => e.preventDefault()}><AddImages /></button>
+		<button type="submit">Post</button>
+	</div>
 </form>
 
 <style>
-    form {
-        width: 100%;
-        padding: var(--space-lg);
+	form {
+		width: 100%;
+		padding: var(--space-lg);
 
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-lg);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-lg);
 
-        border: 1px solid var(--border-subtle);
-    }
+		border: 1px solid var(--border-subtle);
+	}
 
-    .row {
-        display: flex;
-        align-items: center;
-        width: 100%;
-    }
+	.row {
+		display: flex;
+		align-items: center;
+		width: 100%;
+	}
 
-    button[type="submit"] {
-        margin-left: auto;
-    }
+	button[type='submit'] {
+		margin-left: auto;
+	}
 
-    textarea {
-        width: 100%;
-    }
+	textarea {
+		width: 100%;
+	}
 </style>
