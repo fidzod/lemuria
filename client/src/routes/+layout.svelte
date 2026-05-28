@@ -8,6 +8,7 @@
 	import '../app.css';
 
 	import PageHead from '$lib/components/PageHead.svelte';
+	import Toaster from '$lib/components/Toaster.svelte';
 	import LeftSidebar from '$lib/components/LeftSidebar.svelte';
 	import RightSidebar from '$lib/components/RightSidebar.svelte';
 	import { SIDEBAR_FRIENDS_KEY, UNREAD_NOTIFICATIONS_COUNT_KEY, USER_KEY } from '$lib/context';
@@ -22,6 +23,8 @@
 <svelte:head>
 	<title>lemuria</title>
 </svelte:head>
+
+<Toaster />
 
 <div id="layout">
 	<PageHead />
