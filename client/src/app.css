@@ -100,7 +100,7 @@ button {
 	}
 }
 
-button:not(.unset) {
+button:not(.unset), span.btn {
 	font-family: var(--monospace);
 	font-size: var(--text-sm);
 
@@ -172,4 +172,15 @@ a {
 
 .primary {
 	color: var(--text-primary);
+}
+
+.lucide {
+    width: 1em;
+    height: 1em;
+    margin-top: 1px;
+}
+
+button:has(.lucide) {
+    display: flex;
+    align-items: flex-start;
 }

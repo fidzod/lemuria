@@ -1,7 +1,6 @@
 # Tasks
 
 ## Backlog
-- [ ] (#19!, #client) Add icons
 - [ ] (#20!) Display names, user avatars, accent colors
 - [ ] (#14!) Fix: Need flash messages for failed to friend etc.
 - [ ] (#13!, #client) Fix: Login needs a redirectTo
@@ -15,8 +14,9 @@
 - [ ] (#16) Friends pane in sidebar: online/offline
 - [ ] (#17) Refactor: Ids (move away from autoincrement)
 - [ ] (#21) Feature: Likes
-- [ ] (#22) Feature: Reposts
+- [ ] (#22) Feature: Reposts (Rename: Reshares)
 - [ ] (#23) Feature: Comments
+- [ ] (#25) Feature: Post views
 
 ## In-Progress
 - [ ] (#03) Feature: Profile page
@@ -24,6 +24,7 @@
 - [ ] (#15) Feature: Shelves
 
 ## Done
+- [x] (#19!, #client) Add icons
 - [x] (#18!, #client) Refactor: Remove padding-top from sections
 - [x] (#01) Feature: Posts
 - [x] (#08) Feature: Friends

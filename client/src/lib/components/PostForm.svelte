@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { Image as AddImages } from '@lucide/svelte/icons';
 	import { enhance } from '$app/forms';
 	import type { ActionData } from '../../routes/$types';
 
@@ -23,7 +24,7 @@
         oninput={handleInput}
     ></textarea>
     <div class="row">
-        <button onclick={e => e.preventDefault()}>+</button>
+        <button onclick={e => e.preventDefault()}><AddImages/></button>
         <button type="submit">Post</button>
     </div>
 </form>

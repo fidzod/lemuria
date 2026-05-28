@@ -1,5 +1,13 @@
 <script lang="ts">
     import PlaceholderAvatar from '$lib/assets/placeholder-avatar.jpg';
+    import {
+        ArrowBigUp as Upvote,
+        ArrowBigDown as Downvote,
+        Repeat2 as Repost,
+        MessagesSquare as Replies,
+        Save,
+        Share,
+    } from '@lucide/svelte/icons';
 	import { timeAgo } from '$lib/timeago';
 	import type { Post } from '@lemuria/types';
 	let { post }: { post: Post } = $props();
@@ -14,25 +22,28 @@
                 <span class="date">{timeAgo(post.createdAt)}</span>
             </div>
             <div class="stats">
-                <span><span>{post.reshareCount}</span> reposts</span>
-                <span><span>{post.replyCount}</span> replies</span>
+                <span><span class="mono">0</span> views</span>
+                <span><span class="mono">{post.reshareCount}</span> reposts</span>
+                <span><span class="mono">{post.replyCount}</span> replies</span>
             </div>
         </div>
     </div>
     <div class="body">{post.textContent}</div>
     <div class="footer">
-        <div class="group likes">
-            <button>-</button>
-            <span>{ post.likeCount }</span>
-            <button>+</button>
+        <div class="group">
+            <button><Downvote/></button>
+            <span class="mono">{ post.likeCount }</span>
+            <button><Upvote/></button>
         </div>
-        <div class="group main">
-            <button>r</button>
-            <button>c</button>
+        <div class="group">
+            <button><Repost/></button>
+        </div>
+        <div class="group">
+            <button><Replies/></button>
         </div>
         <div class="group aside">
-            <button>sv</button>
-            <button>sh</button>
+            <button><Save/></button>
+            <button><Share/></button>
         </div>
     </div>
 </div>
@@ -80,8 +91,12 @@
     }
     .group {
         display: flex;
-        align-items: flex-end;
+        align-items: flex-start;
         gap: var(--space-xs);
+
+        button {
+            margin-top: 1px;
+        }
     }
     .aside {
         margin-left: auto;
