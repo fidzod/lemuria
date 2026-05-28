@@ -6,12 +6,11 @@
 - [ ] (#13!, #client) Fix: Login needs a redirectTo
 - [ ] (#12!, #server) Fix: PublicUser should not include email
 - [ ] (#02) Fix: "Your Profile" in right sidebar
-- [ ] (#24) Fix: Nav (Login/Logout belongs here)
 - [ ] (#05) Feature: Boards
 - [ ] (#07) Feature: Tags
 - [ ] (#10) Feature: Search
 - [ ] (#11) Fix: Stats
-- [ ] (#16) Friends pane in sidebar: online/offline
+- [ ] (#16) Friends pane in sidebar
 - [ ] (#17) Refactor: Ids (move away from autoincrement)
 - [ ] (#21) Feature: Likes
 - [ ] (#22) Feature: Reposts (Rename: Reshares)
@@ -19,6 +18,7 @@
 - [ ] (#25) Feature: Post views
 
 ## In-Progress
+- [ ] (#24) Fix: Nav
 - [ ] (#03) Feature: Profile page
 - [ ] (#04) Feature: Profile customisation
 - [ ] (#15) Feature: Shelves

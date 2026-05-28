@@ -2,6 +2,7 @@
     import {
         House as Home,
         Bell as Notifications,
+        CircleUserRound as YourProfile,
         Search,
         FolderTree as Boards,
         LifeBuoy as Help,
@@ -12,13 +13,21 @@
 	import { getContext } from 'svelte';
 
 	const getUnreadNotificationsCount = getContext<() => number>(UNREAD_NOTIFICATIONS_COUNT_KEY);
+    const unreadNotifications = $derived(getUnreadNotificationsCount());
 </script>
 
 <h1>Menu</h1>
 
 <ul>
 	<li id="active"><a href="/">[<Home/>] Home</a></li>
-	<li><a href="/notifications">[<Notifications/>] Notifications ({getUnreadNotificationsCount()})</a></li>
+	<li class="notifications" class:hasUnread={unreadNotifications > 0}>
+        <a href="/notifications">
+            [<Notifications/>] 
+            Notifications 
+            <span>{unreadNotifications}</span>
+        </a>
+    </li>
+	<li><a href="/">[<YourProfile/>] Your Profile</a></li>
 	<li><a href="/">[<Search/>] Search</a></li>
 	<li><a href="/">[<Boards/>] Boards</a></li>
 	<div class="separator"></div>
@@ -31,13 +40,26 @@
 	li#active a {
 		color: var(--text-primary);
 	}
-
     li a {
         display: inline-flex;
         align-items: center;
         gap: var(--space-xs);
     }
+    .notifications {
+        span {
+            margin-left: auto;
 
+            &:before {
+                content: '<';
+            }
+            &:after {
+                content: '>';
+            }
+        }
+        &.hasUnread span {
+            color: var(--text-primary);
+        }
+    }
 	.separator {
 		width: 100%;
 		border-bottom: 1px solid var(--border-subtle);
