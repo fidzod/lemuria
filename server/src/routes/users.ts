@@ -11,12 +11,10 @@ import { resolveRelationship } from '../lib/relationships';
 export const usersRouter = new Hono<{ Variables: AppVariables }>()
 
 	// GET /api/v1/users/:userId - get PublicUser by Id
-	.get('/:userId', async (c) => {
-		const userId = Number(c.req.param('userId'));
+	.get('/:username', async (c) => {
+		const username = c.req.param('username') as string;
 
-		if (isNaN(userId)) return err(c, 'Invalid userId.');
-
-		const [user] = await db.select().from(users).where(eq(users.id, userId));
+		const [user] = await db.select().from(users).where(eq(users.username, username));
 
 		if (user === undefined) return err(c, 'User not found.', 404);
 
@@ -27,6 +25,6 @@ export const usersRouter = new Hono<{ Variables: AppVariables }>()
 			user: userRowToPublicUser(user),
 			relationship: isNaN(sessionUserId)
 				? { status: null }
-				: await resolveRelationship(sessionUserId, userId, db)
+				: await resolveRelationship(sessionUserId, user.id, db)
 		});
 	});

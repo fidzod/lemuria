@@ -69,7 +69,7 @@ export const api = {
 		get: (fetch: SvelteKitFetch) => request<Notification[]>(fetch, '/notifications')
 	},
 	users: {
-		byId: (fetch: SvelteKitFetch, userId: number) => request<UserProfile>(fetch, `/users/${userId}`)
+		get: (fetch: SvelteKitFetch, username: string) => request<UserProfile>(fetch, `/users/${username}`)
 	},
 	friends: {
 		request: (fetch: SvelteKitFetch, toUserId: number) =>
