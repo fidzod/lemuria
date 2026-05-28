@@ -5,7 +5,6 @@
 - [ ] (#14!) Fix: Need flash messages for failed to friend etc.
 - [ ] (#13!, #client) Fix: Login needs a redirectTo
 - [ ] (#12!, #server) Fix: PublicUser should not include email
-- [ ] (#02) Fix: "Your Profile" in right sidebar
 - [ ] (#05) Feature: Boards
 - [ ] (#07) Feature: Tags
 - [ ] (#10) Feature: Search
@@ -18,7 +17,8 @@
 - [ ] (#25) Feature: Post views
 
 ## In-Progress
-- [ ] (#24) Fix: Nav
+- [ ] (#02) Fix: "Your Profile" pane in right sidebar
+- [ ] (#24, #client) Fix: Nav
 - [ ] (#03) Feature: Profile page
 - [ ] (#04) Feature: Profile customisation
 - [ ] (#15) Feature: Shelves

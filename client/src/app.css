@@ -100,7 +100,7 @@ button {
 	}
 }
 
-button:not(.unset), span.btn {
+button:not(.unset), .btn {
 	font-family: var(--monospace);
 	font-size: var(--text-sm);
 

@@ -9,16 +9,9 @@
 <h1>Recent Posts</h1>
 
 <div class="feed">
-	{#if data.user}
-		<p>Welcome, <strong>{data.user.username}</strong></p>
-		<form method="POST" action="/login?/logout">
-			<button type="submit">Log Out</button>
-		</form>
-	{:else}
-		<a href="/login">[ Log In ]</a>
-	{/if}
-
-    <PostForm {form} />
+    {#if data.user}
+        <PostForm {form} />
+    {/if}
 
 	{#each data.posts as post}
         <Post {post} />

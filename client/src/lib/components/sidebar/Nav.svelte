@@ -9,17 +9,22 @@
         MessageCircleQuestionMark as ContactUs,
         Bitcoin as Donate
     } from '@lucide/svelte/icons';
-	import { UNREAD_NOTIFICATIONS_COUNT_KEY } from '$lib/context';
+	import { UNREAD_NOTIFICATIONS_COUNT_KEY, USER_KEY } from '$lib/context';
 	import { getContext } from 'svelte';
+	import type { PublicUser } from '@lemuria/types';
 
 	const getUnreadNotificationsCount = getContext<() => number>(UNREAD_NOTIFICATIONS_COUNT_KEY);
-    const unreadNotifications = $derived(getUnreadNotificationsCount());
+    let unreadNotifications = $derived(getUnreadNotificationsCount());
+
+    const getUser = getContext<() => PublicUser>(USER_KEY);
+    let user = $derived(getUser());
 </script>
 
 <h1>Menu</h1>
 
 <ul>
 	<li id="active"><a href="/">[<Home/>] Home</a></li>
+    {#if user}
 	<li class="notifications" class:hasUnread={unreadNotifications > 0}>
         <a href="/notifications">
             [<Notifications/>] 
@@ -28,6 +33,7 @@
         </a>
     </li>
 	<li><a href="/">[<YourProfile/>] Your Profile</a></li>
+    {/if}
 	<li><a href="/">[<Search/>] Search</a></li>
 	<li><a href="/">[<Boards/>] Boards</a></li>
 	<div class="separator"></div>
