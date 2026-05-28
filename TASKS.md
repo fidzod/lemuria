@@ -25,6 +25,7 @@
 - (#15) Feature: Shelves
 
 ## Done
+- (#28) Create README.md
 - (#14!) Fix: Create a toaster
 - (#13!, #client) Fix: Login needs a redirectTo
 - (#12!) Fix: PublicUser should not include email
