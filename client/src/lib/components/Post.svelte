@@ -18,7 +18,7 @@
 		<img src={PlaceholderAvatar} alt="{post.author.username}'s Avatar" class="avatar" />
 		<div class="details-and-stats">
 			<div class="details">
-				<a class="username" href="/@{post.author.username}">@{post.author.username}</a>
+				<a class="username" href="/@{post.author.username}">{post.author.displayName} @{post.author.username}</a>
 				<span class="date">{timeAgo(post.createdAt)}</span>
 			</div>
 			<div class="stats">

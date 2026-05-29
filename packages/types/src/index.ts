@@ -13,12 +13,17 @@ export type Relationship =
 
 export type PublicUser = {
 	id: number;
+    displayName: string;
 	username: string;
+    accentColor: string | null;
+    avatarUrl: string | null;
 	createdAt: Date;
 };
 
 export type UserProfile = {
 	user: PublicUser;
+    bannerUrl: string | null;
+    bio: string | null;
 	relationship: Relationship;
 };
 

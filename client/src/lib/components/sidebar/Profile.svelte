@@ -15,7 +15,7 @@
 	<div id="your-profile">
 		<img class="avatar" src={PlaceholderAvatar} alt="Avatar" />
 		<div class="name">
-			<p class="name">Display Name</p>
+			<p class="name">{user.displayName}</p>
 			<p class="name">@{user.username}</p>
 		</div>
 		<div class="stats">

@@ -1,8 +1,6 @@
 # Tasks
 
 ## Backlog
-- (#20!) Fix: User missing fields:
-  - Avatar, banner, bio, displayName, accentColor
 - (#05) Feature: Boards
 - (#07) Feature: Tags
 - (#10) Feature: Search
@@ -25,6 +23,7 @@
 - (#15) Feature: Shelves
 
 ## Done
+- (#20!) Fix: User is missing fields
 - (#28) Create README.md
 - (#14!) Fix: Create a toaster
 - (#13!, #client) Fix: Login needs a redirectTo
