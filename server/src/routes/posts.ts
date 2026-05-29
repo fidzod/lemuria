@@ -26,11 +26,11 @@ export const postsRouter = new Hono<{ Variables: AppVariables }>()
 				author: {
 					id: users.id,
 					email: users.email,
-                    displayName: users.displayName,
+					displayName: users.displayName,
 					username: users.username,
-                    accentColor: users.accentColor,
-                    avatarUrl: users.accentColor,
-					createdAt: users.createdAt,
+					accentColor: users.accentColor,
+					avatarUrl: users.accentColor,
+					createdAt: users.createdAt
 				}
 			})
 			.from(posts)

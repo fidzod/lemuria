@@ -35,8 +35,8 @@
 				Requested
 			{:else if profile.relationship.status === 'request_received'}
 				<form
-                    action="?/respondToFriendRequest"
-                    method="POST"
+					action="?/respondToFriendRequest"
+					method="POST"
 					use:enhance={() => {
 						return async ({ result }) => {
 							if (result.type === 'failure') {
@@ -45,7 +45,7 @@
 							}
 						};
 					}}
-                >
+				>
 					<input
 						type="hidden"
 						name="friend-request-id"

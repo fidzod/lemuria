@@ -33,4 +33,3 @@ authentication and user accounts.
 **Upcoming:** Boards, comments, likes, reposts, search, essay posts, and more.
 
 See [TASKS.md](./TASKS.md) for the full development roadmap.
-

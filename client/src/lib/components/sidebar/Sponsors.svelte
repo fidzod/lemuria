@@ -9,7 +9,7 @@
 		>
 	</div>
 
-	<div class="ad" style="--ad-accent: var(--cya-dark)">
+	<div class="ad" style="--ad-accent: var(--cyan-dark)">
 		<span><a href="/">camel.py</a></span>
 		<span>Build reactive web UIs in pure python</span>
 	</div>

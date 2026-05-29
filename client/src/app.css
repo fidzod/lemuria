@@ -9,16 +9,16 @@
 	--border-subtle: var(--text-muted);
 	--border-strong: var(--text-secondary);
 
-	--red-bright: #84304d;
-	--red-dark: #3c0a2d;
-	--yel-bright: #979b52;
-	--yel-dark: #6a2e42;
-	--gre-bright: #3b806b;
-	--gre-dark: #4a3926;
-	--cya-bright: #758685;
-	--cya-dark: #363464;
-	--mag-bright: #9b528c;
-	--mag-dark: #6a2e2e;
+	--red-bright: #ae3c63;
+	--red-dark: #6e1353;
+	--yellow-bright: #979b52;
+	--yellow-dark: #6a2e42;
+	--green-bright: #3b806b;
+	--green-dark: #4a3926;
+	--cyan-bright: #758685;
+	--cyan-dark: #363464;
+	--magenta-bright: #9b528c;
+	--magenta-dark: #6a2e2e;
 
 	/* Spacing */
 	--space-xs: 0.2rem; /* tight internal padding, e.g.  */

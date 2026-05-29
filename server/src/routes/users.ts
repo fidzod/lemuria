@@ -23,8 +23,8 @@ export const usersRouter = new Hono<{ Variables: AppVariables }>()
 
 		return ok<UserProfile>(c, {
 			user: userRowToPublicUser(user),
-            bannerUrl: user.bannerUrl,
-            bio: user.bio,
+			bannerUrl: user.bannerUrl,
+			bio: user.bio,
 			relationship: isNaN(sessionUserId)
 				? { status: null }
 				: await resolveRelationship(sessionUserId, user.id, db)

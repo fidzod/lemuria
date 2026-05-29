@@ -1,6 +1,7 @@
 # Tasks
 
 ## Backlog
+
 - (#05) Feature: Boards
 - (#07) Feature: Tags
 - (#10) Feature: Search
@@ -16,6 +17,7 @@
 - (#27) Feature: Essay/Longform Posts
 
 ## In-Progress
+
 - (#03) Feature: Profile page
 - (#04) Feature: Profile customisation
 - (#02, #client) Fix: "Your Profile" pane in right sidebar
@@ -23,6 +25,7 @@
 - (#15) Feature: Shelves
 
 ## Done
+
 - (#20!) Fix: User is missing fields
 - (#28) Create README.md
 - (#14!) Fix: Create a toaster

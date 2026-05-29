@@ -1,10 +1,10 @@
 .notification:not(.read) {
-    color: var(--text-primary);
+	color: var(--text-primary);
 
-    span {
-        color: var(--text-secondary);
-    }
+	span {
+		color: var(--text-secondary);
+	}
 }
 .notification.read {
-    color: var(--text-muted);
+	color: var(--text-muted);
 }

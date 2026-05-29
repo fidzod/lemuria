@@ -12,7 +12,7 @@
 <h1>Your Profile</h1>
 
 {#if user}
-	<div id="your-profile">
+	<div id="your-profile" style="--user-accent: var(--{user.accentColor || 'red'}-bright)">
 		<img class="avatar" src={PlaceholderAvatar} alt="Avatar" />
 		<div class="name">
 			<p class="name">{user.displayName}</p>
@@ -53,10 +53,10 @@
 		margin: 3px;
 		box-shadow:
 			0 0 0 2px var(--bg),
-			0 0 0 3px var(--red-bright);
+			0 0 0 3px var(--user-accent);
 	}
 	.name {
-		color: var(--red-bright);
+		color: var(--user-accent);
 	}
 	.stats {
 		display: flex;

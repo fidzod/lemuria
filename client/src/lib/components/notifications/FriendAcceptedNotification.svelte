@@ -15,12 +15,12 @@
 	{#if notification.friendship.friend}
 		<div class="notification" class:read={notification.read}>
 			@{notification.friendship.friend.username} accepted your friend request
-            <span>{date}</span>
+			<span>{date}</span>
 		</div>
 	{:else}
 		<div class="notification" class:read={notification.read}>
 			Friend request accepted by deleted user
-            <span>{date}</span>
+			<span>{date}</span>
 		</div>
 	{/if}
 {/if}
@@ -29,13 +29,13 @@
 	.notification:not(.read) {
 		color: var(--text-primary);
 
-        span {
-            color: var(--text-secondary);
-        }
+		span {
+			color: var(--text-secondary);
+		}
 	}
-    .notification.read {
-        span {
-            color: var(--text-muted);
-        }
-    }
+	.notification.read {
+		span {
+			color: var(--text-muted);
+		}
+	}
 </style>
