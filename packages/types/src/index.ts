@@ -11,11 +11,17 @@ export type Relationship =
 	| { status: 'request_received'; friendRequestId: number }
 	| { status: null };
 
+export const AccentColors = ['red', 'yellow', 'green', 'cyan', 'magenta', 'unset'] as const;
+export type AccentColor = (typeof AccentColors)[number];
+
+export const isAccentColor = (value: string): value is AccentColor =>
+	(AccentColors as readonly string[]).includes(value);
+
 export type PublicUser = {
 	id: number;
 	displayName: string;
 	username: string;
-	accentColor: string | null;
+	accentColor: AccentColor;
 	avatarUrl: string | null;
 	createdAt: Date;
 };
@@ -25,6 +31,14 @@ export type UserProfile = {
 	bannerUrl: string | null;
 	bio: string | null;
 	relationship: Relationship;
+};
+
+export type ProfileUpdate = {
+	displayName: string;
+	bio: string | null;
+	accentColor: AccentColor;
+	avatar: File | null;
+	banner: File | null;
 };
 
 export type FriendRequest = {

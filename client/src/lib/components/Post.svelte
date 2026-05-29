@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PlaceholderAvatar from '$lib/assets/placeholder-avatar.jpg';
+	import PlaceholderAvatar from '$lib/assets/default_avatar.jpeg';
 	import {
 		ArrowBigUp as Upvote,
 		ArrowBigDown as Downvote,
@@ -21,7 +21,11 @@
     "
 >
 	<div class="head">
-		<img src={PlaceholderAvatar} alt="{post.author.username}'s Avatar" class="avatar" />
+		<img
+			src={post.author.avatarUrl || PlaceholderAvatar}
+			alt="{post.author.username}'s Avatar"
+			class="avatar"
+		/>
 		<div class="details-and-stats">
 			<div class="details">
 				<a class="username" href="/@{post.author.username}"
@@ -30,7 +34,7 @@
 				<span class="date">{timeAgo(post.createdAt)}</span>
 			</div>
 			<div class="stats">
-                <span>Joined {timeAgo(post.author.createdAt)}</span>
+				<span>Joined {timeAgo(post.author.createdAt)}</span>
 			</div>
 		</div>
 	</div>

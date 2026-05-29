@@ -6,3 +6,4 @@ drizzle
 *.db-shm
 *.db-wal
 local
+uploads

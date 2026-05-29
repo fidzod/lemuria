@@ -1,3 +1,4 @@
+import type { AccentColor } from '@lemuria/types';
 import { sql } from 'drizzle-orm';
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
@@ -8,7 +9,7 @@ export const users = sqliteTable('users', {
 	passwordHash: text('password_hash').notNull(),
 	displayName: text('display_name').notNull().default('User'),
 	avatarUrl: text('avatar_url'),
-	accentColor: text('accent_color'),
+	accentColor: text('accent_color').notNull().$type<AccentColor>(),
 	bannerUrl: text('banner_url'),
 	bio: text(''),
 	createdAt: integer('created_at', { mode: 'timestamp' })

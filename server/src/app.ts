@@ -11,6 +11,7 @@ import { friendsRouter } from './routes/friends';
 import { notificationsRouter } from './routes/notifications';
 import { usersRouter } from './routes/users';
 import { postsRouter } from './routes/posts';
+import { serveStatic } from 'hono/bun';
 
 export const app = new Hono()
 	.use('*', logger())
@@ -23,6 +24,8 @@ export const app = new Hono()
 	)
 
 	.use('*', session)
+
+	.use('/uploads/*', serveStatic({ root: './' }))
 
 	.route('/api/v1/auth', authRouter)
 	.route('/api/v1/friends', friendsRouter)

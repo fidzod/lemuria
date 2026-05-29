@@ -1,28 +1,28 @@
 <script lang="ts">
+	import Textarea from './Textarea.svelte';
 	import { Image as AddImages } from '@lucide/svelte/icons';
 	import { enhance } from '$app/forms';
-	import type { ActionData } from '../../routes/$types';
+	import type { ActionData } from '../../../routes/$types';
 
 	let { form }: { form: ActionData } = $props();
 
-	let textarea: HTMLTextAreaElement;
-
-	const handleInput = () => {
-		textarea.style.height = 'auto';
-		textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px';
-	};
+	let textareaComponent: ReturnType<typeof Textarea>;
 </script>
 
-<form method="POST" action="?/post" use:enhance>
+<form
+	method="POST"
+	action="?/post"
+	use:enhance={() => {
+		return ({ update }) => {
+			update();
+			textareaComponent.reset();
+		};
+	}}
+>
 	{#if form?.error}
 		<p role="alert">{form.error}, please try again.</p>
 	{/if}
-	<textarea
-		name="text-content"
-		placeholder="Share something..."
-		bind:this={textarea}
-		oninput={handleInput}
-	></textarea>
+	<Textarea name="text-content" placeholder="Share something..." bind:this={textareaComponent} />
 	<div class="row">
 		<button onclick={(e) => e.preventDefault()}><AddImages /></button>
 		<button type="submit">Post</button>
@@ -48,10 +48,7 @@
 	}
 
 	button[type='submit'] {
-		margin-left: auto;
-	}
-
-	textarea {
-		width: 100%;
+		margin-block-start: 0;
+		margin-inline-start: auto;
 	}
 </style>

@@ -1,6 +1,7 @@
 :root {
 	/* Colors */
 	--bg: #000;
+	--bg-alpha: #0008;
 
 	--text-primary: #e4e4e4;
 	--text-secondary: #949494;
@@ -19,6 +20,9 @@
 	--cyan-dark: #363464;
 	--magenta-bright: #9b528c;
 	--magenta-dark: #6a2e2e;
+
+	--unset-bright: var(--text-primary);
+	--unset-dark: var(--text-muted);
 
 	/* Spacing */
 	--space-xs: 0.2rem; /* tight internal padding, e.g.  */
@@ -98,6 +102,9 @@ button {
 	&:hover {
 		color: var(--text-primary);
 	}
+	&:active {
+		transform: translateY(2px);
+	}
 }
 
 button:not(.unset),
@@ -113,28 +120,58 @@ button:not(.unset),
 		content: ']';
 	}
 }
-
+button.link-style {
+	text-decoration: underline;
+	text-align: left;
+}
 button[disabled] {
 	pointer-events: none;
 }
 
-textarea {
-	font-family: var(--monospace);
-	font-size: inherit;
-	color: var(--text-primary);
-	background-color: var(--bg);
+.hidden {
+	display: none;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-sm);
+	align-items: flex-start;
+}
+.form-row {
+	display: flex;
+	gap: var(--space-sm);
+	min-width: 0;
+
+	&:has(input) {
+		height: 1.5rem;
+	}
+}
+input {
+	background: none;
 	border: none;
-	border-bottom: 1px solid var(--border-subtle);
-	transition: border-bottom-color 0.25s;
-	resize: none;
-	min-height: 2rem;
-	max-height: 16rem;
-	overflow-y: auto;
+	color: var(--text-primary);
+
+	&::placeholder {
+		color: var(--text-muted);
+	}
 
 	&:focus {
 		outline: none;
-		border-bottom-color: var(--border-strong);
+		border-bottom: 1px solid var(--text-secondary);
 	}
+}
+button[type='submit'] {
+	margin-block-start: var(--space-xl);
+	color: var(--text-primary);
+
+	&:hover {
+		color: var(--text-secondary);
+	}
+}
+p[role='alert'] {
+	margin-block-end: var(--space-xl);
+	color: var(--red-bright);
 }
 
 ul {

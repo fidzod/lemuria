@@ -28,7 +28,7 @@ The codebase prioritises type safety and clean architecture throughout.
 **Completed:** Posts, friend requests and management, notifications,
 authentication and user accounts.
 
-**In Progress:** Profile pages and customisation, shelves, and sidebars.
+**In Progress:** Profile pages, shelves, and sidebars.
 
 **Upcoming:** Boards, comments, likes, reposts, search, essay posts, and more.
 

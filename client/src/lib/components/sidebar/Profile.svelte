@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PlaceholderAvatar from '$lib/assets/placeholder-avatar.jpg';
+	import PlaceholderAvatar from '$lib/assets/default_avatar.jpeg';
 
 	import { USER_KEY } from '$lib/context';
 	import { getContext } from 'svelte';
@@ -13,11 +13,11 @@
 
 {#if user}
 	<div id="your-profile" style="--user-accent: var(--{user.accentColor || 'red'}-bright)">
-		<img class="avatar" src={PlaceholderAvatar} alt="Avatar" />
-		<div class="name">
+		<img class="avatar" src={user.avatarUrl || PlaceholderAvatar} alt="Avatar" />
+		<a class="name" href="/@{user.username}">
 			<p class="name">{user.displayName}</p>
 			<p class="name">@{user.username}</p>
-		</div>
+		</a>
 		<div class="stats">
 			<button class="stat unset">
 				<span class="value mono">15</span>

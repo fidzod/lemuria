@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Post from '$lib/components/Post.svelte';
-	import PostForm from '$lib/components/PostForm.svelte';
+	import PostForm from '$lib/components/forms/PostForm.svelte';
 	import type { ActionData, PageData } from './$types';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();

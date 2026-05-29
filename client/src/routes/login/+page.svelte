@@ -1,6 +1,6 @@
 <script lang="ts">
 	import GreenOrbs from '$lib/assets/green-orbs.png';
-	import LoginForm from '$lib/components/LoginForm.svelte';
+	import LoginForm from '$lib/components/forms/LoginForm.svelte';
 	import Noise from '$lib/assets/noise.png';
 	import type { ActionData, PageData } from './$types';
 

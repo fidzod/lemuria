@@ -1,12 +1,12 @@
-import {
-	type Notification,
-	type UnreadNotifications,
-	type PublicUser,
-	type UserProfile,
-	type FriendRequest,
-	type Friendship,
-	type Friends,
-	Post
+import type {
+	AppNotification,
+	UnreadNotifications,
+	PublicUser,
+	UserProfile,
+	FriendRequest,
+	Friendship,
+	Post,
+	ProfileUpdate
 } from '@lemuria/types';
 
 type SvelteKitFetch = typeof globalThis.fetch;
@@ -32,17 +32,29 @@ const request = async <T>(
 	path: string,
 	options: RequestInit = {}
 ): Promise<ApiResponse<T>> => {
+	const isFormData = options.body instanceof FormData;
 	const response = await fetch(`${BASE_URL}${path}`, {
 		...options,
 		credentials: 'include',
 		headers: {
-			'Content-Type': 'application/json',
+			...(!isFormData && { 'Content-Type': 'application/json' }),
 			...options.headers
 		}
 	});
 
 	const body = (await response.json()) as ApiResponse<T>;
 	return body;
+};
+
+type GenericUpdate = Record<string, string | File | null | undefined>;
+
+const buildFormData = <T extends GenericUpdate>(data: T): FormData => {
+	const formData = new FormData();
+	for (const [key, value] of Object.entries(data)) {
+		if (value == null || value === '') continue;
+		formData.append(key, value);
+	}
+	return formData;
 };
 
 export const api = {
@@ -66,11 +78,16 @@ export const api = {
 	notifications: {
 		unreadCount: (fetch: SvelteKitFetch) =>
 			request<UnreadNotifications>(fetch, '/notifications/unread-count'),
-		get: (fetch: SvelteKitFetch) => request<Notification[]>(fetch, '/notifications')
+		get: (fetch: SvelteKitFetch) => request<AppNotification[]>(fetch, '/notifications')
 	},
 	users: {
 		get: (fetch: SvelteKitFetch, username: string) =>
-			request<UserProfile>(fetch, `/users/${username}`)
+			request<UserProfile>(fetch, `/users/${username}`),
+		updateProfile: (fetch: SvelteKitFetch, username: string, update: ProfileUpdate) =>
+			request<UserProfile>(fetch, `/users/${username}`, {
+				method: 'PATCH',
+				body: buildFormData<ProfileUpdate>(update)
+			})
 	},
 	friends: {
 		request: (fetch: SvelteKitFetch, toUserId: number) =>

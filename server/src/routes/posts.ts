@@ -29,7 +29,7 @@ export const postsRouter = new Hono<{ Variables: AppVariables }>()
 					displayName: users.displayName,
 					username: users.username,
 					accentColor: users.accentColor,
-					avatarUrl: users.accentColor,
+					avatarUrl: users.avatarUrl,
 					createdAt: users.createdAt
 				}
 			})

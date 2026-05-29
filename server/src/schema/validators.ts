@@ -1,4 +1,4 @@
-import { FRIEND_REQUEST_STATUSES } from '@lemuria/types';
+import { AccentColors, FRIEND_REQUEST_STATUSES } from '@lemuria/types';
 import { z } from 'zod';
 
 export const usernameSchema = z
@@ -35,4 +35,21 @@ export const respondToFriendRequestSchema = z.object({
 
 export const postSchema = z.object({
 	textContent: z.string()
+});
+
+const imageFile = z
+	.instanceof(File)
+	.refine((f) => f.size < 5 * 1024 * 1024, 'File exceeds max upload size (5MB)')
+	.refine(
+		(f) => ['image/jpeg', 'image/png', 'image/webp'].includes(f.type),
+		'Must be JPEG, PNG or WebP'
+	)
+	.optional();
+
+export const updateUserSchema = z.object({
+	displayName: z.string().min(1),
+	bio: z.string().optional(),
+	accentColor: z.enum(AccentColors),
+	avatar: imageFile,
+	banner: imageFile
 });
