@@ -19,8 +19,8 @@
 <style>
 	.toasts {
 		position: absolute;
-		top: var(--space-lg);
-		right: var(--space-lg);
+		top: var(--space-md);
+		right: var(--space-md);
 		display: flex;
 		flex-direction: column;
 		align-items: end;

@@ -15,6 +15,19 @@ export const postsRouter = new Hono<{ Variables: AppVariables }>()
 
 	// GET /api/v1/posts/ - get posts
 	.get('/', async (c) => {
+		const queryUserId = c.req.query('userId');
+
+		if (queryUserId !== undefined) {
+			const queryUserIdNumber = Number(queryUserId);
+			if (isNaN(queryUserIdNumber)) {
+				return err(c, 'Invalid Id.');
+			}
+			const [queryUser] = await db.select().from(users).where(eq(users.id, queryUserIdNumber));
+			if (queryUser === undefined) {
+				return err(c, 'User not found.', 404);
+			}
+		}
+
 		const rows = await db
 			.select({
 				textContent: posts.textContent,
@@ -35,6 +48,7 @@ export const postsRouter = new Hono<{ Variables: AppVariables }>()
 			})
 			.from(posts)
 			.innerJoin(users, eq(posts.authorId, users.id))
+			.where(queryUserId ? eq(posts.authorId, Number(queryUserId)) : undefined)
 			.orderBy(desc(posts.createdAt));
 
 		return ok<Post[]>(c, rows);

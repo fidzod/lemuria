@@ -3,6 +3,8 @@
 	import { Pencil as Edit } from '@lucide/svelte/icons';
 	import MockupHeader from '$lib/assets/mockup-header.jpg';
 	import EditModal from '$lib/components/profile/EditModal.svelte';
+	import Post from '$lib/components/Post.svelte';
+	import FriendButton from '$lib/components/profile/FriendButton.svelte';
 	// import Shelves from '$lib/components/Shelves.svelte';
 	import { USER_KEY } from '$lib/context';
 	import { getContext } from 'svelte';
@@ -25,20 +27,31 @@
 	{form}
 />
 
+{#if sessionUser.id === user.id}
+	<h1>Your Profile</h1>
+{:else}
+	<h1>{user.displayName}'s Profile</h1>
+{/if}
+
 <div
 	class="header"
 	style="
         --image: url('{data.profile.bannerUrl || MockupHeader}');
-        --user-accent: var(--{user.accentColor || 'red'}-bright);
+        --user-accent-bright: var(--{user.accentColor}-bright);
+        --user-accent-dark: var(--{user.accentColor}-dark);
     "
 >
 	<img src={user.avatarUrl || PlaceholderAvatar} alt="{user.displayName}'s Avatar" class="avatar" />
 	<div class="card">
-		<span class="name">{user.displayName} <span class="mono">@{user.username}</span></span>
+		<span class="name text-gradient"
+			>{user.displayName} <span class="mono">@{user.username}</span></span
+		>
 	</div>
-	<div class="card">
+	<div class="card right">
 		{#if sessionUser && sessionUser.id === user.id}
 			<button class="edit-profile" onclick={() => (editModalOpen = true)}><Edit /></button>
+		{:else}
+			<FriendButton relationship={data.profile.relationship} userId={user.id} />
 		{/if}
 	</div>
 </div>
@@ -49,7 +62,12 @@
 
 <!--<Shelves />-->
 
-<h1>Posts</h1>
+<section>
+	<h1>Posts</h1>
+	{#each data.posts as post}
+		<Post {post} />
+	{/each}
+</section>
 
 <style>
 	.header {
@@ -57,10 +75,10 @@
 		height: 8rem;
 		position: relative;
 		margin: 3px;
-		margin-bottom: 2rem;
+		margin-bottom: var(--space-xl);
 		box-shadow:
 			0 0 0 2px var(--bg),
-			0 0 0 3px var(--user-accent);
+			0 0 0 3px var(--user-accent-bright);
 		background: var(--image);
 		background-size: cover;
 		background-position: center;
@@ -71,11 +89,11 @@
 		height: 5rem;
 		position: absolute;
 		bottom: -1.5rem;
-		left: var(--space-lg);
+		left: var(--space-md);
 		margin: 3px;
 		box-shadow:
 			0 0 0 2px var(--bg),
-			0 0 0 3px var(--user-accent);
+			0 0 0 3px var(--user-accent-bright);
 	}
 	.card {
 		width: fit-content;
@@ -85,16 +103,15 @@
 		background-color: var(--bg);
 	}
 	.card:has(.name) {
-		left: calc(var(--space-lg) * 2 + 5rem);
+		left: calc(var(--space-md) * 2 + 5rem);
 	}
-	.card:has(.edit-profile) {
+	.card.right {
 		right: var(--space-sm);
 	}
 	.details {
 		font-size: var(--text-sm);
-		margin-bottom: 2rem; /* TODO: this should be a var */
 	}
-	h1 {
-		margin-top: 2rem;
+	section {
+		margin-top: var(--space-xl);
 	}
 </style>

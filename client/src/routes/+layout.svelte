@@ -38,19 +38,19 @@
 
 <style>
 	#layout {
-		max-width: calc(2 * var(--sidebar-width) + 2 * var(--space-lg) + var(--page-max-width));
+		max-width: calc(2 * var(--sidebar-width) + 2 * var(--space-md) + var(--page-max-width));
 		width: fit-content;
-		margin: var(--space-lg) auto;
+		margin: var(--space-md) auto;
 
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-lg);
+		gap: var(--space-md);
 	}
 	.columns {
 		width: fit-content;
 		margin-inline: auto;
 		display: flex;
-		gap: var(--space-lg);
+		gap: var(--space-md);
 	}
 	aside {
 		width: var(--sidebar-width);

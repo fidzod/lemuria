@@ -120,9 +120,9 @@
 		width: 60vw;
 		max-width: 600px;
 		height: fit-content;
-		padding: var(--space-lg);
+		padding: var(--space-md);
 		display: flex;
-		gap: var(--space-lg);
+		gap: var(--space-md);
 		background-color: var(--bg);
 		border: 1px solid var(--border-subtle);
 	}

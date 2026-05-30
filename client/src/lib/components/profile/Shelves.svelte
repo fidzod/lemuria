@@ -13,10 +13,10 @@
 <style>
 	.shelves {
 		width: 100%;
-		padding: var(--space-lg);
+		padding: var(--space-md);
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-xl);
+		gap: var(--space-lg);
 		border: 1px solid var(--border-subtle);
 	}
 	.shelf {

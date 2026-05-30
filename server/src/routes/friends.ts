@@ -278,8 +278,10 @@ export const friendsRouter = new Hono<{ Variables: AppVariables }>()
 		const friends = await db
 			.select({
 				id: users.id,
-				email: users.email,
 				username: users.username,
+				displayName: users.displayName,
+				accentColor: users.accentColor,
+				avatarUrl: users.avatarUrl,
 				createdAt: users.createdAt
 			})
 			.from(friendships)

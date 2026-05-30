@@ -63,7 +63,7 @@
 	.illustration {
 		width: 50%;
 		height: 100%;
-		padding: var(--space-lg);
+		padding: var(--space-md);
 
 		display: flex;
 		align-items: center;
@@ -77,11 +77,11 @@
 	.content {
 		width: 50%;
 		height: 100%;
-		padding: var(--space-lg);
+		padding: var(--space-md);
 
 		display: flex;
 		flex-direction: column;
-		gap: calc(var(--space-xl) * 3);
+		gap: var(--space-xl);
 		justify-content: center;
 	}
 	.header {
@@ -95,14 +95,14 @@
 
 	@media (max-width: 716px) {
 		.login-modal {
-			width: calc(100vw - var(--space-lg));
+			width: calc(100vw - var(--space-md));
 			max-width: 380px;
 			height: fit-content;
 			flex-direction: column;
 		}
 		.illustration {
 			width: 30%;
-			margin: var(--space-lg) auto;
+			margin: var(--space-md) auto;
 			padding: 0;
 			border: 1px solid var(--border-subtle);
 		}

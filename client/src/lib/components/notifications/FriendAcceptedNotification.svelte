@@ -14,7 +14,10 @@
 {#if notification.friendship}
 	{#if notification.friendship.friend}
 		<div class="notification" class:read={notification.read}>
-			@{notification.friendship.friend.username} accepted your friend request
+			<a href="/@{notification.friendship.friend.username}">
+				@{notification.friendship.friend.username}
+			</a>
+			accepted your friend request
 			<span>{date}</span>
 		</div>
 	{:else}

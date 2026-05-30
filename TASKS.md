@@ -2,7 +2,6 @@
 
 ## Backlog
 
-- (#16) Fix: Friends pane in sidebar
 - (#26) Feature: Images in posts
 - (#21) Feature: Likes
 - (#22) Feature: Reposts (Rename: Reshares)
@@ -21,11 +20,11 @@
 ## In-Progress
 
 - (#03) Feature: Profile page
-  - [ ] Fix red text gradient
-  - [ ] Text gradient for names
-  - [ ] Fix spacing (lg becomes md everywhere, xl becomes 2rem)
-  - [ ] Posts on profile page
-  - [ ] Handle friends/requests
+  - [x] Fix red text gradient
+  - [x] Text gradient for names
+  - [x] Fix spacing
+  - [x] Posts on profile page
+  - [x] Handle friends/requests
   - [ ] Stats: Friends Count, Post Count
   - [ ] Could probably handle accent color globally
 - (#02, #client) Fix: "Your Profile" pane in right sidebar
@@ -33,6 +32,11 @@
 - (#24, #client) Fix: Nav
   - [ ] Update active indicator
   - [ ] Fix broken links
+- (#16) Fix: Friends pane in sidebar
+  - [x] Improve style
+  - [x] Add avatars
+  - [ ] Feature: Online/offline indicator
+  - [ ] Fix: 'X' more
 - (#15) Feature: Shelves
 
 ## Done

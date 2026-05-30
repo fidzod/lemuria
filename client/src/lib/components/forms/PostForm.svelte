@@ -32,11 +32,11 @@
 <style>
 	form {
 		width: 100%;
-		padding: var(--space-lg);
+		padding: var(--space-md);
 
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-lg);
+		gap: var(--space-md);
 
 		border: 1px solid var(--border-subtle);
 	}

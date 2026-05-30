@@ -115,6 +115,8 @@ export const api = {
 				method: 'POST',
 				body: JSON.stringify({ textContent })
 			}),
-		all: (fetch: SvelteKitFetch) => request<Post[]>(fetch, '/posts')
+		all: (fetch: SvelteKitFetch) => request<Post[]>(fetch, '/posts'),
+		fromUser: (fetch: SvelteKitFetch, userId: number) =>
+			request<Post[]>(fetch, `/posts?userId=${userId}`)
 	}
 } as const;

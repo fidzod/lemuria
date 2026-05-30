@@ -27,13 +27,13 @@
 			class="avatar"
 		/>
 		<div class="details-and-stats">
-			<div class="details">
+			<div class="details text-gradient">
 				<a class="username" href="/@{post.author.username}"
 					>{post.author.displayName} @{post.author.username}</a
 				>
 				<span class="date">{timeAgo(post.createdAt)}</span>
 			</div>
-			<div class="stats">
+			<div class="stats text-gradient">
 				<span>Joined {timeAgo(post.author.createdAt)}</span>
 			</div>
 		</div>
@@ -63,9 +63,7 @@
 <style>
 	.post {
 		width: 100%;
-		overflow-x: hidden;
-		text-wrap: wrap;
-		word-break: break-all;
+		overflow-wrap: break-word;
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-sm);
@@ -88,11 +86,6 @@
 		width: 100%;
 		display: flex;
 		flex-direction: column;
-		background: linear-gradient(145deg, var(--user-accent-bright), var(--user-accent-dark));
-		background-size: 50px 50px;
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
 	}
 	.details {
 		width: 100%;
