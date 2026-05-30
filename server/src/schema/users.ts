@@ -14,6 +14,9 @@ export const users = sqliteTable('users', {
 	bio: text(''),
 	createdAt: integer('created_at', { mode: 'timestamp' })
 		.notNull()
+		.default(sql`(unixepoch())`),
+	lastSeen: integer('last_seen', { mode: 'timestamp' })
+		.notNull()
 		.default(sql`(unixepoch())`)
 });
 

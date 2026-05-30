@@ -9,6 +9,8 @@
 
 	const getProfile = getContext<() => UserProfile | null>(PROFILE_KEY);
 	let friendsCount = $derived(getProfile()?.friendsCount);
+
+	const isOnlineThreshold = new Date(Date.now() - 90_000); // 90s
 </script>
 
 <!-- TODO: online/offline; see (#16) -->
@@ -19,10 +21,11 @@
 	<ul>
 		{#each friends as friend}
 			<li
+				class:online={new Date(friend.lastSeen) > isOnlineThreshold}
 				style="
                 --user-accent-bright: var(--{friend.accentColor}-bright);
                 --user-accent-dark: var(--{friend.accentColor}-dark);
-            "
+                "
 			>
 				<a href="/@{friend.username}">
 					<img
@@ -59,6 +62,9 @@
 		box-shadow:
 			0 0 0 2px var(--bg),
 			0 0 0 3px var(--user-accent-bright);
+	}
+	.online a {
+		color: var(--text-primary);
 	}
 	li:last-child {
 		margin-top: var(--space-xs);

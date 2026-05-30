@@ -24,6 +24,7 @@ export type PublicUser = {
 	accentColor: AccentColor;
 	avatarUrl: string | null;
 	createdAt: Date;
+	lastSeen: Date;
 };
 
 export type UserProfile = {
@@ -78,4 +79,10 @@ export type Post = {
 	dislikeCount: number;
 	reshareCount: number;
 	replyCount: number;
+};
+
+export type Stats = {
+	totalPosts: number;
+	onlineUsers: number;
+	uploadsSize: string;
 };

@@ -12,6 +12,7 @@ import { notificationsRouter } from './routes/notifications';
 import { usersRouter } from './routes/users';
 import { postsRouter } from './routes/posts';
 import { serveStatic } from 'hono/bun';
+import { statsRouter } from './routes/stats';
 
 export const app = new Hono()
 	.use('*', logger())
@@ -30,6 +31,7 @@ export const app = new Hono()
 	.route('/api/v1/auth', authRouter)
 	.route('/api/v1/friends', friendsRouter)
 	.route('/api/v1/health', healthRouter)
+	.route('/api/v1/stats', statsRouter)
 	.route('/api/v1/notifications', notificationsRouter)
 	.route('/api/v1/users', usersRouter)
 	.route('/api/v1/posts', postsRouter)

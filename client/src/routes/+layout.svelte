@@ -1,6 +1,7 @@
 <script lang="ts">
+	import { api } from '$lib/api';
 	import type { LayoutData } from './$types';
-	import { setContext, type Snippet } from 'svelte';
+	import { setContext, type Snippet, onMount } from 'svelte';
 
 	import '@fontsource/jetbrains-mono/400.css';
 	import '@fontsource/jetbrains-mono/700.css';
@@ -24,6 +25,14 @@
 	setContext(UNREAD_NOTIFICATIONS_COUNT_KEY, () => data.unreadNotificationsCount);
 	setContext(SIDEBAR_FRIENDS_KEY, () => data.sidebarFriends);
 	setContext(PROFILE_KEY, () => data.profile);
+
+	onMount(() => {
+		api.auth.heartbeat(fetch);
+		const id = setInterval(() => {
+			api.auth.heartbeat(fetch);
+		}, 45_000);
+		return () => clearInterval(id);
+	});
 </script>
 
 <svelte:head>
@@ -33,7 +42,7 @@
 <Toaster />
 
 <div id="layout">
-	<PageHead />
+	<PageHead stats={data.stats} />
 
 	<div class="columns">
 		<aside class="left"><LeftSidebar /></aside>

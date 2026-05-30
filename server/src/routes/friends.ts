@@ -4,7 +4,7 @@ import { requireAuth } from '../middleware/require-auth';
 import { zValidator } from '../lib/validate';
 import { createFriendRequestSchema, respondToFriendRequestSchema } from '../schema/validators';
 import { users } from '../schema';
-import { and, eq, or } from 'drizzle-orm';
+import { and, eq, getTableColumns, or } from 'drizzle-orm';
 import { db } from '../db';
 import { err, ok } from '../lib/response';
 import {
@@ -275,14 +275,9 @@ export const friendsRouter = new Hono<{ Variables: AppVariables }>()
 
 		const limit = Number(c.req.query('limit'));
 
-		const friends = await db
+		const rows = await db
 			.select({
-				id: users.id,
-				username: users.username,
-				displayName: users.displayName,
-				accentColor: users.accentColor,
-				avatarUrl: users.avatarUrl,
-				createdAt: users.createdAt
+				...getTableColumns(users)
 			})
 			.from(friendships)
 			.innerJoin(
@@ -294,6 +289,8 @@ export const friendsRouter = new Hono<{ Variables: AppVariables }>()
 			)
 			.where(or(eq(friendships.userAId, sessionUserId), eq(friendships.userBId, sessionUserId)))
 			.limit(limit || 1000);
+
+		const friends = rows.map((f) => userRowToPublicUser(f));
 
 		return ok<{ friends: PublicUser[] }>(c, { friends });
 	});

@@ -1,16 +1,19 @@
 <script lang="ts">
-	let stats = {
-		users_online: 129,
-		total_posts: 602,
-		uploads_size: '1.2Mb'
-	};
+	import type { Stats } from '@lemuria/types';
+
+	let { stats }: { stats: Stats | null } = $props();
 </script>
 
 <div id="page-head">
 	<div class="stats">
-		<p><span class="mono primary">{stats.users_online}</span> users online</p>
-		<p><span class="mono primary">{stats.total_posts}</span> posts</p>
-		<p><span class="mono primary">{stats.uploads_size}</span> uploaded</p>
+		{#if stats}
+			<p>
+				<span class="mono primary"> {stats.onlineUsers}</span>
+				user{stats.onlineUsers !== 1 ? 's' : ''} online
+			</p>
+			<p><span class="mono primary">{stats.totalPosts}</span> posts</p>
+			<p><span class="mono primary">{stats.uploadsSize}</span> uploaded</p>
+		{/if}
 	</div>
 	<div class="branding">
 		<p class="primary">lemuria.so</p>

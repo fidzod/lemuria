@@ -82,4 +82,12 @@ export const authRouter = new Hono<{ Variables: AppVariables }>()
 		}
 
 		return ok<PublicUser>(c, userRowToPublicUser(user));
+	})
+
+	// POST /api/v1/auth/me/heartbeat
+	.get('/me/heartbeat', requireAuth, async (c) => {
+		const session = c.get('session');
+		const userId = session.get('userId') as number;
+		await db.update(users).set({ lastSeen: new Date() }).where(eq(users.id, userId));
+		return ok<{}>(c, {});
 	});

@@ -4,30 +4,26 @@
 
 - (#26) Feature: Images in posts
 - (#21) Feature: Likes
-- (#22) Feature: Reposts (Rename: Reshares)
 - (#23) Feature: Comments
+- (#22) Feature: Reposts (Rename: Reshares)
 - (#25) Feature: Post views
 - (#28) Feature: Mobile Nav
-- (#29) Fix: Posts 'Joined' line is ugly
 - (#26) Fix: Pagination (notifications, posts)
 - (#05) Feature: Boards
-- (#07) Feature: Tags
+- (#29) Fix: Posts 'Joined' line is ugly
 - (#10) Feature: Search
-- (#11) Fix: Stats
+- (#07) Feature: Tags
 - (#17) Refactor: Ids (move away from autoincrement)
 - (#27) Feature: Essay/Longform Posts
 
 ## In-Progress
 
-- (#16) Fix: Friends pane in sidebar
-  - [x] Improve style
-  - [x] Add avatars
-  - [ ] Feature: Online/offline indicator
-  - [x] Fix: 'X' more
 - (#15) Feature: Shelves
 
 ## Done
 
+- (#16) Fix: Friends pane in sidebar
+- (#11) Fix: Stats in page head
 - (#24, #client) Fix: Nav
 - (#03) Feature: Profile page
 - (#02, #client) Fix: "Your Profile" pane in right sidebar

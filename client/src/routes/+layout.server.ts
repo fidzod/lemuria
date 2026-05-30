@@ -1,16 +1,25 @@
 import { api, withCookies } from '$lib/api';
-import type { PublicUser, UserProfile } from '@lemuria/types';
+import type { PublicUser, Stats, UserProfile } from '@lemuria/types';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ fetch, request }) => {
-	let user: PublicUser | null = null;
+	let stats: Stats | null = null;
+	const statsRes = await api.stats.get(fetch);
+	if (statsRes.success) stats = statsRes.data;
+
 	const userRes = await api.auth.me(withCookies(fetch, request));
 
-	if (userRes.success) user = userRes.data;
-
-	if (user === null) {
-		return { user, unreadNotificationsCount: null, sidebarFriends: [], profile: null };
+	if (!userRes.success) {
+		return {
+			user: null,
+			unreadNotificationsCount: null,
+			sidebarFriends: [],
+			profile: null,
+			stats: stats
+		};
 	}
+
+	const user = userRes.data;
 
 	let profile: UserProfile | null = null;
 	let unreadNotificationsCount: number | null = null;
@@ -25,5 +34,5 @@ export const load: LayoutServerLoad = async ({ fetch, request }) => {
 	const friendsRes = await api.friends.get(withCookies(fetch, request), 5);
 	if (friendsRes.success) sidebarFriends = friendsRes.data.friends;
 
-	return { user, unreadNotificationsCount, sidebarFriends, profile };
+	return { user, unreadNotificationsCount, sidebarFriends, profile, stats };
 };

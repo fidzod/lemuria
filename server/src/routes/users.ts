@@ -26,8 +26,6 @@ export const usersRouter = new Hono<{ Variables: AppVariables }>()
 		const session = c.get('session');
 		const sessionUserId = Number(session.get('userId'));
 
-		console.log(sessionUserId);
-
 		return ok<UserProfile>(c, {
 			user: userRowToPublicUser(userRow),
 			bannerUrl: userRow.bannerUrl,

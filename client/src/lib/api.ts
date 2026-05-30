@@ -1,12 +1,13 @@
-import type {
-	AppNotification,
-	UnreadNotifications,
-	PublicUser,
-	UserProfile,
-	FriendRequest,
-	Friendship,
-	Post,
-	ProfileUpdate
+import {
+	type AppNotification,
+	type UnreadNotifications,
+	type PublicUser,
+	type UserProfile,
+	type FriendRequest,
+	type Friendship,
+	type Post,
+	type ProfileUpdate,
+	type Stats
 } from '@lemuria/types';
 
 type SvelteKitFetch = typeof globalThis.fetch;
@@ -61,6 +62,8 @@ export const api = {
 	auth: {
 		me: (fetch: SvelteKitFetch) => request<PublicUser>(fetch, '/auth/me'),
 
+		heartbeat: (fetch: SvelteKitFetch) => request<{}>(fetch, '/auth/me/heartbeat'),
+
 		login: (fetch: SvelteKitFetch, identifier: string, password: string) =>
 			request<PublicUser>(fetch, '/auth/login', {
 				method: 'POST',
@@ -78,11 +81,13 @@ export const api = {
 	notifications: {
 		unreadCount: (fetch: SvelteKitFetch) =>
 			request<UnreadNotifications>(fetch, '/notifications/unread-count'),
+
 		get: (fetch: SvelteKitFetch) => request<AppNotification[]>(fetch, '/notifications')
 	},
 	users: {
 		get: (fetch: SvelteKitFetch, username: string) =>
 			request<UserProfile>(fetch, `/users/${username}`),
+
 		updateProfile: (fetch: SvelteKitFetch, username: string, update: ProfileUpdate) =>
 			request<UserProfile>(fetch, `/users/${username}`, {
 				method: 'PATCH',
@@ -95,6 +100,7 @@ export const api = {
 				method: 'POST',
 				body: JSON.stringify({ toUserId })
 			}),
+
 		respondToRequest: (
 			fetch: SvelteKitFetch,
 			friendRequestId: number,
@@ -104,8 +110,10 @@ export const api = {
 				method: 'PATCH',
 				body: JSON.stringify({ status: response })
 			}),
+
 		removeFriendship: (fetch: SvelteKitFetch, friendshipId: number) =>
 			request<Friendship>(fetch, `/friends/${friendshipId}`, { method: 'DELETE' }),
+
 		get: (fetch: SvelteKitFetch, limit: number) =>
 			request<{ friends: PublicUser[] }>(fetch, `/friends?limit=${limit}`)
 	},
@@ -115,8 +123,13 @@ export const api = {
 				method: 'POST',
 				body: JSON.stringify({ textContent })
 			}),
+
 		all: (fetch: SvelteKitFetch) => request<Post[]>(fetch, '/posts'),
+
 		fromUser: (fetch: SvelteKitFetch, userId: number) =>
 			request<Post[]>(fetch, `/posts?userId=${userId}`)
+	},
+	stats: {
+		get: (fetch: SvelteKitFetch) => request<Stats>(fetch, '/stats')
 	}
 } as const;
