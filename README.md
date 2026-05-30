@@ -8,7 +8,7 @@ makes for expressive user profiles, and sparks discussions around those
 interests. Meanwhile, boards provide a means for discovery and organic
 conversations.
 
-<img src="images/mockup.png" width="70%" />
+<img src="images/demo.png" width="70%" />
 
 Lemuria adopts a minimal, lainchan-inspired, dark-mode-first aesthetic with
 an almost terminal feel.
