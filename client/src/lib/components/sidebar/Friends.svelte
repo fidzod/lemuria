@@ -1,11 +1,14 @@
 <script lang="ts">
-	import { SIDEBAR_FRIENDS_KEY } from '$lib/context';
-	import type { PublicUser } from '@lemuria/types';
+	import { SIDEBAR_FRIENDS_KEY, PROFILE_KEY } from '$lib/context';
+	import type { PublicUser, UserProfile } from '@lemuria/types';
 	import { getContext } from 'svelte';
 	import DefaultAvatar from '$lib/assets/default_avatar.jpeg';
 
-	const getFriends = getContext<() => PublicUser[] | undefined>(SIDEBAR_FRIENDS_KEY);
+	const getFriends = getContext<() => PublicUser[] | null>(SIDEBAR_FRIENDS_KEY);
 	let friends = $derived(getFriends());
+
+	const getProfile = getContext<() => UserProfile | null>(PROFILE_KEY);
+	let friendsCount = $derived(getProfile()?.friendsCount);
 </script>
 
 <!-- TODO: online/offline; see (#16) -->
@@ -32,8 +35,13 @@
 			</li>
 		{/each}
 		<li>
-			<!-- TODO: See (#16) -->
-			<a href="/friends">See X more...</a>
+			{#if friendsCount && friendsCount > friends.length}
+				<a href="/friends">See {friendsCount - friends.length} more...</a>
+			{:else if friendsCount === 0}
+				<span class="tip">Boards are a good way to discover new friends</span>
+			{:else}
+				<a href="/friends">See all</a>
+			{/if}
 		</li>
 	</ul>
 {/if}
@@ -54,5 +62,8 @@
 	}
 	li:last-child {
 		margin-top: var(--space-xs);
+	}
+	.tip {
+		font-size: var(--text-sm);
 	}
 </style>

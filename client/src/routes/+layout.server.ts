@@ -22,7 +22,7 @@ export const load: LayoutServerLoad = async ({ fetch, request }) => {
 	const unreadRes = await api.notifications.unreadCount(withCookies(fetch, request));
 	if (unreadRes.success) unreadNotificationsCount = unreadRes.data.count;
 
-	const friendsRes = await api.friends.get(withCookies(fetch, request), 10);
+	const friendsRes = await api.friends.get(withCookies(fetch, request), 5);
 	if (friendsRes.success) sidebarFriends = friendsRes.data.friends;
 
 	return { user, unreadNotificationsCount, sidebarFriends, profile };

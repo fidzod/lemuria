@@ -23,7 +23,7 @@
   - [x] Improve style
   - [x] Add avatars
   - [ ] Feature: Online/offline indicator
-  - [ ] Fix: 'X' more
+  - [x] Fix: 'X' more
 - (#15) Feature: Shelves
 
 ## Done
