@@ -19,16 +19,6 @@
 
 ## In-Progress
 
-- (#03) Feature: Profile page
-  - [x] Fix red text gradient
-  - [x] Text gradient for names
-  - [x] Fix spacing
-  - [x] Posts on profile page
-  - [x] Handle friends/requests
-  - [ ] Stats: Friends Count, Post Count
-  - [ ] Could probably handle accent color globally
-- (#02, #client) Fix: "Your Profile" pane in right sidebar
-  - [ ] Stats
 - (#24, #client) Fix: Nav
   - [ ] Update active indicator
   - [ ] Fix broken links
@@ -41,6 +31,8 @@
 
 ## Done
 
+- (#03) Feature: Profile page
+- (#02, #client) Fix: "Your Profile" pane in right sidebar
 - (#04) Feature: Profile customisation
 - (#20!) Fix: User is missing fields
 - (#28) Create README.md

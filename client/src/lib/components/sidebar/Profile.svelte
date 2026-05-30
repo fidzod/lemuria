@@ -1,31 +1,34 @@
 <script lang="ts">
 	import PlaceholderAvatar from '$lib/assets/default_avatar.jpeg';
 
-	import { USER_KEY } from '$lib/context';
+	import { PROFILE_KEY } from '$lib/context';
 	import { getContext } from 'svelte';
-	import type { PublicUser } from '@lemuria/types';
+	import type { UserProfile } from '@lemuria/types';
 
-	const getUser = getContext<() => PublicUser>(USER_KEY);
-	let user = $derived(getUser());
+	const getProfile = getContext<() => UserProfile>(PROFILE_KEY);
+	let profile = $derived(getProfile());
+	let user = $derived(profile ? profile.user : null);
 </script>
 
 <h1>Your Profile</h1>
 
 {#if user}
 	<div id="your-profile" style="--user-accent: var(--{user.accentColor || 'red'}-bright)">
-		<img class="avatar" src={user.avatarUrl || PlaceholderAvatar} alt="Avatar" />
+		<a href="/@{user.username}">
+			<img class="avatar" src={user.avatarUrl || PlaceholderAvatar} alt="Avatar" />
+		</a>
 		<a class="name" href="/@{user.username}">
 			<p class="name">{user.displayName}</p>
 			<p class="name">@{user.username}</p>
 		</a>
 		<div class="stats">
-			<button class="stat unset">
-				<span class="value mono">15</span>
-				<span>Friends</span>
-			</button>
-			<a class="stat" href="/">
-				<span class="value mono">37</span>
-				<span>Posts</span>
+			<a class="stat" href="/friends">
+				<span class="value mono">{profile.friendsCount}</span>
+				<span>Friend{profile.friendsCount !== 1 ? 's' : ''}</span>
+			</a>
+			<a class="stat" href="/@{user.username}">
+				<span class="value mono">{profile.postsCount}</span>
+				<span>Post{profile.postsCount !== 1 ? 's' : ''}</span>
 			</a>
 		</div>
 		<div class="logout">

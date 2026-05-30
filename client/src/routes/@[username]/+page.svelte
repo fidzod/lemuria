@@ -57,6 +57,10 @@
 </div>
 
 <div class="details">
+	<p>
+		Friends: <a class="mono" href="/friends">{data.profile.friendsCount}</a>
+		Posts: <span class="mono">{data.profile.postsCount}</span>
+	</p>
 	<p class="bio">{data.profile.bio}</p>
 </div>
 
@@ -64,14 +68,16 @@
 
 <section>
 	<h1>Posts</h1>
-	{#each data.posts as post}
-		<Post {post} />
-	{/each}
+	<div class="feed">
+		{#each data.posts as post}
+			<Post {post} />
+		{/each}
+	</div>
 </section>
 
 <style>
 	.header {
-		width: 100%;
+		width: calc(100% - 6px);
 		height: 8rem;
 		position: relative;
 		margin: 3px;
@@ -109,9 +115,17 @@
 		right: var(--space-sm);
 	}
 	.details {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-sm);
 		font-size: var(--text-sm);
 	}
 	section {
 		margin-top: var(--space-xl);
+	}
+	.feed {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-md);
 	}
 </style>

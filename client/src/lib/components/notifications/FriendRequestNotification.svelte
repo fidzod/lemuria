@@ -22,7 +22,11 @@
 			<a href="/@{friendRequest.from.username}" class="pending">
 				@{friendRequest.from.username}
 			</a>
-			<form action="/testing?/respondToFriendRequest" method="POST" use:enhance>
+			<form
+				action="/@{friendRequest.from.username}?/respondToFriendRequest"
+				method="POST"
+				use:enhance
+			>
 				<input type="hidden" name="friend-request-id" value={friendRequest.id} />
 				<div class="response">
 					<button type="submit" name="response" value="accepted"><Accept /></button>

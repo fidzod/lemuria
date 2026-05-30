@@ -11,13 +11,19 @@
 	import Toaster from '$lib/components/Toaster.svelte';
 	import LeftSidebar from '$lib/components/LeftSidebar.svelte';
 	import RightSidebar from '$lib/components/RightSidebar.svelte';
-	import { SIDEBAR_FRIENDS_KEY, UNREAD_NOTIFICATIONS_COUNT_KEY, USER_KEY } from '$lib/context';
+	import {
+		SIDEBAR_FRIENDS_KEY,
+		UNREAD_NOTIFICATIONS_COUNT_KEY,
+		USER_KEY,
+		PROFILE_KEY
+	} from '$lib/context';
 
 	let { data, children }: { data: LayoutData; children: Snippet } = $props();
 
 	setContext(USER_KEY, () => data.user);
 	setContext(UNREAD_NOTIFICATIONS_COUNT_KEY, () => data.unreadNotificationsCount);
 	setContext(SIDEBAR_FRIENDS_KEY, () => data.sidebarFriends);
+	setContext(PROFILE_KEY, () => data.profile);
 </script>
 
 <svelte:head>

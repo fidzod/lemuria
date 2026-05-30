@@ -31,6 +31,8 @@ export type UserProfile = {
 	bannerUrl: string | null;
 	bio: string | null;
 	relationship: Relationship;
+	postsCount: number;
+	friendsCount: number;
 };
 
 export type ProfileUpdate = {

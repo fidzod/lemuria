@@ -1,23 +1,29 @@
 import { api, withCookies } from '$lib/api';
-import type { PublicUser } from '@lemuria/types';
+import type { PublicUser, UserProfile } from '@lemuria/types';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ fetch, request }) => {
 	let user: PublicUser | null = null;
-	const meResult = await api.auth.me(withCookies(fetch, request));
+	const userRes = await api.auth.me(withCookies(fetch, request));
 
-	if (meResult.success) user = meResult.data;
+	if (userRes.success) user = userRes.data;
 
-	let unreadNotificationsCount: number | undefined;
-	let sidebarFriends: PublicUser[] | undefined;
-
-	if (user !== null) {
-		const unreadCountResult = await api.notifications.unreadCount(withCookies(fetch, request));
-		const sidebarFriendsResult = await api.friends.get(withCookies(fetch, request), 10);
-
-		if (unreadCountResult.success) unreadNotificationsCount = unreadCountResult.data.count;
-		if (sidebarFriendsResult.success) sidebarFriends = sidebarFriendsResult.data.friends;
+	if (user === null) {
+		return { user, unreadNotificationsCount: null, sidebarFriends: [], profile: null };
 	}
 
-	return { user, unreadNotificationsCount, sidebarFriends };
+	let profile: UserProfile | null = null;
+	let unreadNotificationsCount: number | null = null;
+	let sidebarFriends: PublicUser[] = [];
+
+	const profileRes = await api.users.get(withCookies(fetch, request), user.username);
+	if (profileRes.success) profile = profileRes.data;
+
+	const unreadRes = await api.notifications.unreadCount(withCookies(fetch, request));
+	if (unreadRes.success) unreadNotificationsCount = unreadRes.data.count;
+
+	const friendsRes = await api.friends.get(withCookies(fetch, request), 10);
+	if (friendsRes.success) sidebarFriends = friendsRes.data.friends;
+
+	return { user, unreadNotificationsCount, sidebarFriends, profile };
 };

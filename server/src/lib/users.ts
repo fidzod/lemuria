@@ -1,5 +1,7 @@
 import type { PublicUser } from '@lemuria/types';
-import type { UserRow } from '../schema';
+import { users, type UserRow } from '../schema';
+import { getTableColumns, sql, type SQL } from 'drizzle-orm';
+import type { Db } from '../db';
 
 export const userRowToPublicUser = (user: UserRow) =>
 	(({ passwordHash, email, bannerUrl, bio, ...publicUser }) =>
@@ -20,3 +22,17 @@ export const saveAndReplaceUpload = async (
 	await Bun.write(path, await file.arrayBuffer());
 	return `/${path}`;
 };
+
+export const getUserProfile = async (where: SQL, db: Db) =>
+	await db
+		.select({
+			...getTableColumns(users),
+			postsCount: sql<number>`(
+        select count(*) from posts where author_id = users.id)`,
+			friendsCount: sql<number>`(
+        select count(*)
+        from friendships
+        where user_a_id = users.id or user_b_id = users.id)`
+		})
+		.from(users)
+		.where(where);

@@ -5,7 +5,7 @@ import { db } from '../db';
 import { users } from '../schema';
 import { eq } from 'drizzle-orm';
 import type { UserProfile } from '@lemuria/types';
-import { saveAndReplaceUpload, userRowToPublicUser } from '../lib/users';
+import { getUserProfile, saveAndReplaceUpload, userRowToPublicUser } from '../lib/users';
 import { resolveRelationship } from '../lib/relationships';
 import { requireAuth } from '../middleware/require-auth';
 import { zValidator } from '../lib/validate';
@@ -17,20 +17,26 @@ export const usersRouter = new Hono<{ Variables: AppVariables }>()
 	.get('/:username', async (c) => {
 		const username = c.req.param('username') as string;
 
-		const [user] = await db.select().from(users).where(eq(users.username, username));
+		const [user] = await getUserProfile(eq(users.username, username), db);
 
 		if (user === undefined) return err(c, 'User not found.', 404);
+
+		const { postsCount, friendsCount, ...userRow } = user;
 
 		const session = c.get('session');
 		const sessionUserId = Number(session.get('userId'));
 
+		console.log(sessionUserId);
+
 		return ok<UserProfile>(c, {
-			user: userRowToPublicUser(user),
-			bannerUrl: user.bannerUrl,
-			bio: user.bio,
+			user: userRowToPublicUser(userRow),
+			bannerUrl: userRow.bannerUrl,
+			bio: userRow.bio,
 			relationship: isNaN(sessionUserId)
 				? { status: null }
-				: await resolveRelationship(sessionUserId, user.id, db)
+				: await resolveRelationship(sessionUserId, userRow.id, db),
+			friendsCount,
+			postsCount
 		});
 	})
 
@@ -57,20 +63,24 @@ export const usersRouter = new Hono<{ Variables: AppVariables }>()
 			bannerFile ? saveAndReplaceUpload(bannerFile, sessionUserId, 'banner') : undefined
 		]);
 
-		const [updatedUser] = await db
+		await db
 			.update(users)
 			.set({
 				...textfields,
 				...(avatarUrl !== undefined && { avatarUrl }),
 				...(bannerUrl !== undefined && { bannerUrl })
 			})
-			.where(eq(users.id, sessionUserId))
-			.returning();
+			.where(eq(users.id, sessionUserId));
+
+		const [updated] = await getUserProfile(eq(users.id, sessionUserId), db);
+		const { postsCount, friendsCount, ...updatedUser } = updated!;
 
 		return ok<UserProfile>(c, {
-			user: userRowToPublicUser(updatedUser!),
-			bannerUrl: updatedUser!.bannerUrl,
-			bio: updatedUser!.bio,
-			relationship: await resolveRelationship(sessionUserId, user.id, db)
+			user: userRowToPublicUser(updatedUser),
+			bannerUrl: updatedUser.bannerUrl,
+			bio: updatedUser.bio,
+			relationship: await resolveRelationship(sessionUserId, user.id, db),
+			friendsCount,
+			postsCount
 		});
 	});
