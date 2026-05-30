@@ -19,9 +19,6 @@
 
 ## In-Progress
 
-- (#24, #client) Fix: Nav
-  - [ ] Update active indicator
-  - [ ] Fix broken links
 - (#16) Fix: Friends pane in sidebar
   - [x] Improve style
   - [x] Add avatars
@@ -31,6 +28,7 @@
 
 ## Done
 
+- (#24, #client) Fix: Nav
 - (#03) Feature: Profile page
 - (#02, #client) Fix: "Your Profile" pane in right sidebar
 - (#04) Feature: Profile customisation

@@ -12,6 +12,7 @@
 	import { UNREAD_NOTIFICATIONS_COUNT_KEY, USER_KEY } from '$lib/context';
 	import { getContext } from 'svelte';
 	import type { PublicUser } from '@lemuria/types';
+	import { page } from '$app/state';
 
 	const getUnreadNotificationsCount = getContext<() => number>(UNREAD_NOTIFICATIONS_COUNT_KEY);
 	let unreadNotifications = $derived(getUnreadNotificationsCount());
@@ -23,26 +24,40 @@
 <h1>Menu</h1>
 
 <ul>
-	<li id="active"><a href="/">[<Home />] Home</a></li>
+	<li class:active={page.url.pathname === '/'}><a href="/">[<Home />] Home</a></li>
 	{#if user}
-		<li class="notifications" class:hasUnread={unreadNotifications > 0}>
+		<li
+			class="notifications"
+			class:hasUnread={unreadNotifications > 0}
+			class:active={page.url.pathname === '/notifications'}
+		>
 			<a href="/notifications">
 				[<Notifications />] Notifications
 				<span>{unreadNotifications}</span>
 			</a>
 		</li>
-		<li><a href="/">[<YourProfile />] Your Profile</a></li>
+		<li class:active={page.url.pathname === `/@${user.username}`}>
+			<a href="/@{user.username}">[<YourProfile />] Your Profile</a>
+		</li>
 	{/if}
-	<li><a href="/">[<Search />] Search</a></li>
-	<li><a href="/">[<Boards />] Boards</a></li>
+	<li class:active={page.url.pathname === '/search'}>
+		<a href="/search">[<Search />] Search</a>
+	</li>
+	<li class:active={page.url.pathname === '/boards'}>
+		<a href="/boards">[<Boards />] Boards</a>
+	</li>
 	<div class="separator"></div>
-	<li><a href="/">[<Help />] Help</a></li>
-	<li><a href="/">[<ContactUs />] Contact Us</a></li>
-	<li><a href="/">[<Donate />] Donate or sponsor</a></li>
+	<li class:active={page.url.pathname === '/support'}>
+		<a href="/support">[<Help />] Help</a>
+	</li>
+	<li><a href="mailto:fidzod@lemuria.so">[<ContactUs />] Contact Us</a></li>
+	<li class:active={page.url.pathname === '/donate'}>
+		<a href="/donate">[<Donate />] Donate or sponsor</a>
+	</li>
 </ul>
 
 <style>
-	li#active a {
+	.active a {
 		color: var(--text-primary);
 	}
 	li a {
