@@ -19,6 +19,6 @@ export const actions: Actions = {
 			return fail(400, { error: result.error });
 		}
 
-		return;
+		return { success: true };
 	}
 };
