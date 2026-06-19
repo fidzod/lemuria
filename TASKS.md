@@ -2,26 +2,41 @@
 
 ## Backlog
 
-- (#26) Feature: Images in posts
+### MVP/V1
+
 - (#21) Feature: Likes
 - (#23) Feature: Comments
-- (#22) Feature: Reposts (Rename: Reshares)
-- (#25) Feature: Post views
-- (#28) Feature: Mobile Nav
 - (#26) Fix: Pagination (notifications, posts)
+- (#22) Feature: Reposts (Rename: Reshares)
+- (#28) Feature: Mobile Nav
+- (#17) Refactor: Ids (move away from autoincrement)
+- (#31) Deploy
+- (#32) Feature: Email verification
+- (#33) Feature: Password reset
+- (#34) Feature: Rate limiting - on posts, comments, friend requests
+- (#35) Image moderation
+- (#36) Basic admin - ability to delete posts, users
+- (#37) SEO/Meta tags
+
+### Post-deployment/V2
+
+- (#25) Feature: Post views
 - (#05) Feature: Boards
-- (#29) Fix: Posts 'Joined' line is ugly
 - (#10) Feature: Search
 - (#07) Feature: Tags
-- (#17) Refactor: Ids (move away from autoincrement)
 - (#27) Feature: Essay/Longform Posts
 
 ## In-Progress
 
+- (#30) Redesign
+    - [ ] (#.01) New header
+    - [ ] (#.02) Spacing
+    - [ ] (#.03) Post join line
 - (#15) Feature: Shelves
 
 ## Done
 
+- (#26) Feature: Images in posts
 - (#16) Fix: Friends pane in sidebar
 - (#11) Fix: Stats in page head
 - (#24, #client) Fix: Nav
@@ -39,3 +54,6 @@
 - (#08) Feature: Friends
 - (#09) Feature: Notifications
 - (#06, #server) Refactor: Remove db folder
+
+## Shelved
+- (#29) Fix: Posts 'Joined' line is ugly (-> #30)

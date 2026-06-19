@@ -7,7 +7,8 @@ import {
 	type Friendship,
 	type Post,
 	type ProfileUpdate,
-	type Stats
+	type Stats,
+	type NewPost
 } from '@lemuria/types';
 
 type SvelteKitFetch = typeof globalThis.fetch;
@@ -47,13 +48,17 @@ const request = async <T>(
 	return body;
 };
 
-type GenericUpdate = Record<string, string | File | null | undefined>;
+type GenericUpdate = Record<string, string | File | File[] | null | undefined>;
 
 const buildFormData = <T extends GenericUpdate>(data: T): FormData => {
 	const formData = new FormData();
 	for (const [key, value] of Object.entries(data)) {
 		if (value == null || value === '') continue;
-		formData.append(key, value);
+		if (Array.isArray(value)) {
+			value.forEach((f) => formData.append(key, f));
+		} else {
+			formData.append(key, value);
+		}
 	}
 	return formData;
 };
@@ -118,10 +123,10 @@ export const api = {
 			request<{ friends: PublicUser[] }>(fetch, `/friends?limit=${limit}`)
 	},
 	posts: {
-		createPost: (fetch: SvelteKitFetch, textContent: string) =>
+		createPost: (fetch: SvelteKitFetch, textContent: string, media: File[]) =>
 			request<Post>(fetch, '/posts', {
 				method: 'POST',
-				body: JSON.stringify({ textContent })
+				body: buildFormData<NewPost>({ textContent, media })
 			}),
 
 		all: (fetch: SvelteKitFetch) => request<Post[]>(fetch, '/posts'),

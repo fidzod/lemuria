@@ -33,23 +33,27 @@ export const respondToFriendRequestSchema = z.object({
 	status: z.enum(FRIEND_REQUEST_STATUSES).exclude(['pending'])
 });
 
-export const postSchema = z.object({
-	textContent: z.string()
-});
-
 const imageFile = z
 	.instanceof(File)
 	.refine((f) => f.size < 5 * 1024 * 1024, 'File exceeds max upload size (5MB)')
 	.refine(
 		(f) => ['image/jpeg', 'image/png', 'image/webp'].includes(f.type),
 		'Must be JPEG, PNG or WebP'
-	)
-	.optional();
+	);
 
 export const updateUserSchema = z.object({
 	displayName: z.string().min(1),
 	bio: z.string().optional(),
 	accentColor: z.enum(AccentColors),
-	avatar: imageFile,
-	banner: imageFile
+	avatar: imageFile.optional(),
+	banner: imageFile.optional()
 });
+
+export const postSchema = z
+	.object({
+		textContent: z.string().min(1).optional(),
+		media: z.array(imageFile).max(8).optional()
+	})
+	.refine((d) => d.textContent || (d.media?.length ?? 0) > 0, {
+		message: 'Posts cannot be empty'
+	});

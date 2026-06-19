@@ -37,18 +37,27 @@ export const notificationsRouter = new Hono<{ Variables: AppVariables }>()
 				friendRequestCreatedAt: friendRequests.createdAt,
 				fromId: fromUser.id,
 				fromUsername: fromUser.username,
-				fromEmail: fromUser.email,
 				fromCreatedAt: fromUser.createdAt,
+        fromDisplayName: fromUser.displayName,
+        fromAccentColor: fromUser.accentColor,
+        fromAvatarUrl: fromUser.avatarUrl,
+        fromLastSeen: fromUser.lastSeen,
 				toId: toUser.id,
 				toUsername: toUser.username,
-				toEmail: toUser.email,
 				toCreatedAt: toUser.createdAt,
+        toDisplayName: toUser.displayName,
+        toAccentColor: toUser.accentColor,
+        toAvatarUrl: toUser.avatarUrl,
+        toLastSeen: toUser.lastSeen,
 				friendshipId: friendships.id,
 				friendshipCreatedAt: friendships.createdAt,
 				friendId: friendUser.id,
 				friendUsername: friendUser.username,
-				friendEmail: friendUser.email,
-				friendCreatedAt: friendUser.createdAt
+				friendCreatedAt: friendUser.createdAt,
+        friendDisplayName: friendUser.displayName,
+        friendAccentColor: friendUser.accentColor,
+        friendAvatarUrl: friendUser.avatarUrl,
+        friendLastSeen: friendUser.lastSeen,
 			})
 			.from(notifications)
 			.leftJoin(friendRequests, eq(notifications.friendRequestId, friendRequests.id))
@@ -85,14 +94,20 @@ export const notificationsRouter = new Hono<{ Variables: AppVariables }>()
 						from: {
 							id: row.fromId!,
 							username: row.fromUsername!,
-							email: row.fromEmail!,
-							createdAt: row.fromCreatedAt!
+							createdAt: row.fromCreatedAt!,
+              displayName: row.fromDisplayName!,
+              accentColor: row.fromAccentColor!,
+              avatarUrl: row.fromAvatarUrl!,
+              lastSeen: row.fromLastSeen!
 						},
 						to: {
 							id: row.toId!,
 							username: row.toUsername!,
-							email: row.toEmail!,
-							createdAt: row.toCreatedAt!
+							createdAt: row.toCreatedAt!,
+              displayName: row.toDisplayName!,
+              accentColor: row.toAccentColor!,
+              avatarUrl: row.toAvatarUrl!,
+              lastSeen: row.toLastSeen!
 						}
 					}
 				};
@@ -107,8 +122,11 @@ export const notificationsRouter = new Hono<{ Variables: AppVariables }>()
 						friend: {
 							id: row.friendId!,
 							username: row.friendUsername!,
-							email: row.friendEmail!,
-							createdAt: row.friendCreatedAt!
+							createdAt: row.friendCreatedAt!,
+              displayName: row.friendDisplayName!,
+              accentColor: row.friendAccentColor!,
+              avatarUrl: row.friendAvatarUrl!,
+              lastSeen: row.friendLastSeen!
 						}
 					}
 				};

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getToasts } from '$lib/stores/toast.svelte.ts';
+	import { getToasts } from '$lib/stores/toast.svelte';
 	import { CircleAlert as Error, CircleCheck as Success } from '@lucide/svelte/icons';
 </script>
 

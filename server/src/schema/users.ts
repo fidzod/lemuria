@@ -9,7 +9,7 @@ export const users = sqliteTable('users', {
 	passwordHash: text('password_hash').notNull(),
 	displayName: text('display_name').notNull().default('User'),
 	avatarUrl: text('avatar_url'),
-	accentColor: text('accent_color').notNull().$type<AccentColor>(),
+	accentColor: text('accent_color').notNull().$type<AccentColor>().default("unset"),
 	bannerUrl: text('banner_url'),
 	bio: text(''),
 	createdAt: integer('created_at', { mode: 'timestamp' })

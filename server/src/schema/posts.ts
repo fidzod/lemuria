@@ -17,4 +17,14 @@ export const posts = sqliteTable('posts', {
 	dislikeCount: integer('dislike_count').notNull().default(0)
 });
 
+export const postMedia = sqliteTable('post_media', {
+	id: integer('id').primaryKey({ autoIncrement: true }),
+	postId: integer('post_id')
+		.notNull()
+		.references(() => posts.id, { onDelete: 'cascade' }),
+	url: text('url').notNull(),
+	position: integer('position').notNull().default(0)
+});
+
 export type PostRow = typeof posts.$inferSelect;
+export type PostMediaRow = typeof posts.$inferSelect;

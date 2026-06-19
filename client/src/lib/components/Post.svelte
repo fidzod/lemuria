@@ -10,6 +10,7 @@
 	} from '@lucide/svelte/icons';
 	import { timeAgo } from '$lib/timeago';
 	import type { Post } from '@lemuria/types';
+	import Gallery from './Gallery.svelte';
 	let { post }: { post: Post } = $props();
 </script>
 
@@ -38,7 +39,18 @@
 			</div>
 		</div>
 	</div>
-	<div class="body">{post.textContent}</div>
+	<div class="body">
+		<div class="media">
+    {#if post.media.length > 1}
+      <Gallery images={post.media} />
+    {:else if post.media.length == 1}
+      <img src={post.media[0]} alt="Post Media">
+    {/if}
+		</div>
+		<div class="text-content">
+			{post.textContent}
+		</div>
+	</div>
 	<div class="footer">
 		<div class="group">
 			<button><Downvote /></button>
@@ -111,4 +123,8 @@
 	.aside {
 		margin-left: auto;
 	}
+  .media img {
+    width: 100%;
+    border-radius: 10px;
+  }
 </style>

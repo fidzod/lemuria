@@ -17,6 +17,6 @@
 	"scripts": {
 		"dev": "bun run --watch src/index.ts",
 		"start": "bun run src/index.ts",
-		"typecheck": "tsc --noEmit"
+		"typecheck": "bunx tsc --noEmit"
 	}
 }

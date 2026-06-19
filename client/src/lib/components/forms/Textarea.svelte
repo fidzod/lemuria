@@ -17,6 +17,8 @@
 		resize();
 	};
 
+	export const getValue = () => textarea.value;
+
 	$effect(() => resize());
 </script>
 

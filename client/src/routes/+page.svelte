@@ -1,16 +1,16 @@
 <script lang="ts">
 	import Post from '$lib/components/Post.svelte';
 	import PostForm from '$lib/components/forms/PostForm.svelte';
-	import type { ActionData, PageData } from './$types';
+	import type { PageData } from './$types';
 
-	let { data, form }: { data: PageData; form: ActionData } = $props();
+	let { data }: { data: PageData } = $props();
 </script>
 
 <h1>Recent Posts</h1>
 
 <div class="feed">
 	{#if data.user}
-		<PostForm {form} />
+		<PostForm />
 	{/if}
 
 	{#each data.posts as post}

@@ -71,10 +71,16 @@ export type UnreadNotifications = {
 	count: number;
 };
 
+export type NewPost = {
+	textContent: string;
+	media: File[];
+};
+
 export type Post = {
 	textContent: string | null;
 	createdAt: Date;
 	author: PublicUser;
+	media: string[];
 	likeCount: number;
 	dislikeCount: number;
 	reshareCount: number;

@@ -7,3 +7,4 @@ drizzle
 *.db-wal
 local
 uploads
+*.pdf
