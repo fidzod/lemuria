@@ -27,11 +27,5 @@ The codebase prioritises type safety and clean architecture throughout.
 
 ## Current Status
 
-**Completed:** Posts, friend requests and management, notifications,
-authentication and user accounts.
-
-**In Progress:** Profile pages, shelves, and sidebars.
-
-**Upcoming:** Boards, comments, likes, reposts, search, essay posts, and more.
-
-See [TASKS.md](./TASKS.md) for the full development roadmap.
+Lemuria is approaching deployment, 
+see [TASKS.md](../TASKS.md) for the full development roadmap.
