@@ -24,8 +24,9 @@
 		top: calc(100% + 1.1rem);
 		left: 50%;
 		transform: translateX(-50%);
-		padding: var(--space-sm);
+		padding: var(--space-sm) var(--space-md);
 		background-color: var(--bg);
+		border-radius: 18px;
 		border: 1px solid var(--border-subtle);
 
 		/* Triangle */

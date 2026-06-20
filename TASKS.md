@@ -7,7 +7,6 @@
 - (#21) Feature: Likes
 - (#23) Feature: Comments
 - (#26) Fix: Pagination (notifications, posts)
-- (#22) Feature: Reposts (Rename: Reshares)
 - (#28) Feature: Mobile Nav
 - (#17) Refactor: Ids (move away from autoincrement)
 - (#31) Deploy
@@ -17,9 +16,12 @@
 - (#35) Image moderation
 - (#36) Basic admin - ability to delete posts, users
 - (#37) SEO/Meta tags
+- (#39) Fix: Missing help and donate pages
 
 ### Post-deployment/V2
 
+- (#38) Feature: Friends Page
+- (#22) Feature: Reposts (Rename: Reshares)
 - (#25) Feature: Post views
 - (#05) Feature: Boards
 - (#10) Feature: Search
@@ -28,14 +30,11 @@
 
 ## In-Progress
 
-- (#30) Redesign
-    - [ ] (#.01) New header
-    - [ ] (#.02) Spacing
-    - [ ] (#.03) Post join line
 - (#15) Feature: Shelves
 
 ## Done
 
+- (#30) Redesign
 - (#26) Feature: Images in posts
 - (#16) Fix: Friends pane in sidebar
 - (#11) Fix: Stats in page head
@@ -56,4 +55,5 @@
 - (#06, #server) Refactor: Remove db folder
 
 ## Shelved
+
 - (#29) Fix: Posts 'Joined' line is ugly (-> #30)

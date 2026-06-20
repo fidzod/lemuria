@@ -7,6 +7,11 @@
 </script>
 
 <h1>Notifications</h1>
+
+{#if notifications.length === 0}
+	Nothing to see here...
+{/if}
+
 {#each notifications as notification}
 	<Notification {notification} />
 {/each}

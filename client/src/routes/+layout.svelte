@@ -53,19 +53,19 @@
 
 <style>
 	#layout {
-		max-width: calc(2 * var(--sidebar-width) + 2 * var(--space-md) + var(--page-max-width));
+		max-width: calc(2 * var(--sidebar-width) + 2 * var(--space-xl) + var(--page-max-width));
 		width: fit-content;
-		margin: var(--space-md) auto;
+		margin: var(--space-xl) auto;
 
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-md);
+		gap: var(--space-xl);
 	}
 	.columns {
 		width: fit-content;
 		margin-inline: auto;
 		display: flex;
-		gap: var(--space-md);
+		gap: var(--space-xl);
 	}
 	aside {
 		width: var(--sidebar-width);
@@ -75,7 +75,7 @@
 		flex: 1;
 	}
 
-	@media (max-width: 740px) {
+	@media (max-width: 810px) {
 		aside.right {
 			display: none;
 		}

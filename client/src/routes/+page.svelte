@@ -22,6 +22,6 @@
 	.feed {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-md);
+		gap: var(--space-xl);
 	}
 </style>

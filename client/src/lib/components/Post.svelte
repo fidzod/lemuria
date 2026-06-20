@@ -29,23 +29,23 @@
 		/>
 		<div class="details-and-stats">
 			<div class="details text-gradient">
-				<a class="username" href="/@{post.author.username}"
-					>{post.author.displayName} @{post.author.username}</a
-				>
+				<a class="name" href="/@{post.author.username}">
+					{post.author.displayName}
+				</a>
 				<span class="date">{timeAgo(post.createdAt)}</span>
 			</div>
-			<div class="stats text-gradient">
-				<span>Joined {timeAgo(post.author.createdAt)}</span>
+			<div class="username text-gradient">
+				<span>@{post.author.username}</span>
 			</div>
 		</div>
 	</div>
 	<div class="body">
 		<div class="media">
-    {#if post.media.length > 1}
-      <Gallery images={post.media} />
-    {:else if post.media.length == 1}
-      <img src={post.media[0]} alt="Post Media">
-    {/if}
+			{#if post.media.length > 1}
+				<Gallery images={post.media} />
+			{:else if post.media.length == 1}
+				<img src={post.media[0]} alt="Post Media" />
+			{/if}
 		</div>
 		<div class="text-content">
 			{post.textContent}
@@ -105,16 +105,21 @@
 	}
 	.date {
 		margin-left: auto;
+		font-size: 0.8rem;
+	}
+	.username {
+		font-size: 0.8rem;
+		font-family: var(--monospace);
 	}
 	.footer {
 		width: 100%;
 		display: flex;
-		gap: var(--space-sm);
+		gap: var(--space-lg);
 	}
 	.group {
 		display: flex;
 		align-items: flex-start;
-		gap: var(--space-xs);
+		gap: var(--space-sm);
 
 		button {
 			margin-top: 1px;
@@ -122,9 +127,10 @@
 	}
 	.aside {
 		margin-left: auto;
+		gap: var(--space-lg);
 	}
-  .media img {
-    width: 100%;
-    border-radius: 10px;
-  }
+	.media img {
+		width: 100%;
+		border-radius: 10px;
+	}
 </style>

@@ -27,12 +27,6 @@
 	{form}
 />
 
-{#if sessionUser.id === user.id}
-	<h1>Your Profile</h1>
-{:else}
-	<h1>{user.displayName}'s Profile</h1>
-{/if}
-
 <div
 	class="header"
 	style="
@@ -82,6 +76,7 @@
 		position: relative;
 		margin: 3px;
 		margin-bottom: var(--space-xl);
+		border-radius: 10px;
 		box-shadow:
 			0 0 0 2px var(--bg),
 			0 0 0 3px var(--user-accent-bright);
@@ -106,6 +101,7 @@
 		padding: var(--space-xs) var(--space-sm);
 		position: absolute;
 		bottom: var(--space-sm);
+		border-radius: 10px;
 		background-color: var(--bg);
 	}
 	.card:has(.name) {
@@ -113,6 +109,7 @@
 	}
 	.card.right {
 		right: var(--space-sm);
+		border-radius: 50%;
 	}
 	.details {
 		display: flex;
@@ -126,6 +123,6 @@
 	.feed {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-md);
+		gap: var(--space-xl);
 	}
 </style>

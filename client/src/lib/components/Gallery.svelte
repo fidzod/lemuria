@@ -52,13 +52,13 @@
 	.gallery-wrapper {
 		position: relative;
 
-    &:hover button:not(.hidden) {
-      opacity: 1;
-    }
+		&:hover button:not(.hidden) {
+			opacity: 1;
+		}
 
-    &:hover .dots {
-      opacity: 1;
-    }
+		&:hover .dots {
+			opacity: 1;
+		}
 	}
 	button {
 		position: absolute;
@@ -74,21 +74,21 @@
 		filter: brightness(1);
 		opacity: 0;
 
-    &:hover {
-      filter: brightness(5);
-    }
+		&:hover {
+			filter: brightness(5);
+		}
 
-    &.scroll-left {
-      left: 10px;
-    }
+		&.scroll-left {
+			left: 10px;
+		}
 
-    &.scroll-right {
-      right: 10px;
-    }
+		&.scroll-right {
+			right: 10px;
+		}
 
-    &.hidden {
-      pointer-events: none;
-    }
+		&.hidden {
+			pointer-events: none;
+		}
 	}
 	.gallery {
 		display: flex;
@@ -97,15 +97,15 @@
 		scroll-snap-type: x mandatory;
 		border-radius: 10px;
 		scrollbar-width: none;
-  }
-  .gallery-item {
-    width: calc(100% - 40px);
-    flex-shrink: 0;
-    height: 250px;
-    background-size: cover;
-    background-position: center;
-    scroll-snap-align: center;
-  }
+	}
+	.gallery-item {
+		width: calc(100% - 40px);
+		flex-shrink: 0;
+		height: 250px;
+		background-size: cover;
+		background-position: center;
+		scroll-snap-align: center;
+	}
 	.dots {
 		width: fit-content;
 		padding: 6px 10px;
@@ -130,9 +130,9 @@
 		opacity: 0.3;
 		transition: opacity 0.3s;
 
-    &.active {
-      opacity: 1;
-    }
+		&.active {
+			opacity: 1;
+		}
 	}
 	@media (hover: none) {
 		.gallery-wrapper .dots {

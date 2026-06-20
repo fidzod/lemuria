@@ -48,7 +48,7 @@
 
 	/* Breakpoints 
     --bp-mobile: 580px;
-    --bp-tablet: 740px;
+    --bp-tablet: 810px;
     */
 }
 
@@ -73,8 +73,6 @@ h1 {
 	font-size: var(--text-md);
 	font-weight: normal;
 	color: var(--text-primary);
-
-	border-bottom: 1px solid var(--border-subtle);
 }
 h2 {
 	margin: 0;
@@ -98,22 +96,11 @@ button {
 	&:hover {
 		color: var(--text-primary);
 	}
-	&:active {
-		transform: translateY(2px);
-	}
 }
 button:not(.unset),
 .btn {
 	font-family: var(--monospace);
 	font-size: var(--text-sm);
-
-	&:before {
-		content: '[';
-	}
-
-	&:after {
-		content: ']';
-	}
 }
 button.link-style {
 	text-decoration: underline;

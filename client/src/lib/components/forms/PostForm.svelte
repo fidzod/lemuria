@@ -72,13 +72,11 @@
 <style>
 	form {
 		width: 100%;
-		padding: var(--space-md);
+		margin-block-start: var(--space-lg);
 
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-md);
-
-		border: 1px solid var(--border-subtle);
 	}
 	.row {
 		display: flex;

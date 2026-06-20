@@ -1,5 +1,6 @@
 <script lang="ts">
 	import PlaceholderAvatar from '$lib/assets/default_avatar.jpeg';
+	import { LogOut } from '@lucide/svelte/icons';
 
 	import { PROFILE_KEY } from '$lib/context';
 	import { getContext } from 'svelte';
@@ -9,8 +10,6 @@
 	let profile = $derived(getProfile());
 	let user = $derived(profile ? profile.user : null);
 </script>
-
-<h1>Your Profile</h1>
 
 {#if user}
 	<div id="your-profile" style="--user-accent: var(--{user.accentColor || 'red'}-bright)">
@@ -33,7 +32,7 @@
 		</div>
 		<div class="logout">
 			<form method="POST" action="/login?/logout">
-				<button type="submit">Log Out</button>
+				<button type="submit"><LogOut />Log Out</button>
 			</form>
 		</div>
 	</div>
@@ -51,8 +50,8 @@
 		font-size: var(--text-sm);
 	}
 	.avatar {
-		width: 4rem;
-		height: 4rem;
+		width: 5rem;
+		height: 5rem;
 		margin: 3px;
 		box-shadow:
 			0 0 0 2px var(--bg),
@@ -72,5 +71,13 @@
 	}
 	.value {
 		font-weight: bold;
+	}
+	.logout button {
+		display: flex;
+		gap: var(--space-sm);
+		color: var(--text-secondary);
+		&:hover {
+			color: color-mix(in hsl, var(--red-bright) 70%, var(--text-primary));
+		}
 	}
 </style>

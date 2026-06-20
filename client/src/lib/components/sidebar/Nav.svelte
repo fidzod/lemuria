@@ -21,10 +21,8 @@
 	let user = $derived(getUser());
 </script>
 
-<h1>Menu</h1>
-
 <ul>
-	<li class:active={page.url.pathname === '/'}><a href="/">[<Home />] Home</a></li>
+	<li class:active={page.url.pathname === '/'}><a href="/"><Home />Home</a></li>
 	{#if user}
 		<li
 			class="notifications"
@@ -32,57 +30,49 @@
 			class:active={page.url.pathname === '/notifications'}
 		>
 			<a href="/notifications">
-				[<Notifications />] Notifications
-				<span>{unreadNotifications}</span>
+				<Notifications />Notifications
+				{#if unreadNotifications > 0}<span>{unreadNotifications}</span>{/if}
 			</a>
 		</li>
 		<li class:active={page.url.pathname === `/@${user.username}`}>
-			<a href="/@{user.username}">[<YourProfile />] Your Profile</a>
+			<a href="/@{user.username}"><YourProfile />Your Profile</a>
 		</li>
 	{/if}
 	<li class:active={page.url.pathname === '/search'}>
-		<a href="/search">[<Search />] Search</a>
+		<a href="/search"><Search />Search</a>
 	</li>
 	<li class:active={page.url.pathname === '/boards'}>
-		<a href="/boards">[<Boards />] Boards</a>
+		<a href="/boards"><Boards />Boards</a>
 	</li>
-	<div class="separator"></div>
 	<li class:active={page.url.pathname === '/support'}>
-		<a href="/support">[<Help />] Help</a>
+		<a href="/support"><Help />Help</a>
 	</li>
-	<li><a href="mailto:fidzod@lemuria.so">[<ContactUs />] Contact Us</a></li>
+	<li><a href="mailto:fidzod@lemuria.so"><ContactUs />Contact Us</a></li>
 	<li class:active={page.url.pathname === '/donate'}>
-		<a href="/donate">[<Donate />] Donate or sponsor</a>
+		<a href="/donate"><Donate />Donate or sponsor</a>
 	</li>
 </ul>
 
 <style>
+	ul {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-sm);
+	}
 	.active a {
 		color: var(--text-primary);
 	}
 	li a {
 		display: inline-flex;
 		align-items: center;
-		gap: var(--space-xs);
+		gap: var(--space-sm);
 	}
 	.notifications {
 		span {
 			margin-left: auto;
-
-			&:before {
-				content: '<';
-			}
-			&:after {
-				content: '>';
-			}
 		}
 		&.hasUnread span {
 			color: var(--text-primary);
 		}
-	}
-	.separator {
-		width: 100%;
-		border-bottom: 1px solid var(--border-subtle);
-		margin: var(--space-xs) 0;
 	}
 </style>
