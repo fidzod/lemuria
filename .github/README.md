@@ -1,17 +1,19 @@
 # Lemuria
 
-**Lemuria** is a discussion platform built with a focus on thoughtful
-conversations within small, genuine communities. Rather than the typical
-follower model, Lemuria emphasises two-sided friendships. Shelves provide a
-way to share what you're currently reading, watching, or listening to. This
-makes for expressive user profiles, and sparks discussions around those
-interests. Meanwhile, boards provide a means for discovery and organic
-conversations.
+**Lemuria** is a social platform built around two-sided friendships, shelves,
+and topic-based boards. Inspired by Letterboxd and early Facebook.
 
-<img src="images/demo.png" width="70%" />
+<img src="demo.gif" width="70%" />
 
-Lemuria adopts a minimal, lainchan-inspired, dark-mode-first aesthetic with
-an almost terminal feel.
+- **Shelves** provide a way to share what you're currently reading, watching, or
+listening to. This makes for expressive user profiles you want to share, and
+also sparks discussions around those interests.
+
+- **Boards** provide a means for discovery and organic conversations.
+
+- **Two-sided friendships** are an alternative to the typical follower model,
+and help to encourage thoughtful conversations within small, genuine
+communities.
 
 ## Tech Stack
 
