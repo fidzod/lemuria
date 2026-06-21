@@ -1,16 +1,18 @@
 import { Hono } from 'hono';
-import type { AppVariables } from '../lib/types';
+import { and, desc, eq, isNull, sql } from 'drizzle-orm';
 import * as z from 'zod';
+
+import type { Post } from '@lemuria/types';
+import type { AppVariables } from '../lib/types';
+
 import { postSchema } from '../schema/validators';
 import { requireAuth } from '../middleware/require-auth';
 import { err, ok } from '../lib/response';
-import { saveUpload } from '../lib/uploads';
-import type { Post } from '@lemuria/types';
 import { db } from '../db';
-import { postMedia, posts } from '../schema/posts';
-import { and, desc, eq, isNull, sql } from 'drizzle-orm';
+import { postLikes, postMedia, posts } from '../schema/posts';
 import { users } from '../schema';
-import { userRowToPublicUser } from '../lib/users';
+import { applyLikesJoin, createPost, getPostSelect, groupPosts } from '../lib/posts';
+import { createNotification } from '../lib/notifications';
 
 export const postsRouter = new Hono<{ Variables: AppVariables }>()
 
@@ -29,56 +31,39 @@ export const postsRouter = new Hono<{ Variables: AppVariables }>()
       }
     }
 
-    const rows = await db
-      .select({
-        id: posts.id,
-        textContent: posts.textContent,
-        createdAt: posts.createdAt,
-        likeCount: posts.likeCount,
-        dislikeCount: posts.dislikeCount,
-        reshareCount: posts.reshareCount,
-        replyCount: posts.replyCount,
-        author: {
-          id: users.id,
-          email: users.email,
-          displayName: users.displayName,
-          username: users.username,
-          accentColor: users.accentColor,
-          avatarUrl: users.avatarUrl,
-          createdAt: users.createdAt,
-          lastSeen: users.lastSeen
-        },
-        mediaUrl: postMedia.url,
-        mediaPosition: postMedia.position
-      })
+    const currentUserId = c.get('session')?.get('userId') as number;
+    const q = db
+      .select(getPostSelect(currentUserId))
       .from(posts)
       .innerJoin(users, eq(posts.authorId, users.id))
       .leftJoin(postMedia, eq(postMedia.postId, posts.id))
-      .where(
-        queryUserId
-          ? and(
-            eq(posts.authorId, Number(queryUserId)),
-            isNull(posts.parentId)
-          )
-          : isNull(posts.parentId)
-      )
+      .where(queryUserId
+        ? and(eq(posts.authorId, Number(queryUserId)), isNull(posts.parentId))
+        : isNull(posts.parentId))
       .orderBy(desc(posts.createdAt));
 
-    const grouped = new Map<number, Post & { id: number }>();
+    const rows = await applyLikesJoin(q, currentUserId);
+    return ok<Post[]>(c, groupPosts(rows));
+  })
 
-    for (const row of rows) {
-      if (!grouped.has(row.id)) {
-        grouped.set(row.id, { ...row, media: [] });
-      }
-      if (row.mediaUrl) {
-        grouped.get(row.id)!.media.push(row.mediaUrl);
-      }
-    }
+  // GET /api/v1/posts/:postId - get a single post
+  .get('/:postId', async (c) => {
+    const postId = Number(c.req.param('postId'));
 
-    return ok<Post[]>(
-      c,
-      [...grouped.values()]
-    );
+    if (isNaN(postId)) return err(c, 'Invalid post Id.');
+
+    const currentUserId = c.get('session').get('userId') as number;
+
+    const q = db
+      .select(getPostSelect(currentUserId))
+      .from(posts)
+      .innerJoin(users, eq(posts.authorId, users.id))
+      .leftJoin(postMedia, eq(postMedia.postId, posts.id))
+      .where(eq(posts.id, postId));
+
+    const rows = await applyLikesJoin(q, currentUserId);
+    if (rows.length === 0) return err(c, 'Post not found.', 404);
+    return ok<Post>(c, groupPosts(rows)[0]!);
   })
 
   // POST /api/v1/posts - create post
@@ -96,179 +81,109 @@ export const postsRouter = new Hono<{ Variables: AppVariables }>()
     }
 
     if (parentId !== null) {
-      const [parent] = await db
-        .select()
-        .from(posts)
-        .where(eq(posts.id, parentId))
-
-      if (parent === undefined) {
-        return err(c, 'Comment parent does not exist.', 404)
-      }
-
-      if (parent.parentId !== null) {
-        return err(c, 'Cannot comment post a comment on another comment.')
-      }
+      const [parent] = await db.select().from(posts).where(eq(posts.id, parentId))
+      if (parent === undefined) return err(c, 'Comment parent does not exist.', 404)
+      if (parent.parentId !== null) return err(c, 'Cannot comment post a comment on another comment.')
     }
 
-    const session = c.get('session');
-    const userId = session.get('userId') as number;
-
-    const [inserted] = await db
-      .insert(posts)
-      .values({
-        textContent,
-        authorId: userId,
-        ...(parentId !== null && { parentId })
-      })
-      .returning();
-
-    if (!inserted) {
+    const userId = c.get('session').get('userId') as number;
+    
+    try {
+      const post = await createPost(userId, textContent, parentId, result.data.media ?? []);
+      return ok<Post>(c, post, 201);
+    } catch {
       return err(c, 'Failed to post.');
     }
-
-    if (parentId !== null) {
-      await db
-        .update(posts)
-        .set({ replyCount: sql`${posts.replyCount} + 1` })
-        .where(eq(posts.id, parentId))
-    }
-
-    const mediaRows = await Promise.all(
-      (result.data.media ?? []).map((file, i) =>
-        saveUpload(file, userId, `post-${inserted.id}-${i}`).then((url) => ({
-          postId: inserted.id,
-          url,
-          position: i
-        }))
-      )
-    );
-
-    if (mediaRows.length) {
-      await db.insert(postMedia).values(mediaRows);
-    }
-
-    const [user] = await db.select().from(users).where(eq(users.id, userId));
-    const { authorId, ...post } = inserted;
-
-    return ok<Post>(
-      c,
-      {
-        ...post,
-        author: userRowToPublicUser(user!),
-        media: mediaRows.map(({ url }) => url)
-      },
-      201
-    );
   })
 
   // GET /api/v1/posts/:id/comments - get comments for a post
   .get('/:id/comments', async (c) => {
-    const postId = c.req.param('id');
+    const postId = Number(c.req.param('id'));
 
-    const postIdNumber = Number(postId)
-
-    if (isNaN(postIdNumber)) {
-      return err(c, "Invalid post Id.")
-    }
+    if (isNaN(postId)) return err(c, "Invalid Id.")
 
     const [post] = await db
       .select({ id: posts.id })
       .from(posts)
-      .where(eq(posts.id, postIdNumber));
+      .where(eq(posts.id, postId));
 
-    if (post === undefined) {
-      return err(c, "Post not found.", 404)
-    }
+    if (post === undefined) return err(c, "Post not found.", 404)
 
-    const rows = await db
-      .select({
-        id: posts.id,
-        textContent: posts.textContent,
-        createdAt: posts.createdAt,
-        likeCount: posts.likeCount,
-        dislikeCount: posts.dislikeCount,
-        reshareCount: posts.reshareCount,
-        replyCount: posts.replyCount,
-        author: {
-          id: users.id,
-          email: users.email,
-          displayName: users.displayName,
-          username: users.username,
-          accentColor: users.accentColor,
-          avatarUrl: users.avatarUrl,
-          createdAt: users.createdAt,
-          lastSeen: users.lastSeen
-        },
-        mediaUrl: postMedia.url,
-        mediaPosition: postMedia.position
-      })
+    const currentUserId = c.get('session')?.get('userId') as number;
+
+    const q = db
+      .select(getPostSelect(currentUserId))
       .from(posts)
       .innerJoin(users, eq(posts.authorId, users.id))
       .leftJoin(postMedia, eq(postMedia.postId, posts.id))
-      .where(eq(posts.parentId, postIdNumber))
+      .where(eq(posts.parentId, postId))
       .orderBy(posts.createdAt);
 
-    const grouped = new Map<number, Post & { id: number }>();
-
-    for (const row of rows) {
-      if (!grouped.has(row.id)) {
-        grouped.set(row.id, { ...row, media: [] });
-      }
-      if (row.mediaUrl) {
-        grouped.get(row.id)!.media.push(row.mediaUrl);
-      }
-    }
-
-    return ok<Post[]>(
-      c,
-      [...grouped.values()]
-    );
+    const rows = await applyLikesJoin(q, currentUserId);
+    return ok<Post[]>(c, groupPosts(rows));
   })
 
-  // GET /api/v1/posts/:postId - get a single post
-  .get('/:postId', async (c) => {
-    const postId = c.req.param('postId');
+  // POST /api/v1/posts/:postId/like - like a post
+  .post('/:id/like', requireAuth, async (c) => {
+    const postId = c.req.param('id');
+    const postIdNumber = Number(postId);
+
+    if (isNaN(postIdNumber)) return err(c, 'Invalid post Id.');
+
+    const userId = c.get('session').get('userId') as number;
+
+    const res = await db
+      .insert(postLikes)
+      .values({ postId: postIdNumber, userId })
+      .onConflictDoNothing()
+      .returning();
+
+    if (res.length === 0) {
+      return err(c, "You have already liked this post.")
+    }
+
+    const [post] = await db
+      .update(posts)
+      .set({ likeCount: sql`${posts.likeCount} + 1` })
+      .where(eq(posts.id, postIdNumber))
+      .returning();
+
+    if (post === undefined) return err(c, "Post not found", 404);
+
+    await createNotification(db, {
+      userId: post.authorId,
+      type: post.parentId === null ? 'post_liked' : 'comment_liked',
+      actionUserId: userId,
+      postId: post.id,
+    });
+
+    return ok<{}>(c, {}, 201);
+  })
+
+  // DELETE /api/v1/posts/:postId/like - unlike a post
+  .delete('/:id/like', requireAuth, async (c) => {
+    const postId = c.req.param('id');
     const postIdNumber = Number(postId);
 
     if (isNaN(postIdNumber)) {
       return err(c, 'Invalid post Id.');
     }
 
-    const rows = await db
-      .select({
-        id: posts.id,
-        textContent: posts.textContent,
-        createdAt: posts.createdAt,
-        likeCount: posts.likeCount,
-        dislikeCount: posts.dislikeCount,
-        reshareCount: posts.reshareCount,
-        replyCount: posts.replyCount,
-        author: {
-          id: users.id,
-          email: users.email,
-          displayName: users.displayName,
-          username: users.username,
-          accentColor: users.accentColor,
-          avatarUrl: users.avatarUrl,
-          createdAt: users.createdAt,
-          lastSeen: users.lastSeen
-        },
-        mediaUrl: postMedia.url,
-        mediaPosition: postMedia.position
-      })
-      .from(posts)
-      .innerJoin(users, eq(posts.authorId, users.id))
-      .leftJoin(postMedia, eq(postMedia.postId, posts.id))
+    const session = c.get('session');
+    const userId = session.get('userId') as number;
+
+    await db
+      .delete(postLikes)
+      .where(and(
+        eq(postLikes.userId, userId),
+        eq(postLikes.postId, postIdNumber)
+      ));
+
+    await db
+      .update(posts)
+      .set({ likeCount: sql`${posts.likeCount} - 1` })
       .where(eq(posts.id, postIdNumber));
 
-    if (rows.length === 0) {
-      return err(c, 'Post not found.', 404);
-    }
-
-    const post: Post = { ...rows[0]!, media: [] };
-    for (const row of rows) {
-      if (row.mediaUrl) post.media.push(row.mediaUrl);
-    }
-
-    return ok<Post>(c, post);
+    return ok<{}>(c, {});
   });
+

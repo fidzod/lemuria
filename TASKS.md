@@ -4,7 +4,6 @@
 
 ### MVP/V1
 
-- (#21) Feature: Likes
 - (#26) Fix: Pagination (notifications, posts)
 - (#28) Feature: Mobile Nav
 - (#17) Refactor: Ids (move away from autoincrement)
@@ -19,6 +18,7 @@
 
 ### Post-deployment/V2
 
+- (#40) Feature: Replies
 - (#38) Feature: Friends Page
 - (#22) Feature: Reposts (Rename: Reshares)
 - (#25) Feature: Post views
@@ -33,6 +33,7 @@
 
 ## Done
 
+- (#21) Feature: Likes
 - (#23) Feature: Comments
 - (#30) Redesign
 - (#26) Feature: Images in posts

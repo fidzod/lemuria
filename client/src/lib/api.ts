@@ -135,7 +135,13 @@ export const api = {
 			request<Post[]>(fetch, `/posts?userId=${userId}`),
 
     get: (fetch: SvelteKitFetch, postId: number) =>
-      request<Post>(fetch, `/posts/${postId}`)
+      request<Post>(fetch, `/posts/${postId}`),
+
+    like: (fetch: SvelteKitFetch, postId: number) =>
+			request<{}>(fetch, `/posts/${postId}/like`, { method: 'POST' }),
+
+    unlike: (fetch: SvelteKitFetch, postId: number) =>
+			request<{}>(fetch, `/posts/${postId}/like`, { method: 'DELETE' }),
 	},
   comments: {
     get: (fetch: SvelteKitFetch, postId: number) =>

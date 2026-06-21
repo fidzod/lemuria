@@ -1,8 +1,7 @@
 <script lang="ts">
 	import PlaceholderAvatar from '$lib/assets/default_avatar.jpeg';
 	import {
-		ArrowBigUp as Upvote,
-		ArrowBigDown as Downvote,
+		ArrowBigUp as Like,
 		Repeat2 as Repost,
 		MessagesSquare as Replies,
 		Save,
@@ -11,7 +10,28 @@
 	import { timeAgo } from '$lib/timeago';
 	import type { Post } from '@lemuria/types';
 	import Gallery from './Gallery.svelte';
+	import { api } from '$lib/api';
 	let { post }: { post: Post } = $props();
+
+  // svelte-ignore state_referenced_locally
+  let likedByMe = $state(post.likedByMe);
+  // svelte-ignore state_referenced_locally
+  let likeCount = $state(post.likeCount)
+
+  const handleLike = async () => {
+    const wasLiked = likedByMe;
+    likedByMe = !likedByMe;
+    likeCount += wasLiked ? -1 : 1;
+
+    const res = wasLiked
+      ? await api.posts.unlike(fetch, post.id)
+      : await api.posts.like(fetch, post.id);
+
+    if (!res.success) {
+      likedByMe = wasLiked;
+      likeCount += wasLiked ? 1 : -1;
+    }
+  }
 </script>
 
 <div
@@ -53,11 +73,10 @@
 		</div>
 	</div>
 	<div class="footer">
-		<div class="group">
-			<button><Downvote /></button>
-			<span class="mono">{post.likeCount}</span>
-			<button><Upvote /></button>
-		</div>
+		<button class="group like-btn" class:liked={likedByMe} onclick={handleLike}>
+			<Like />
+			<span class="mono">{likeCount}</span>
+		</button>
 		<div class="group">
 			<button><Repost /></button>
 			<span class="mono">{post.reshareCount}</span>
@@ -131,6 +150,18 @@
 			margin-top: 1px;
 		}
 	}
+  .like-btn.liked {
+    color: var(--text-primary);
+    :global(.lucide) {
+      fill: var(--text-primary);
+    }
+    &:hover {
+      :global(.lucide) {
+        fill: none;
+      }
+      color: var(--text-secondary);
+    }
+  }
 	.aside {
 		margin-left: auto;
 		gap: var(--space-lg);

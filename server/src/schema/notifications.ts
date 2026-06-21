@@ -1,8 +1,10 @@
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { sql } from 'drizzle-orm';
+
+import type { NotificationType } from '@lemuria/types';
 import { users } from './users';
 import { friendRequests, friendships } from './friends';
-import type { NotificationType } from '@lemuria/types';
-import { sql } from 'drizzle-orm';
+import { posts } from './posts';
 
 export const notifications = sqliteTable('notifications', {
 	id: integer('id').primaryKey({ autoIncrement: true }),
@@ -15,6 +17,8 @@ export const notifications = sqliteTable('notifications', {
 		onDelete: 'set null'
 	}),
 	friendshipId: integer('friendship_id').references(() => friendships.id, { onDelete: 'set null' }),
+  actionUserId: integer('action_user_id').references(() => users.id, { onDelete: 'set null'}),
+  postId: integer('post_id').references(() => posts.id, { onDelete: 'set null' }),
 	createdAt: integer('created_at', { mode: 'timestamp' })
 		.notNull()
 		.default(sql`(unixepoch())`)

@@ -1,4 +1,9 @@
-export const NotificationTypes = ['friend_request', 'friend_accepted'] as const;
+export const NotificationTypes = [
+  'friend_request',
+  'friend_accepted',
+  'post_liked',
+  'comment_liked'
+] as const;
 export type NotificationType = (typeof NotificationTypes)[number];
 
 export const FRIEND_REQUEST_STATUSES = ['pending', 'accepted', 'rejected'] as const;
@@ -64,6 +69,11 @@ export type AppNotification = {
 	read: boolean;
 	friendRequest?: FriendRequest;
 	friendship?: Friendship;
+  actionUser?: PublicUser;
+  post?: {
+    id: number;
+    parentId: number;
+  };
 	createdAt: Date;
 };
 
@@ -84,7 +94,7 @@ export type Post = {
 	author: PublicUser;
 	media: string[];
 	likeCount: number;
-	dislikeCount: number;
+  likedByMe: boolean;
 	reshareCount: number;
 	replyCount: number;
 };

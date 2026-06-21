@@ -3,17 +3,37 @@
 	import type { Post } from '@lemuria/types';
 	import Gallery from './Gallery.svelte';
 	import {
-		ArrowBigUp as Upvote,
-		ArrowBigDown as Downvote,
+		ArrowBigUp as Like,
 		Repeat2 as Repost,
 		Save,
 		Share
 	} from '@lucide/svelte/icons';
+	import { api } from '$lib/api';
 
 	let { comment }: { comment: Post } = $props();
+
+  // svelte-ignore state_referenced_locally
+  let likedByMe = $state(comment.likedByMe);
+  // svelte-ignore state_referenced_locally
+  let likeCount = $state(comment.likeCount)
+
+  const handleLike = async () => {
+    const wasLiked = likedByMe;
+    likedByMe = !likedByMe;
+    likeCount += wasLiked ? -1 : 1;
+
+    const res = wasLiked
+      ? await api.posts.unlike(fetch, comment.id)
+      : await api.posts.like(fetch, comment.id);
+
+    if (!res.success) {
+      likedByMe = wasLiked;
+      likeCount += wasLiked ? 1 : -1;
+    }
+  }
 </script>
 
-<div class="comment" style="
+<div class="comment" id="comment-{comment.id}" style="
   --user-accent-dark: var(--{comment.author.accentColor}-dark);
   --user-accent-bright: var(--{comment.author.accentColor}-bright);
 ">
@@ -38,11 +58,10 @@
 		</div>
   </div>
 	<div class="row footer">
-		<div class="group">
-			<button><Downvote /></button>
-			<span class="mono">{comment.likeCount}</span>
-			<button><Upvote /></button>
-		</div>
+		<button class="group like-btn" class:liked={likedByMe} onclick={handleLike}>
+			<Like />
+			<span class="mono">{likeCount}</span>
+		</button>
 		<div class="group">
 			<button><Repost /></button>
 			<span class="mono">{comment.reshareCount}</span>
@@ -59,6 +78,8 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
+    background: transparent;
+    transition: background-color 1.5s ease;
   }
   .row {
     display: flex;
@@ -109,5 +130,19 @@
   .media img {
     width: 100%;
     border-radius: 10px;
+  }
+  .like-btn.liked {
+    color: var(--text-primary);
+    :global(.lucide) {
+      fill: var(--text-primary);
+    }
+    &:hover {
+      :global(.lucide) {
+        fill: none;
+      }
+    }
+  }
+  :global(.comment.highlighted) {
+    background-color: color-mix(in srgb, var(--bg) 70%, white);
   }
 </style>
