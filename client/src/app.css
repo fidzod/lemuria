@@ -56,6 +56,7 @@ html {
 	font-size: 14px;
 }
 * {
+  margin: 0;
 	box-sizing: border-box;
 }
 body {
@@ -68,7 +69,7 @@ body {
 
 h1 {
 	width: 100%;
-	margin: 0 0 var(--space-sm);
+  margin-block-end: var(--space-sm);
 
 	font-size: var(--text-md);
 	font-weight: normal;
@@ -207,4 +208,12 @@ button:has(.lucide) {
 	-webkit-background-clip: text;
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
+}
+
+.prose {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  hyphenate-limit-chars: 5 2 2;
+  word-break: break-word;
 }

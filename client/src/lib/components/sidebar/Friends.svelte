@@ -53,7 +53,7 @@
 	li a {
 		display: flex;
 		align-items: center;
-		gap: var(--space-xs);
+		gap: var(--space-sm);
 	}
 	.avatar {
 		width: 1rem;
@@ -67,7 +67,7 @@
 		color: var(--text-primary);
 	}
 	li:last-child {
-		margin-top: var(--space-xs);
+		margin-block-start: var(--space-sm);
 	}
 	.tip {
 		font-size: var(--text-sm);

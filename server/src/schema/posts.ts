@@ -1,4 +1,4 @@
-import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { index, integer, sqliteTable, text, type AnySQLiteColumn } from 'drizzle-orm/sqlite-core';
 import { users } from './users';
 import { sql } from 'drizzle-orm';
 
@@ -7,6 +7,8 @@ export const posts = sqliteTable('posts', {
 	authorId: integer('author_id')
 		.notNull()
 		.references(() => users.id, { onDelete: 'cascade' }),
+  parentId: integer('parent_id')
+    .references((): AnySQLiteColumn => posts.id, { onDelete: 'cascade' }),
 	textContent: text('text_content'),
 	createdAt: integer('created_at', { mode: 'timestamp' })
 		.notNull()
@@ -15,7 +17,9 @@ export const posts = sqliteTable('posts', {
 	replyCount: integer('reply_count').notNull().default(0),
 	likeCount: integer('like_count').notNull().default(0),
 	dislikeCount: integer('dislike_count').notNull().default(0)
-});
+}, (table) => [
+  index('parent_id_idx').on(table.parentId)
+]);
 
 export const postMedia = sqliteTable('post_media', {
 	id: integer('id').primaryKey({ autoIncrement: true }),

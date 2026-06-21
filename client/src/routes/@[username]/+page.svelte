@@ -124,5 +124,6 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-xl);
+    margin-block-start: var(--space-lg);
 	}
 </style>

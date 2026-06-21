@@ -22,21 +22,22 @@
     "
 >
 	<div class="head">
-		<img
-			src={post.author.avatarUrl || PlaceholderAvatar}
-			alt="{post.author.username}'s Avatar"
-			class="avatar"
-		/>
+    <a href="/@{post.author.username}" class="avatar">
+      <img
+        src={post.author.avatarUrl || PlaceholderAvatar}
+        alt="{post.author.username}'s Avatar"
+      />
+    </a>
 		<div class="details-and-stats">
 			<div class="details text-gradient">
-				<a class="name" href="/@{post.author.username}">
+				<a href="/@{post.author.username}" class="name">
 					{post.author.displayName}
 				</a>
 				<span class="date">{timeAgo(post.createdAt)}</span>
 			</div>
-			<div class="username text-gradient">
-				<span>@{post.author.username}</span>
-			</div>
+			<a href="/@{post.author.username}" class="username text-gradient">
+				@{post.author.username}
+			</a>
 		</div>
 	</div>
 	<div class="body">
@@ -47,7 +48,7 @@
 				<img src={post.media[0]} alt="Post Media" />
 			{/if}
 		</div>
-		<div class="text-content">
+		<div class="text-content prose">
 			{post.textContent}
 		</div>
 	</div>
@@ -61,10 +62,10 @@
 			<button><Repost /></button>
 			<span class="mono">{post.reshareCount}</span>
 		</div>
-		<div class="group">
+		<a class="group" href="/p/{post.id}">
 			<button><Replies /></button>
 			<span class="mono">{post.replyCount}</span>
-		</div>
+		</a>
 		<div class="group aside">
 			<button><Save /></button>
 			<button><Share /></button>
@@ -93,6 +94,10 @@
 		box-shadow:
 			0 0 0 2px var(--bg),
 			0 0 0 3px var(--user-accent-bright);
+    img {
+      width: 2rem;
+      height: 2rem;
+    }
 	}
 	.details-and-stats {
 		width: 100%;
@@ -110,6 +115,7 @@
 	.username {
 		font-size: 0.8rem;
 		font-family: var(--monospace);
+    width: fit-content;
 	}
 	.footer {
 		width: 100%;
@@ -129,8 +135,14 @@
 		margin-left: auto;
 		gap: var(--space-lg);
 	}
+  .text-content {
+    color: var(--text-primary);
+  }
 	.media img {
 		width: 100%;
 		border-radius: 10px;
 	}
+  a.group {
+    cursor: pointer;
+  }
 </style>

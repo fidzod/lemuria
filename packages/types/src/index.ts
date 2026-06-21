@@ -74,9 +74,11 @@ export type UnreadNotifications = {
 export type NewPost = {
 	textContent: string;
 	media: File[];
+  parentId?: string;
 };
 
 export type Post = {
+  id: number;
 	textContent: string | null;
 	createdAt: Date;
 	author: PublicUser;

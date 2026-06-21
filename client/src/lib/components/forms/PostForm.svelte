@@ -6,6 +6,14 @@
 	import { api } from '$lib/api';
 	import { invalidateAll } from '$app/navigation';
 
+	let {
+		message = null,
+		parentId = null
+	}: {
+		message: string | null;
+		parentId: number | null;
+	} = $props();
+
 	let textareaComponent: ReturnType<typeof Textarea>;
 	let mediaInput: HTMLInputElement;
 
@@ -29,7 +37,10 @@
 	const handleSubmit = async (e: Event) => {
 		e.preventDefault();
 		const textContent = textareaComponent.getValue();
-		const result = await api.posts.createPost(fetch, textContent, postFiles);
+    const result = parentId === null
+      ? await api.posts.createPost(fetch, textContent, postFiles)
+      : await api.comments.create(fetch, parentId, textContent, postFiles);
+
 		if (!result.success) {
 			addToast(result.error ?? 'Something went wrong', 'error');
 			return;
@@ -41,7 +52,11 @@
 </script>
 
 <form onsubmit={handleSubmit}>
-	<Textarea name="text-content" placeholder="Share something..." bind:this={textareaComponent} />
+	<Textarea
+		name="text-content"
+		placeholder={message || 'Share something...'}
+		bind:this={textareaComponent}
+	/>
 	{#if postFiles.length}
 		<div class="row image-preview">
 			{#each postFiles as file, index (file.name + index)}

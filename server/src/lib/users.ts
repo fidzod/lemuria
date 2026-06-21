@@ -28,7 +28,7 @@ export const getUserProfile = async (where: SQL, db: Db) =>
 		.select({
 			...getTableColumns(users),
 			postsCount: sql<number>`(
-        select count(*) from posts where author_id = users.id)`,
+        select count(*) from posts where author_id = users.id and parent_id is null)`,
 			friendsCount: sql<number>`(
         select count(*)
         from friendships

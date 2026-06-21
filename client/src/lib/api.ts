@@ -132,8 +132,21 @@ export const api = {
 		all: (fetch: SvelteKitFetch) => request<Post[]>(fetch, '/posts'),
 
 		fromUser: (fetch: SvelteKitFetch, userId: number) =>
-			request<Post[]>(fetch, `/posts?userId=${userId}`)
+			request<Post[]>(fetch, `/posts?userId=${userId}`),
+
+    get: (fetch: SvelteKitFetch, postId: number) =>
+      request<Post>(fetch, `/posts/${postId}`)
 	},
+  comments: {
+    get: (fetch: SvelteKitFetch, postId: number) =>
+      request<Post[]>(fetch, `/posts/${postId}/comments`),
+
+    create: (fetch: SvelteKitFetch, parentId: number, textContent: string, media: File[]) =>
+      request<Post>(fetch, '/posts', {
+        method: 'POST',
+        body: buildFormData<NewPost>({ textContent, media, parentId: String(parentId) })
+      }),
+  },
 	stats: {
 		get: (fetch: SvelteKitFetch) => request<Stats>(fetch, '/stats')
 	}

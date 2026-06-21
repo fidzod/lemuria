@@ -5,7 +5,6 @@
 ### MVP/V1
 
 - (#21) Feature: Likes
-- (#23) Feature: Comments
 - (#26) Fix: Pagination (notifications, posts)
 - (#28) Feature: Mobile Nav
 - (#17) Refactor: Ids (move away from autoincrement)
@@ -34,6 +33,7 @@
 
 ## Done
 
+- (#23) Feature: Comments
 - (#30) Redesign
 - (#26) Feature: Images in posts
 - (#16) Fix: Friends pane in sidebar

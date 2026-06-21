@@ -11,10 +11,13 @@
 	let user = $derived(getUser());
 </script>
 
+{#if user}
+<div class="section right-sidebar"><Profile /></div>
+{/if}
+
 <div class="section"><Nav /></div>
 
 {#if user}
-	<div class="section right-sidebar"><Profile /></div>
 	<div class="section"><Friends /></div>
 {/if}
 
