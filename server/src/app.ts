@@ -13,6 +13,7 @@ import { usersRouter } from './routes/users';
 import { postsRouter } from './routes/posts';
 import { serveStatic } from 'hono/bun';
 import { statsRouter } from './routes/stats';
+import { shelvesRouter } from './routes/shelves';
 
 export const app = new Hono()
 	.use('*', logger())
@@ -35,6 +36,7 @@ export const app = new Hono()
 	.route('/api/v1/notifications', notificationsRouter)
 	.route('/api/v1/users', usersRouter)
 	.route('/api/v1/posts', postsRouter)
+	.route('/api/v1/shelves', shelvesRouter)
 
 	.notFound((c: Context) => err(c, 'Not found', 404))
 

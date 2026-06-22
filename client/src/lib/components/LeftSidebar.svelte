@@ -12,7 +12,7 @@
 </script>
 
 {#if user}
-<div class="section right-sidebar"><Profile /></div>
+	<div class="section right-sidebar"><Profile /></div>
 {/if}
 
 <div class="section"><Nav /></div>

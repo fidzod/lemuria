@@ -1,7 +1,11 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 
-	let { message, children }: { message: string; children: Snippet } = $props();
+	let {
+		message,
+		subtitle = '',
+		children
+	}: { message: string; subtitle?: string; children: Snippet } = $props();
 </script>
 
 <div class="tooltip-wrapper">
@@ -10,6 +14,9 @@
 	</div>
 	<div class="tooltip">
 		<span>{message}</span>
+		{#if subtitle !== ''}
+			<span class="subtitle">{subtitle}</span>
+		{/if}
 	</div>
 </div>
 
@@ -26,8 +33,18 @@
 		transform: translateX(-50%);
 		padding: var(--space-sm) var(--space-md);
 		background-color: var(--bg);
-		border-radius: 18px;
+		border-radius: 8px;
 		border: 1px solid var(--border-subtle);
+		z-index: 100;
+
+		span {
+			display: block;
+			text-align: center;
+		}
+
+		.subtitle {
+			font-size: 0.8rem;
+		}
 
 		/* Triangle */
 		&:before {

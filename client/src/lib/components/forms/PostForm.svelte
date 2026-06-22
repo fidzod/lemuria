@@ -37,9 +37,10 @@
 	const handleSubmit = async (e: Event) => {
 		e.preventDefault();
 		const textContent = textareaComponent.getValue();
-    const result = parentId === null
-      ? await api.posts.createPost(fetch, textContent, postFiles)
-      : await api.comments.create(fetch, parentId, textContent, postFiles);
+		const result =
+			parentId === null
+				? await api.posts.createPost(fetch, textContent, postFiles)
+				: await api.comments.create(fetch, parentId, textContent, postFiles);
 
 		if (!result.success) {
 			addToast(result.error ?? 'Something went wrong', 'error');

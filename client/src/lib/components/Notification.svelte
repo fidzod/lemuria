@@ -13,5 +13,5 @@
 {:else if notification.type === 'friend_accepted'}
 	<FriendAcceptedNotification {notification} />
 {:else if notification.type === 'post_liked' || notification.type === 'comment_liked'}
-  <LikedNotification {notification} />
+	<LikedNotification {notification} />
 {/if}

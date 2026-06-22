@@ -5,3 +5,4 @@ export * from './users.ts';
 export * from './friends.ts';
 export * from './notifications.ts';
 export * from './posts.ts';
+export * from './shelves.ts';

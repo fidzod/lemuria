@@ -6,6 +6,8 @@
 		initialValue?: string;
 		required?: boolean;
 		type?: 'text' | 'email' | 'password';
+		value?: string;
+		oninput?: (value: string) => void;
 	};
 
 	let {
@@ -14,17 +16,24 @@
 		placeholder = '',
 		initialValue = '',
 		required = false,
-		type = 'text'
+		type = 'text',
+		value = $bindable(initialValue),
+		oninput
 	}: Props = $props();
-
-	// svelte-ignore state_referenced_locally
-	let value = $state(initialValue);
 </script>
 
 <div class="form-row">
 	<label for={name}>{label}:</label>
 	<div class="input-sizer">
-		<input {type} {name} {placeholder} {required} size="1" bind:value />
+		<input
+			{type}
+			{name}
+			{placeholder}
+			{required}
+			size="1"
+			bind:value
+			oninput={(e) => oninput?.(e.currentTarget.value)}
+		/>
 		<span aria-hidden="true">{value || placeholder}</span>
 	</div>
 </div>

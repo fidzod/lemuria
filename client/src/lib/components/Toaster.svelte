@@ -24,7 +24,8 @@
 		display: flex;
 		flex-direction: column;
 		align-items: end;
-		gap: var(--space-sm);
+		gap: var(--space-xs);
+		z-index: 100;
 	}
 	p {
 		background-color: var(--bg);
@@ -32,7 +33,7 @@
 
 		display: flex;
 		align-items: center;
-		gap: var(--space-sm);
+		gap: var(--space-xs);
 
 		&.error {
 			color: var(--red-bright);

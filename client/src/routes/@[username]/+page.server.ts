@@ -10,10 +10,13 @@ export const load: PageServerLoad = async ({ params, fetch, request }) => {
 	const profileRes = await api.users.get(withCookies(fetch, request), username);
 	if (!profileRes.success) error(404, 'User not found.');
 
+	const shelvesRes = await api.shelves.get(fetch, profileRes.data.user.id);
+	if (!shelvesRes.success) error(400, 'Failed to fetch shelves.');
+
 	const postsRes = await api.posts.fromUser(withCookies(fetch, request), profileRes.data.user.id);
 	if (!postsRes.success) error(400, 'Failed to fetch posts.');
 
-	return { profile: profileRes.data, posts: postsRes.data };
+	return { profile: profileRes.data, posts: postsRes.data, shelfItems: shelvesRes.data };
 };
 
 export const actions: Actions = {

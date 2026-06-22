@@ -13,25 +13,25 @@
 	import { api } from '$lib/api';
 	let { post }: { post: Post } = $props();
 
-  // svelte-ignore state_referenced_locally
-  let likedByMe = $state(post.likedByMe);
-  // svelte-ignore state_referenced_locally
-  let likeCount = $state(post.likeCount)
+	// svelte-ignore state_referenced_locally
+	let likedByMe = $state(post.likedByMe);
+	// svelte-ignore state_referenced_locally
+	let likeCount = $state(post.likeCount);
 
-  const handleLike = async () => {
-    const wasLiked = likedByMe;
-    likedByMe = !likedByMe;
-    likeCount += wasLiked ? -1 : 1;
+	const handleLike = async () => {
+		const wasLiked = likedByMe;
+		likedByMe = !likedByMe;
+		likeCount += wasLiked ? -1 : 1;
 
-    const res = wasLiked
-      ? await api.posts.unlike(fetch, post.id)
-      : await api.posts.like(fetch, post.id);
+		const res = wasLiked
+			? await api.posts.unlike(fetch, post.id)
+			: await api.posts.like(fetch, post.id);
 
-    if (!res.success) {
-      likedByMe = wasLiked;
-      likeCount += wasLiked ? 1 : -1;
-    }
-  }
+		if (!res.success) {
+			likedByMe = wasLiked;
+			likeCount += wasLiked ? 1 : -1;
+		}
+	};
 </script>
 
 <div
@@ -42,12 +42,9 @@
     "
 >
 	<div class="head">
-    <a href="/@{post.author.username}" class="avatar">
-      <img
-        src={post.author.avatarUrl || PlaceholderAvatar}
-        alt="{post.author.username}'s Avatar"
-      />
-    </a>
+		<a href="/@{post.author.username}" class="avatar">
+			<img src={post.author.avatarUrl || PlaceholderAvatar} alt="{post.author.username}'s Avatar" />
+		</a>
 		<div class="details-and-stats">
 			<div class="details text-gradient">
 				<a href="/@{post.author.username}" class="name">
@@ -113,10 +110,10 @@
 		box-shadow:
 			0 0 0 2px var(--bg),
 			0 0 0 3px var(--user-accent-bright);
-    img {
-      width: 2rem;
-      height: 2rem;
-    }
+		img {
+			width: 2rem;
+			height: 2rem;
+		}
 	}
 	.details-and-stats {
 		width: 100%;
@@ -134,7 +131,7 @@
 	.username {
 		font-size: 0.8rem;
 		font-family: var(--monospace);
-    width: fit-content;
+		width: fit-content;
 	}
 	.footer {
 		width: 100%;
@@ -150,30 +147,30 @@
 			margin-top: 1px;
 		}
 	}
-  .like-btn.liked {
-    color: var(--text-primary);
-    :global(.lucide) {
-      fill: var(--text-primary);
-    }
-    &:hover {
-      :global(.lucide) {
-        fill: none;
-      }
-      color: var(--text-secondary);
-    }
-  }
+	.like-btn.liked {
+		color: var(--text-primary);
+		:global(.lucide) {
+			fill: var(--text-primary);
+		}
+		&:hover {
+			:global(.lucide) {
+				fill: none;
+			}
+			color: var(--text-secondary);
+		}
+	}
 	.aside {
 		margin-left: auto;
 		gap: var(--space-lg);
 	}
-  .text-content {
-    color: var(--text-primary);
-  }
+	.text-content {
+		color: var(--text-primary);
+	}
 	.media img {
 		width: 100%;
 		border-radius: 10px;
 	}
-  a.group {
-    cursor: pointer;
-  }
+	a.group {
+		cursor: pointer;
+	}
 </style>

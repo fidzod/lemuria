@@ -8,7 +8,10 @@ import {
 	type Post,
 	type ProfileUpdate,
 	type Stats,
-	type NewPost
+	type NewPost,
+	type SearchResult,
+	type ShelfItemType,
+	type ShelfItem
 } from '@lemuria/types';
 
 type SvelteKitFetch = typeof globalThis.fetch;
@@ -134,25 +137,44 @@ export const api = {
 		fromUser: (fetch: SvelteKitFetch, userId: number) =>
 			request<Post[]>(fetch, `/posts?userId=${userId}`),
 
-    get: (fetch: SvelteKitFetch, postId: number) =>
-      request<Post>(fetch, `/posts/${postId}`),
+		get: (fetch: SvelteKitFetch, postId: number) => request<Post>(fetch, `/posts/${postId}`),
 
-    like: (fetch: SvelteKitFetch, postId: number) =>
+		like: (fetch: SvelteKitFetch, postId: number) =>
 			request<{}>(fetch, `/posts/${postId}/like`, { method: 'POST' }),
 
-    unlike: (fetch: SvelteKitFetch, postId: number) =>
-			request<{}>(fetch, `/posts/${postId}/like`, { method: 'DELETE' }),
+		unlike: (fetch: SvelteKitFetch, postId: number) =>
+			request<{}>(fetch, `/posts/${postId}/like`, { method: 'DELETE' })
 	},
-  comments: {
-    get: (fetch: SvelteKitFetch, postId: number) =>
-      request<Post[]>(fetch, `/posts/${postId}/comments`),
+	comments: {
+		get: (fetch: SvelteKitFetch, postId: number) =>
+			request<Post[]>(fetch, `/posts/${postId}/comments`),
 
-    create: (fetch: SvelteKitFetch, parentId: number, textContent: string, media: File[]) =>
-      request<Post>(fetch, '/posts', {
-        method: 'POST',
-        body: buildFormData<NewPost>({ textContent, media, parentId: String(parentId) })
-      }),
-  },
+		create: (fetch: SvelteKitFetch, parentId: number, textContent: string, media: File[]) =>
+			request<Post>(fetch, '/posts', {
+				method: 'POST',
+				body: buildFormData<NewPost>({ textContent, media, parentId: String(parentId) })
+			})
+	},
+	shelves: {
+		search: (fetch: SvelteKitFetch, itemType: ShelfItemType, query: string) => {
+			const queryEncoded = encodeURIComponent(query);
+			return request<SearchResult[]>(fetch, `/shelves/search/${itemType}?q=${queryEncoded}`);
+		},
+
+		get: (fetch: SvelteKitFetch, userId: number) =>
+			request<ShelfItem[]>(fetch, `/shelves/${userId}`),
+
+		addItem: (fetch: SvelteKitFetch, item: SearchResult) =>
+			request<ShelfItem>(fetch, `/shelves`, {
+				method: 'POST',
+				body: JSON.stringify(item)
+			}),
+
+		remove: (fetch: SvelteKitFetch, itemId: number) =>
+			request<{ id: number }>(fetch, `/shelves/${itemId}`, {
+				method: 'DELETE'
+			})
+	},
 	stats: {
 		get: (fetch: SvelteKitFetch) => request<Stats>(fetch, '/stats')
 	}

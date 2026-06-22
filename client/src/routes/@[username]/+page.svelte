@@ -5,7 +5,7 @@
 	import EditModal from '$lib/components/profile/EditModal.svelte';
 	import Post from '$lib/components/Post.svelte';
 	import FriendButton from '$lib/components/profile/FriendButton.svelte';
-	// import Shelves from '$lib/components/Shelves.svelte';
+	import Shelves from '$lib/components/shelves/Shelves.svelte';
 	import { USER_KEY } from '$lib/context';
 	import { getContext } from 'svelte';
 	import type { PublicUser } from '@lemuria/types';
@@ -18,6 +18,8 @@
 	let sessionUser = $derived(getUser());
 
 	let editModalOpen = $state(false);
+
+	let isOwner = $derived(sessionUser && sessionUser.id === user.id);
 </script>
 
 <EditModal
@@ -42,7 +44,7 @@
 		>
 	</div>
 	<div class="card right">
-		{#if sessionUser && sessionUser.id === user.id}
+		{#if isOwner}
 			<button class="edit-profile" onclick={() => (editModalOpen = true)}><Edit /></button>
 		{:else}
 			<FriendButton relationship={data.profile.relationship} userId={user.id} />
@@ -58,7 +60,9 @@
 	<p class="bio">{data.profile.bio}</p>
 </div>
 
-<!--<Shelves />-->
+<section>
+	<Shelves shelfItems={data.shelfItems} {isOwner} />
+</section>
 
 <section>
 	<h1>Posts</h1>
@@ -118,12 +122,13 @@
 		font-size: var(--text-sm);
 	}
 	section {
+		position: relative;
 		margin-top: var(--space-xl);
 	}
 	.feed {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-xl);
-    margin-block-start: var(--space-lg);
+		margin-block-start: var(--space-lg);
 	}
 </style>

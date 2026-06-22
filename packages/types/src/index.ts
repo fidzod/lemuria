@@ -1,8 +1,8 @@
 export const NotificationTypes = [
-  'friend_request',
-  'friend_accepted',
-  'post_liked',
-  'comment_liked'
+	'friend_request',
+	'friend_accepted',
+	'post_liked',
+	'comment_liked'
 ] as const;
 export type NotificationType = (typeof NotificationTypes)[number];
 
@@ -69,11 +69,11 @@ export type AppNotification = {
 	read: boolean;
 	friendRequest?: FriendRequest;
 	friendship?: Friendship;
-  actionUser?: PublicUser;
-  post?: {
-    id: number;
-    parentId: number;
-  };
+	actionUser?: PublicUser;
+	post?: {
+		id: number;
+		parentId: number;
+	};
 	createdAt: Date;
 };
 
@@ -84,17 +84,17 @@ export type UnreadNotifications = {
 export type NewPost = {
 	textContent: string;
 	media: File[];
-  parentId?: string;
+	parentId?: string;
 };
 
 export type Post = {
-  id: number;
+	id: number;
 	textContent: string | null;
 	createdAt: Date;
 	author: PublicUser;
 	media: string[];
 	likeCount: number;
-  likedByMe: boolean;
+	likedByMe: boolean;
 	reshareCount: number;
 	replyCount: number;
 };
@@ -103,4 +103,18 @@ export type Stats = {
 	totalPosts: number;
 	onlineUsers: number;
 	uploadsSize: string;
+};
+
+export type ShelfItemType = 'film' | 'album' | 'book';
+
+export type SearchResult = {
+	externalId: string;
+	title: string;
+	subtitle: string;
+	coverUrl: string;
+	type: ShelfItemType;
+};
+
+export type ShelfItem = SearchResult & {
+	id: number;
 };

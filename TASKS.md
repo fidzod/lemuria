@@ -18,7 +18,10 @@
 
 ### Post-deployment/V2
 
-- (#40) Feature: Replies
+- (#41) Feature: Shelves V1
+  - (#.01) New post type
+  - (#.02) Re-order items
+- (#40) Feature: Formatted replies
 - (#38) Feature: Friends Page
 - (#22) Feature: Reposts (Rename: Reshares)
 - (#25) Feature: Post views
@@ -29,10 +32,9 @@
 
 ## In-Progress
 
-- (#15) Feature: Shelves
-
 ## Done
 
+- (#15) Feature: Shelves MVP
 - (#21) Feature: Likes
 - (#23) Feature: Comments
 - (#30) Redesign
