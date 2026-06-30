@@ -18,6 +18,7 @@
 		USER_KEY,
 		PROFILE_KEY
 	} from '$lib/context';
+	import MobileNav from '$lib/components/MobileNav.svelte';
 
 	let { data, children }: { data: LayoutData; children: Snippet } = $props();
 
@@ -51,6 +52,10 @@
 	</div>
 </div>
 
+<div class="mobile-nav-wrapper">
+	<MobileNav />
+</div>
+
 <style>
 	#layout {
 		max-width: calc(2 * var(--sidebar-width) + 2 * var(--space-xl) + var(--page-max-width));
@@ -74,6 +79,13 @@
 		width: var(--page-max-width);
 		flex: 1;
 	}
+	.mobile-nav-wrapper {
+		position: fixed;
+		top: calc(100vh - var(--mb-nav-height) - var(--space-xl));
+		left: 0;
+		right: 0;
+		display: none;
+	}
 
 	@media (max-width: 810px) {
 		aside.right {
@@ -84,6 +96,12 @@
 	@media (max-width: 580px) {
 		aside.left {
 			display: none;
+		}
+		.mobile-nav-wrapper {
+			display: block;
+		}
+		.columns {
+			margin-bottom: 70px;
 		}
 	}
 </style>

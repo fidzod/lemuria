@@ -54,6 +54,7 @@
 		display: flex;
 
 		border: 1px solid var(--border-subtle);
+		border-radius: 5px;
 		background-color: var(--bg);
 
 		box-shadow: 0 0 0 3px var(--bg);
@@ -68,6 +69,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+
+		border-radius: 5px;
 
 		img {
 			width: 100%;

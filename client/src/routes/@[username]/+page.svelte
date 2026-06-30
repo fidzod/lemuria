@@ -114,6 +114,14 @@
 	.card.right {
 		right: var(--space-sm);
 		border-radius: 50%;
+		padding: 0.3rem 0.5rem;
+		:global(button[type='submit']) {
+			margin-block-start: 0;
+		}
+		:global(.lucide) {
+			width: 1rem;
+			height: 1rem;
+		}
 	}
 	.details {
 		display: flex;

@@ -5,7 +5,6 @@
 ### MVP/V1
 
 - (#26) Fix: Pagination (notifications, posts)
-- (#28) Feature: Mobile Nav
 - (#17) Refactor: Ids (move away from autoincrement)
 - (#31) Deploy
 - (#32) Feature: Email verification
@@ -21,6 +20,7 @@
 - (#41) Feature: Shelves V1
   - (#.01) New post type
   - (#.02) Re-order items
+- (#43) Feature: Friends-only posts and feed
 - (#40) Feature: Formatted replies
 - (#38) Feature: Friends Page
 - (#22) Feature: Reposts (Rename: Reshares)
@@ -29,11 +29,13 @@
 - (#10) Feature: Search
 - (#07) Feature: Tags
 - (#27) Feature: Essay/Longform Posts
+- (#42) Feature: Share and save posts
 
 ## In-Progress
 
 ## Done
 
+- (#28) Feature: Mobile Nav
 - (#15) Feature: Shelves MVP
 - (#21) Feature: Likes
 - (#23) Feature: Comments

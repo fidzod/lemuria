@@ -45,6 +45,7 @@
 	/* Layout */
 	--sidebar-width: 150px;
 	--page-max-width: 400px;
+	--mb-nav-height: 3rem;
 
 	/* Breakpoints 
     --bp-mobile: 580px;

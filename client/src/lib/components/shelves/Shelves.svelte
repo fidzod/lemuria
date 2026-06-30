@@ -20,7 +20,7 @@
 	const handleRemove = async (itemId: number) => {
 		const res = await api.shelves.remove(fetch, itemId);
 		if (!res.success) {
-			addToast(res.error, 'error');
+			addToast('Failed to remove item', 'error');
 			return;
 		}
 		await invalidateAll();
@@ -39,9 +39,11 @@
 							class:album={item.type === 'album'}
 							style="--img-url: url({item.coverUrl})"
 						>
-							<button class="remove-item" onclick={() => handleRemove(item.id)}>
-								<RemoveItem />
-							</button>
+							{#if isOwner}
+								<button class="remove-item" onclick={() => handleRemove(item.id)}>
+									<RemoveItem />
+								</button>
+							{/if}
 						</div>
 					</Tooltip>
 				</div>
@@ -65,7 +67,6 @@
 		class="add-item-btn"
 		onclick={() => {
 			if (shelfItems.length < 12) {
-				console.log(shelfItems.length);
 				addItemModalOpen = true;
 			} else {
 				addToast('Your shelves are full. Remove an item.', 'error');

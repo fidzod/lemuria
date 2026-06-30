@@ -109,7 +109,6 @@
 		gap: var(--space-xs);
 	}
 	button {
-		padding-top: var(--space-xs);
 		margin: 0;
 	}
 </style>

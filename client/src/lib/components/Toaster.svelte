@@ -18,7 +18,7 @@
 
 <style>
 	.toasts {
-		position: absolute;
+		position: fixed;
 		top: var(--space-md);
 		right: var(--space-md);
 		display: flex;
