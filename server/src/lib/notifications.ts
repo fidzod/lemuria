@@ -2,10 +2,10 @@ import type { Db, Tx } from '../db';
 import { notifications } from '../schema/notifications';
 
 type CreateNotificationInput =
-	| { userId: number; type: 'friend_request'; friendRequestId: number }
-	| { userId: number; type: 'friend_accepted'; friendshipId: number }
-	| { userId: number; type: 'post_liked'; actionUserId: number; postId: number }
-	| { userId: number; type: 'comment_liked'; actionUserId: number; postId: number };
+	| { userId: string; type: 'friend_request'; friendRequestId: string }
+	| { userId: string; type: 'friend_accepted'; friendshipId: string }
+	| { userId: string; type: 'post_liked'; actionUserId: string; postId: string }
+	| { userId: string; type: 'comment_liked'; actionUserId: string; postId: string };
 
 export const createNotification = async (db: Db | Tx, input: CreateNotificationInput) => {
 	await db

@@ -103,7 +103,7 @@ export const api = {
 			})
 	},
 	friends: {
-		request: (fetch: SvelteKitFetch, toUserId: number) =>
+		request: (fetch: SvelteKitFetch, toUserId: string) =>
 			request<FriendRequest | Friendship>(fetch, '/friends/requests', {
 				method: 'POST',
 				body: JSON.stringify({ toUserId })
@@ -119,7 +119,7 @@ export const api = {
 				body: JSON.stringify({ status: response })
 			}),
 
-		removeFriendship: (fetch: SvelteKitFetch, friendshipId: number) =>
+		removeFriendship: (fetch: SvelteKitFetch, friendshipId: string) =>
 			request<Friendship>(fetch, `/friends/${friendshipId}`, { method: 'DELETE' }),
 
 		get: (fetch: SvelteKitFetch, limit: number) =>
@@ -134,22 +134,22 @@ export const api = {
 
 		all: (fetch: SvelteKitFetch) => request<Post[]>(fetch, '/posts'),
 
-		fromUser: (fetch: SvelteKitFetch, userId: number) =>
+		fromUser: (fetch: SvelteKitFetch, userId: string) =>
 			request<Post[]>(fetch, `/posts?userId=${userId}`),
 
-		get: (fetch: SvelteKitFetch, postId: number) => request<Post>(fetch, `/posts/${postId}`),
+		get: (fetch: SvelteKitFetch, postId: string) => request<Post>(fetch, `/posts/${postId}`),
 
-		like: (fetch: SvelteKitFetch, postId: number) =>
+		like: (fetch: SvelteKitFetch, postId: string) =>
 			request<{}>(fetch, `/posts/${postId}/like`, { method: 'POST' }),
 
-		unlike: (fetch: SvelteKitFetch, postId: number) =>
+		unlike: (fetch: SvelteKitFetch, postId: string) =>
 			request<{}>(fetch, `/posts/${postId}/like`, { method: 'DELETE' })
 	},
 	comments: {
-		get: (fetch: SvelteKitFetch, postId: number) =>
+		get: (fetch: SvelteKitFetch, postId: string) =>
 			request<Post[]>(fetch, `/posts/${postId}/comments`),
 
-		create: (fetch: SvelteKitFetch, parentId: number, textContent: string, media: File[]) =>
+		create: (fetch: SvelteKitFetch, parentId: string, textContent: string, media: File[]) =>
 			request<Post>(fetch, '/posts', {
 				method: 'POST',
 				body: buildFormData<NewPost>({ textContent, media, parentId: String(parentId) })
@@ -161,7 +161,7 @@ export const api = {
 			return request<SearchResult[]>(fetch, `/shelves/search/${itemType}?q=${queryEncoded}`);
 		},
 
-		get: (fetch: SvelteKitFetch, userId: number) =>
+		get: (fetch: SvelteKitFetch, userId: string) =>
 			request<ShelfItem[]>(fetch, `/shelves/${userId}`),
 
 		addItem: (fetch: SvelteKitFetch, item: SearchResult) =>
@@ -170,8 +170,8 @@ export const api = {
 				body: JSON.stringify(item)
 			}),
 
-		remove: (fetch: SvelteKitFetch, itemId: number) =>
-			request<{ id: number }>(fetch, `/shelves/${itemId}`, {
+		remove: (fetch: SvelteKitFetch, itemId: string) =>
+			request<{ id: string }>(fetch, `/shelves/${itemId}`, {
 				method: 'DELETE'
 			})
 	},

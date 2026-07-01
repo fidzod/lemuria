@@ -5,8 +5,8 @@ import { friendRequests, friendships } from '../schema';
 import { and, eq, or } from 'drizzle-orm';
 
 export const resolveRelationship = async (
-	sessionUserId: number,
-	targetUserId: number,
+	sessionUserId: string,
+	targetUserId: string,
 	db: Db
 ): Promise<Relationship> => {
 	if (sessionUserId === targetUserId) return { status: 'me' };

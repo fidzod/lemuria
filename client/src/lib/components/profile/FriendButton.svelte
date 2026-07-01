@@ -12,7 +12,7 @@
 		UserRoundPlus as Request
 	} from '@lucide/svelte/icons';
 
-	let { relationship, userId }: { relationship: Relationship; userId: number } = $props();
+	let { relationship, userId }: { relationship: Relationship; userId: string } = $props();
 </script>
 
 {#if relationship.status === 'friends'}

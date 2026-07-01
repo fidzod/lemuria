@@ -112,6 +112,7 @@ export const toShelfItem = async (db: Db, shelfItemRow: ShelfItemRow): Promise<S
 		case 'film':
 			const [film] = await db.select().from(films).where(eq(films.id, shelfItemRow.filmId!));
 			return {
+        id: film!.id,
 				externalId: film!.externalId,
 				title: film!.title,
 				subtitle: film!.year,
@@ -121,6 +122,7 @@ export const toShelfItem = async (db: Db, shelfItemRow: ShelfItemRow): Promise<S
 		case 'album':
 			const [album] = await db.select().from(albums).where(eq(albums.id, shelfItemRow.albumId!));
 			return {
+        id: album!.id,
 				externalId: album!.externalId,
 				title: album!.title,
 				subtitle: album!.artist,
@@ -130,6 +132,7 @@ export const toShelfItem = async (db: Db, shelfItemRow: ShelfItemRow): Promise<S
 		case 'book':
 			const [book] = await db.select().from(books).where(eq(books.id, shelfItemRow.bookId!));
 			return {
+        id: book!.id,
 				externalId: book!.externalId,
 				title: book!.title,
 				subtitle: book!.author,

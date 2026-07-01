@@ -17,7 +17,7 @@
 
 	let addItemModalOpen = $state(false);
 
-	const handleRemove = async (itemId: number) => {
+	const handleRemove = async (itemId: string) => {
 		const res = await api.shelves.remove(fetch, itemId);
 		if (!res.success) {
 			addToast('Failed to remove item', 'error');

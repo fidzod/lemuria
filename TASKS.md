@@ -34,8 +34,8 @@
 - (#17) Refactor: Ids (move away from autoincrement)
     - [x] (#.01) Create shared id utility
     - [x] (#.02) Update id fields in schema
-    - [ ] (#.03) Audit for assumptions about ids
-    - [ ] (#.04) Update route validation
+    - [x] (#.03) Audit for assumptions about ids
+    - [x] (#.04) Update route validation
     - [ ] (#.05) Drop tables, push, re-seed and test
 
 ## Done

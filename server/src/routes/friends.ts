@@ -30,8 +30,7 @@ export const friendsRouter = new Hono<{ Variables: AppVariables }>()
 		if (toUser === undefined) return err(c, 'User does not exist.', 404);
 
 		// check user isn't yourself
-		const session = c.get('session');
-		const fromUserId = session.get('userId') as number;
+    const fromUserId = c.get('session').get('userId')!;
 
 		if (fromUserId === toUserId) return err(c, 'Cannot send friend request to yourself.');
 
@@ -144,11 +143,7 @@ export const friendsRouter = new Hono<{ Variables: AppVariables }>()
 		zValidator('json', respondToFriendRequestSchema),
 		requireAuth,
 		async (c) => {
-			const friendRequestId = Number(c.req.param('id'));
-
-			if (isNaN(friendRequestId)) {
-				return err(c, 'Invalid request Id.');
-			}
+			const friendRequestId = c.req.param('id');
 
 			// fetch request
 			const [friendRequest] = await db
@@ -161,8 +156,7 @@ export const friendsRouter = new Hono<{ Variables: AppVariables }>()
 			}
 
 			// verify toUserId matches session user
-			const session = c.get('session');
-			const sessionUserId = session.get('userId') as number;
+      const sessionUserId = c.get('session').get('userId')!;
 
 			if (friendRequest.toUserId !== sessionUserId) {
 				return err(c, 'You can only respond to requests sent to you.');
@@ -234,14 +228,9 @@ export const friendsRouter = new Hono<{ Variables: AppVariables }>()
 
 	// DELETE /api/v1/friends/:id - delete a friendship
 	.delete('/:id', requireAuth, async (c) => {
-		const friendshipId = Number(c.req.param('id'));
+		const friendshipId = c.req.param('id');
 
-		if (isNaN(friendshipId)) {
-			return err(c, 'Invalid request Id.');
-		}
-
-		const session = c.get('session');
-		const sessionUserId = session.get('userId') as number;
+    const sessionUserId = c.get('session').get('userId')!;
 
 		const [friendship] = await db
 			.select()
@@ -270,8 +259,7 @@ export const friendsRouter = new Hono<{ Variables: AppVariables }>()
 
 	// GET /api/v1/friends - get session user's friends
 	.get('/', requireAuth, async (c) => {
-		const session = c.get('session');
-		const sessionUserId = session.get('userId') as number;
+    const sessionUserId = c.get('session').get('userId')!;
 
 		const limit = Number(c.req.query('limit'));
 

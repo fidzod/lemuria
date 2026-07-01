@@ -71,11 +71,7 @@ export const actions: Actions = {
 			return fail(400, { error: 'Invalid form data.' });
 		}
 
-		const toUserIdNumber = parseInt(toUserId);
-
-		if (isNaN(toUserIdNumber)) {
-			return fail(400, { error: 'Invalid user ID.' });
-		}
+		const toUserIdNumber = toUserId;
 
 		const result = await api.friends.request(withCookies(fetch, request), toUserIdNumber);
 
@@ -128,11 +124,7 @@ export const actions: Actions = {
 			return fail(400, { error: 'Invalid form data.' });
 		}
 
-		const friendshipIdNumber = parseInt(friendshipId);
-
-		if (isNaN(friendshipIdNumber)) {
-			return fail(400, { error: 'Invalid friend request ID.' });
-		}
+		const friendshipIdNumber = friendshipId;
 
 		const result = await api.friends.removeFriendship(
 			withCookies(fetch, request),
