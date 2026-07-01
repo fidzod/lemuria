@@ -5,7 +5,6 @@
 ### MVP/V1
 
 - (#26) Fix: Pagination (notifications, posts)
-- (#17) Refactor: Ids (move away from autoincrement)
 - (#31) Deploy
 - (#32) Feature: Email verification
 - (#33) Feature: Password reset
@@ -32,6 +31,12 @@
 - (#42) Feature: Share and save posts
 
 ## In-Progress
+- (#17) Refactor: Ids (move away from autoincrement)
+    - [x] (#.01) Create shared id utility
+    - [ ] (#.02) Update id fields in schema
+    - [ ] (#.03) Audit for assumptions about ids
+    - [ ] (#.04) Update route validation
+    - [ ] (#.05) Drop tables, push, re-seed and test
 
 ## Done
 
