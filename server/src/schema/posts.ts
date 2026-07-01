@@ -8,15 +8,16 @@ import {
 } from 'drizzle-orm/sqlite-core';
 import { users } from './users';
 import { sql } from 'drizzle-orm';
+import { nanoid } from '../lib/id';
 
 export const posts = sqliteTable(
 	'posts',
 	{
-		id: integer('id').primaryKey({ autoIncrement: true }),
-		authorId: integer('author_id')
+		id: text('id').primaryKey().$defaultFn(nanoid),
+		authorId: text('author_id')
 			.notNull()
 			.references(() => users.id, { onDelete: 'cascade' }),
-		parentId: integer('parent_id').references((): AnySQLiteColumn => posts.id, {
+		parentId: text('parent_id').references((): AnySQLiteColumn => posts.id, {
 			onDelete: 'cascade'
 		}),
 		textContent: text('text_content'),
@@ -31,8 +32,8 @@ export const posts = sqliteTable(
 );
 
 export const postMedia = sqliteTable('post_media', {
-	id: integer('id').primaryKey({ autoIncrement: true }),
-	postId: integer('post_id')
+	id: text('id').primaryKey().$defaultFn(nanoid),
+	postId: text('post_id')
 		.notNull()
 		.references(() => posts.id, { onDelete: 'cascade' }),
 	url: text('url').notNull(),
@@ -42,10 +43,10 @@ export const postMedia = sqliteTable('post_media', {
 export const postLikes = sqliteTable(
 	'post_likes',
 	{
-		userId: integer('user_id')
+		userId: text('user_id')
 			.notNull()
 			.references(() => users.id),
-		postId: integer('post_id')
+		postId: text('post_id')
 			.notNull()
 			.references(() => posts.id)
 	},
