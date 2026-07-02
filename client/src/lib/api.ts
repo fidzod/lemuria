@@ -111,7 +111,7 @@ export const api = {
 
 		respondToRequest: (
 			fetch: SvelteKitFetch,
-			friendRequestId: number,
+			friendRequestId: string,
 			response: 'accepted' | 'rejected'
 		) =>
 			request<FriendRequest>(fetch, `/friends/requests/${friendRequestId}`, {

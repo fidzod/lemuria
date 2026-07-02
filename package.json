@@ -5,14 +5,24 @@
 	"workspaces": [
 		"packages/*",
 		"client",
-		"server"
+		"server",
+		"seed"
 	],
 	"scripts": {
 		"dev:server": "cd server && bun dev",
 		"dev:client": "cd client && bun dev",
-		"format": "prettier --write ."
+		"dev:all": "bunx concurrently --names \"server,client\" \"bun dev:server\" \"bun dev:client\"",
+		"check:server": "cd server && bun typecheck",
+		"check:client": "cd client && bun typecheck",
+		"check:all": "sh scripts/check-all.sh",
+		"format:all": "prettier --write .",
+		"db:clean": "cd server && rm *.db* && rm uploads/*",
+		"db:push": "cd server && bunx drizzle-kit push",
+		"db:seed": "cd seed && bun seed",
+		"db:reseed": "sh scripts/db-reseed.sh"
 	},
 	"devDependencies": {
+		"concurrently": "^10.0.3",
 		"prettier": "^3.8.3",
 		"prettier-plugin-svelte": "^4.0.0"
 	}

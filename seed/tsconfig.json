@@ -1,0 +1,19 @@
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+    "baseUrl": ".",
+		"target": "ESNext",
+		"module": "Preserve",
+		"lib": ["ESNext"],
+		"types": ["@types/bun"],
+
+		"moduleDetection": "force",
+		"jsx": "react-jsx",
+		"allowJs": true,
+
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"verbatimModuleSyntax": true,
+		"noEmit": true
+	}
+}

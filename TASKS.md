@@ -36,7 +36,8 @@
     - [x] (#.02) Update id fields in schema
     - [x] (#.03) Audit for assumptions about ids
     - [x] (#.04) Update route validation
-    - [ ] (#.05) Drop tables, push, re-seed and test
+    - [ ] (#.05) Re-seed script
+    - [ ] (#.06) Re-seed and test
 
 ## Done
 

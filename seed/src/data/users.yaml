@@ -1,0 +1,26 @@
+users:
+  - username: gendo
+    displayName: Gendo Ikari
+    email: gendo@tokyo3.jp
+    accentColor: magenta
+    bio: Burying memories is man's way of surviving. But there are some things a man should never forget.
+  - username: ayanami
+    displayName: Rei Ayanami
+    email: rei@tokyo3.jp
+    accentColor: green
+    bio: Am I just a tool to be used, or do I have purpose beyond this?
+  - username: kaworu
+    displayName: Kaworu Nagisa
+    email: kaworu@tokyo3.jp
+    accentColor: cyan
+    bio: Pain is something man must carry in his heart, and since the heart feels pain so easily, some believe that life is pain.
+  - username: shinji
+    displayName: Shinji Ikari
+    email: shinji@tokyo3.jp
+    accentColor: red
+    bio: I thought this was supposed to be a world without pain and without uncertainty.
+  - username: misato
+    displayName: Misato Katsuragi
+    email: misato@tokyo3.jp
+    accentColor: yellow
+    bio: The one who deserves to survive is the one with the will to make it happen.
