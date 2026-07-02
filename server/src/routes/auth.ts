@@ -71,7 +71,7 @@ export const authRouter = new Hono<{ Variables: AppVariables }>()
 	// GET /api/v1/auth/me
 	.get('/me', requireAuth, async (c) => {
 		const session = c.get('session');
-		const userId = session.get('userId') || "";
+		const userId = session.get('userId') || '';
 
 		const [user] = await db.select().from(users).where(eq(users.id, userId));
 

@@ -31,16 +31,11 @@
 - (#42) Feature: Share and save posts
 
 ## In-Progress
-- (#17) Refactor: Ids (move away from autoincrement)
-    - [x] (#.01) Create shared id utility
-    - [x] (#.02) Update id fields in schema
-    - [x] (#.03) Audit for assumptions about ids
-    - [x] (#.04) Update route validation
-    - [ ] (#.05) Re-seed script
-    - [ ] (#.06) Re-seed and test
+
 
 ## Done
 
+- (#17) Refactor: Ids (move away from autoincrement)
 - (#28) Feature: Mobile Nav
 - (#15) Feature: Shelves MVP
 - (#21) Feature: Likes

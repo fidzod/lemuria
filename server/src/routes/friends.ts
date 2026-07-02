@@ -30,7 +30,7 @@ export const friendsRouter = new Hono<{ Variables: AppVariables }>()
 		if (toUser === undefined) return err(c, 'User does not exist.', 404);
 
 		// check user isn't yourself
-    const fromUserId = c.get('session').get('userId')!;
+		const fromUserId = c.get('session').get('userId')!;
 
 		if (fromUserId === toUserId) return err(c, 'Cannot send friend request to yourself.');
 
@@ -156,7 +156,7 @@ export const friendsRouter = new Hono<{ Variables: AppVariables }>()
 			}
 
 			// verify toUserId matches session user
-      const sessionUserId = c.get('session').get('userId')!;
+			const sessionUserId = c.get('session').get('userId')!;
 
 			if (friendRequest.toUserId !== sessionUserId) {
 				return err(c, 'You can only respond to requests sent to you.');
@@ -230,7 +230,7 @@ export const friendsRouter = new Hono<{ Variables: AppVariables }>()
 	.delete('/:id', requireAuth, async (c) => {
 		const friendshipId = c.req.param('id');
 
-    const sessionUserId = c.get('session').get('userId')!;
+		const sessionUserId = c.get('session').get('userId')!;
 
 		const [friendship] = await db
 			.select()
@@ -259,7 +259,7 @@ export const friendsRouter = new Hono<{ Variables: AppVariables }>()
 
 	// GET /api/v1/friends - get session user's friends
 	.get('/', requireAuth, async (c) => {
-    const sessionUserId = c.get('session').get('userId')!;
+		const sessionUserId = c.get('session').get('userId')!;
 
 		const limit = Number(c.req.query('limit'));
 

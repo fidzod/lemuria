@@ -13,7 +13,8 @@ export const getPostSelect = (currentUserId: string | null) => ({
 	likeCount: posts.likeCount,
 	reshareCount: posts.reshareCount,
 	replyCount: posts.replyCount,
-	likedByMe: currentUserId !== null ? isNotNull(postLikes.userId) : sql<boolean>`false`.mapWith(Boolean),
+	likedByMe:
+		currentUserId !== null ? isNotNull(postLikes.userId) : sql<boolean>`false`.mapWith(Boolean),
 	author: {
 		id: users.id,
 		email: users.email,

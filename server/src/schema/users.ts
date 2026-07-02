@@ -4,7 +4,7 @@ import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { nanoid } from '../lib/id';
 
 export const users = sqliteTable('users', {
-  id: text('id').primaryKey().$defaultFn(nanoid),
+	id: text('id').primaryKey().$defaultFn(nanoid),
 	email: text('email').notNull().unique(),
 	username: text('username').notNull().unique(),
 	passwordHash: text('password_hash').notNull(),

@@ -153,7 +153,7 @@ export const postsRouter = new Hono<{ Variables: AppVariables }>()
 	.delete('/:id/like', requireAuth, async (c) => {
 		const postId = c.req.param('id');
 
-    const userId = c.get('session').get('userId')!;
+		const userId = c.get('session').get('userId')!;
 
 		await db
 			.delete(postLikes)
