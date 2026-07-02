@@ -21,17 +21,13 @@ export const postsRouter = new Hono<{ Variables: AppVariables }>()
 		const queryUserId = c.req.query('userId');
 
 		if (queryUserId !== undefined) {
-			const queryUserIdNumber = Number(queryUserId);
-			if (isNaN(queryUserIdNumber)) {
-				return err(c, 'Invalid Id.');
-			}
-			const [queryUser] = await db.select().from(users).where(eq(users.id, queryUserIdNumber));
+			const [queryUser] = await db.select().from(users).where(eq(users.id, queryUserId));
 			if (queryUser === undefined) {
 				return err(c, 'User not found.', 404);
 			}
 		}
 
-		const currentUserId = c.get('session')?.get('userId') as number;
+		const currentUserId = c.get('session')?.get('userId');
 		const q = db
 			.select(getPostSelect(currentUserId))
 			.from(posts)
@@ -39,7 +35,7 @@ export const postsRouter = new Hono<{ Variables: AppVariables }>()
 			.leftJoin(postMedia, eq(postMedia.postId, posts.id))
 			.where(
 				queryUserId
-					? and(eq(posts.authorId, Number(queryUserId)), isNull(posts.parentId))
+					? and(eq(posts.authorId, queryUserId), isNull(posts.parentId))
 					: isNull(posts.parentId)
 			)
 			.orderBy(desc(posts.createdAt));
@@ -50,11 +46,9 @@ export const postsRouter = new Hono<{ Variables: AppVariables }>()
 
 	// GET /api/v1/posts/:postId - get a single post
 	.get('/:postId', async (c) => {
-		const postId = Number(c.req.param('postId'));
+		const postId = c.req.param('postId');
 
-		if (isNaN(postId)) return err(c, 'Invalid post Id.');
-
-		const currentUserId = c.get('session').get('userId') as number;
+		const currentUserId = c.get('session').get('userId');
 
 		const q = db
 			.select(getPostSelect(currentUserId))
@@ -72,7 +66,7 @@ export const postsRouter = new Hono<{ Variables: AppVariables }>()
 	.post('/', requireAuth, async (c) => {
 		const formData = await c.req.formData();
 		const textContent = formData.get('textContent') as string | null;
-		const parentId = formData.get('parentId') as number | null;
+		const parentId = formData.get('parentId') as string | null;
 		const media = formData
 			.getAll('media')
 			.filter((v): v is File => v instanceof File && v.size > 0);
@@ -89,7 +83,7 @@ export const postsRouter = new Hono<{ Variables: AppVariables }>()
 				return err(c, 'Cannot comment post a comment on another comment.');
 		}
 
-		const userId = c.get('session').get('userId') as number;
+		const userId = c.get('session').get('userId')!;
 
 		try {
 			const post = await createPost(userId, textContent, parentId, result.data.media ?? []);
@@ -101,15 +95,13 @@ export const postsRouter = new Hono<{ Variables: AppVariables }>()
 
 	// GET /api/v1/posts/:id/comments - get comments for a post
 	.get('/:id/comments', async (c) => {
-		const postId = Number(c.req.param('id'));
-
-		if (isNaN(postId)) return err(c, 'Invalid Id.');
+		const postId = c.req.param('id');
 
 		const [post] = await db.select({ id: posts.id }).from(posts).where(eq(posts.id, postId));
 
 		if (post === undefined) return err(c, 'Post not found.', 404);
 
-		const currentUserId = c.get('session')?.get('userId') as number;
+		const currentUserId = c.get('session')?.get('userId');
 
 		const q = db
 			.select(getPostSelect(currentUserId))
@@ -126,15 +118,12 @@ export const postsRouter = new Hono<{ Variables: AppVariables }>()
 	// POST /api/v1/posts/:postId/like - like a post
 	.post('/:id/like', requireAuth, async (c) => {
 		const postId = c.req.param('id');
-		const postIdNumber = Number(postId);
 
-		if (isNaN(postIdNumber)) return err(c, 'Invalid post Id.');
-
-		const userId = c.get('session').get('userId') as number;
+		const userId = c.get('session').get('userId')!;
 
 		const res = await db
 			.insert(postLikes)
-			.values({ postId: postIdNumber, userId })
+			.values({ postId: postId, userId })
 			.onConflictDoNothing()
 			.returning();
 
@@ -145,7 +134,7 @@ export const postsRouter = new Hono<{ Variables: AppVariables }>()
 		const [post] = await db
 			.update(posts)
 			.set({ likeCount: sql`${posts.likeCount} + 1` })
-			.where(eq(posts.id, postIdNumber))
+			.where(eq(posts.id, postId))
 			.returning();
 
 		if (post === undefined) return err(c, 'Post not found', 404);
@@ -163,23 +152,17 @@ export const postsRouter = new Hono<{ Variables: AppVariables }>()
 	// DELETE /api/v1/posts/:postId/like - unlike a post
 	.delete('/:id/like', requireAuth, async (c) => {
 		const postId = c.req.param('id');
-		const postIdNumber = Number(postId);
 
-		if (isNaN(postIdNumber)) {
-			return err(c, 'Invalid post Id.');
-		}
-
-		const session = c.get('session');
-		const userId = session.get('userId') as number;
+		const userId = c.get('session').get('userId')!;
 
 		await db
 			.delete(postLikes)
-			.where(and(eq(postLikes.userId, userId), eq(postLikes.postId, postIdNumber)));
+			.where(and(eq(postLikes.userId, userId), eq(postLikes.postId, postId)));
 
 		await db
 			.update(posts)
 			.set({ likeCount: sql`${posts.likeCount} - 1` })
-			.where(eq(posts.id, postIdNumber));
+			.where(eq(posts.id, postId));
 
 		return ok<{}>(c, {});
 	});

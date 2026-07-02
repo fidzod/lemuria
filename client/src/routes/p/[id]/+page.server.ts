@@ -3,7 +3,7 @@ import { api, withCookies } from '$lib/api';
 import { error } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async ({ params, fetch, request }) => {
-	const postId = Number(params.id);
+	const postId = params.id;
 	const commentsRes = await api.comments.get(withCookies(fetch, request), postId);
 	const postRes = await api.posts.get(withCookies(fetch, request), postId);
 

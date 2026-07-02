@@ -19,8 +19,7 @@ export const notificationsRouter = new Hono<{ Variables: AppVariables }>()
 
 	// GET /api/v1/notifications - get notifications for current user
 	.get('/', requireAuth, async (c) => {
-		const session = c.get('session');
-		const userId = session.get('userId') as number;
+		const userId = c.get('session').get('userId')!;
 
 		const fromUser = alias(users, 'from_user');
 		const toUser = alias(users, 'to_user');
@@ -173,9 +172,8 @@ export const notificationsRouter = new Hono<{ Variables: AppVariables }>()
 
 	// GET /api/v1/notifications/unread-count
 	// get unread notifications count for current user
-	.get('/unread-count', async (c) => {
-		const session = c.get('session');
-		const userId = session.get('userId') as number;
+	.get('/unread-count', requireAuth, async (c) => {
+		const userId = c.get('session').get('userId')!;
 
 		const [result] = await db
 			.select({ count: sql`COUNT(*)` })

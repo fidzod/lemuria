@@ -6,6 +6,7 @@
 		"drizzle-orm": "^0.45.2",
 		"hono": "^4.12.21",
 		"hono-sessions": "^0.8.1",
+		"nanoid": "^5.1.16",
 		"zod": "^4.4.3"
 	},
 	"devDependencies": {

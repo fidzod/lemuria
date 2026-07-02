@@ -71,7 +71,7 @@ export const authRouter = new Hono<{ Variables: AppVariables }>()
 	// GET /api/v1/auth/me
 	.get('/me', requireAuth, async (c) => {
 		const session = c.get('session');
-		const userId = session.get('userId') as number;
+		const userId = session.get('userId') || '';
 
 		const [user] = await db.select().from(users).where(eq(users.id, userId));
 
@@ -87,7 +87,7 @@ export const authRouter = new Hono<{ Variables: AppVariables }>()
 	// POST /api/v1/auth/me/heartbeat
 	.get('/me/heartbeat', requireAuth, async (c) => {
 		const session = c.get('session');
-		const userId = session.get('userId') as number;
+		const userId = session.get('userId')!;
 		await db.update(users).set({ lastSeen: new Date() }).where(eq(users.id, userId));
 		return ok<{}>(c, {});
 	});

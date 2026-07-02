@@ -6,14 +6,15 @@ import { db } from '../db';
 import { saveUpload } from '../lib/uploads';
 import { userRowToPublicUser } from '../lib/users';
 
-export const getPostSelect = (currentUserId?: number) => ({
+export const getPostSelect = (currentUserId: string | null) => ({
 	id: posts.id,
 	textContent: posts.textContent,
 	createdAt: posts.createdAt,
 	likeCount: posts.likeCount,
 	reshareCount: posts.reshareCount,
 	replyCount: posts.replyCount,
-	likedByMe: currentUserId ? isNotNull(postLikes.userId) : sql<boolean>`false`.mapWith(Boolean),
+	likedByMe:
+		currentUserId !== null ? isNotNull(postLikes.userId) : sql<boolean>`false`.mapWith(Boolean),
 	author: {
 		id: users.id,
 		email: users.email,
@@ -28,7 +29,7 @@ export const getPostSelect = (currentUserId?: number) => ({
 	mediaPosition: postMedia.position
 });
 
-export const applyLikesJoin = (query: any, currentUserId?: number) => {
+export const applyLikesJoin = (query: any, currentUserId: string | null) => {
 	if (!currentUserId) return query;
 	return query.leftJoin(
 		postLikes,
@@ -50,9 +51,9 @@ export const groupPosts = (rows: any[]): Post[] => {
 };
 
 export const createPost = async (
-	userId: number,
+	userId: string,
 	textContent: string | null,
-	parentId: number | null,
+	parentId: string | null,
 	media: File[]
 ): Promise<Post> => {
 	const [inserted] = await db

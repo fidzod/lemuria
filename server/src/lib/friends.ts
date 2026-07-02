@@ -8,10 +8,10 @@ import {
 } from '../schema/friends';
 import { createNotification } from './notifications';
 
-type NormalisedFriendship = { userAId: number; userBId: number };
+type NormalisedFriendship = { userAId: string; userBId: string };
 
-export const normaliseFriendship = (userA: number, userB: number): NormalisedFriendship => {
-	return userA < userB ? { userAId: userA, userBId: userB } : { userAId: userB, userBId: userA };
+export const normaliseFriendship = (userAId: string, userBId: string): NormalisedFriendship => {
+	return userAId < userBId ? { userAId, userBId } : { userAId, userBId };
 };
 
 type createFriendshipInput = {

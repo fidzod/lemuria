@@ -2,13 +2,14 @@ import { integer, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core
 import { users } from './users';
 import type { FriendRequestStatus } from '@lemuria/types';
 import { sql } from 'drizzle-orm';
+import { nanoid } from '../lib/id';
 
 export const friendRequests = sqliteTable('friend_requests', {
-	id: integer('id').primaryKey({ autoIncrement: true }),
-	fromUserId: integer('from_user_id')
+	id: text('id').primaryKey().$defaultFn(nanoid),
+	fromUserId: text('from_user_id')
 		.notNull()
 		.references(() => users.id, { onDelete: 'cascade' }),
-	toUserId: integer('to_user_id')
+	toUserId: text('to_user_id')
 		.notNull()
 		.references(() => users.id, { onDelete: 'cascade' }),
 	status: text('status').notNull().$type<FriendRequestStatus>().default('pending'),
@@ -20,11 +21,11 @@ export const friendRequests = sqliteTable('friend_requests', {
 export const friendships = sqliteTable(
 	'friendships',
 	{
-		id: integer('id').primaryKey({ autoIncrement: true }),
-		userAId: integer('user_a_id')
+		id: text('id').primaryKey().$defaultFn(nanoid),
+		userAId: text('user_a_id')
 			.notNull()
 			.references(() => users.id, { onDelete: 'cascade' }),
-		userBId: integer('user_b_id')
+		userBId: text('user_b_id')
 			.notNull()
 			.references(() => users.id, { onDelete: 'cascade' }),
 		createdAt: integer('created_at', { mode: 'timestamp' })

@@ -7,11 +7,11 @@
 	import { invalidateAll } from '$app/navigation';
 
 	let {
-		message = null,
-		parentId = null
+		message = undefined,
+		parentId = undefined
 	}: {
-		message: string | null;
-		parentId: number | null;
+		message?: string;
+		parentId?: string;
 	} = $props();
 
 	let textareaComponent: ReturnType<typeof Textarea>;
@@ -38,7 +38,7 @@
 		e.preventDefault();
 		const textContent = textareaComponent.getValue();
 		const result =
-			parentId === null
+			parentId === undefined
 				? await api.posts.createPost(fetch, textContent, postFiles)
 				: await api.comments.create(fetch, parentId, textContent, postFiles);
 

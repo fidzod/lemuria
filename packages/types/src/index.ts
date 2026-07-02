@@ -11,9 +11,9 @@ export type FriendRequestStatus = (typeof FRIEND_REQUEST_STATUSES)[number];
 
 export type Relationship =
 	| { status: 'me' }
-	| { status: 'friends'; friendshipId: number }
+	| { status: 'friends'; friendshipId: string }
 	| { status: 'request_sent' }
-	| { status: 'request_received'; friendRequestId: number }
+	| { status: 'request_received'; friendRequestId: string }
 	| { status: null };
 
 export const AccentColors = ['red', 'yellow', 'green', 'cyan', 'magenta', 'unset'] as const;
@@ -23,7 +23,7 @@ export const isAccentColor = (value: string): value is AccentColor =>
 	(AccentColors as readonly string[]).includes(value);
 
 export type PublicUser = {
-	id: number;
+	id: string;
 	displayName: string;
 	username: string;
 	accentColor: AccentColor;
@@ -50,7 +50,7 @@ export type ProfileUpdate = {
 };
 
 export type FriendRequest = {
-	id: number;
+	id: string;
 	from: PublicUser;
 	to: PublicUser;
 	status: FriendRequestStatus;
@@ -58,21 +58,21 @@ export type FriendRequest = {
 };
 
 export type Friendship = {
-	id: number;
+	id: string;
 	friend: PublicUser;
 	createdAt: Date;
 };
 
 export type AppNotification = {
-	id: number;
+	id: string;
 	type: NotificationType;
 	read: boolean;
 	friendRequest?: FriendRequest;
 	friendship?: Friendship;
 	actionUser?: PublicUser;
 	post?: {
-		id: number;
-		parentId: number;
+		id: string;
+		parentId: string;
 	};
 	createdAt: Date;
 };
@@ -88,7 +88,7 @@ export type NewPost = {
 };
 
 export type Post = {
-	id: number;
+	id: string;
 	textContent: string | null;
 	createdAt: Date;
 	author: PublicUser;
@@ -116,5 +116,5 @@ export type SearchResult = {
 };
 
 export type ShelfItem = SearchResult & {
-	id: number;
+	id: string;
 };

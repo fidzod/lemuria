@@ -14,6 +14,7 @@
 
 	type TextOption = { lines: string[]; rare: boolean };
 
+	// svelte-ignore state_referenced_locally
 	const TEXT_OPTIONS: TextOption[] = [
 		{ lines: ['lemuria.so'], rare: false },
 		{

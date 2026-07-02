@@ -5,7 +5,6 @@
 ### MVP/V1
 
 - (#26) Fix: Pagination (notifications, posts)
-- (#17) Refactor: Ids (move away from autoincrement)
 - (#31) Deploy
 - (#32) Feature: Email verification
 - (#33) Feature: Password reset
@@ -33,8 +32,10 @@
 
 ## In-Progress
 
+
 ## Done
 
+- (#17) Refactor: Ids (move away from autoincrement)
 - (#28) Feature: Mobile Nav
 - (#15) Feature: Shelves MVP
 - (#21) Feature: Likes

@@ -9,7 +9,7 @@ export const userRowToPublicUser = (user: UserRow) =>
 
 export const saveAndReplaceUpload = async (
 	file: File,
-	userId: number,
+	userId: string,
 	kind: 'avatar' | 'banner',
 	previous?: string | null
 ): Promise<string> => {

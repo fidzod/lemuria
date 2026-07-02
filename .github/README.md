@@ -5,6 +5,8 @@ and topic-based boards. Inspired by Letterboxd and early Facebook.
 
 <img src="demo.png" />
 
+## Features
+
 - **Shelves** provide a way to share what you're currently reading, watching, or
   listening to. This makes for expressive user profiles you want to share, and
   also sparks discussions around those interests.

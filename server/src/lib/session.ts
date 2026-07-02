@@ -4,7 +4,7 @@ import { sqlite } from '../db';
 import { env } from './env';
 
 export type SessionData = {
-	userId: number;
+	userId: string;
 };
 
 export type AppSession = Session<SessionData>;

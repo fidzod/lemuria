@@ -23,16 +23,16 @@ export const usersRouter = new Hono<{ Variables: AppVariables }>()
 
 		const { postsCount, friendsCount, ...userRow } = user;
 
-		const session = c.get('session');
-		const sessionUserId = Number(session.get('userId'));
+		const sessionUserId = c.get('session').get('userId');
 
 		return ok<UserProfile>(c, {
 			user: userRowToPublicUser(userRow),
 			bannerUrl: userRow.bannerUrl,
 			bio: userRow.bio,
-			relationship: isNaN(sessionUserId)
-				? { status: null }
-				: await resolveRelationship(sessionUserId, userRow.id, db),
+			relationship:
+				sessionUserId === null
+					? { status: null }
+					: await resolveRelationship(sessionUserId, userRow.id, db),
 			friendsCount,
 			postsCount
 		});
@@ -47,8 +47,7 @@ export const usersRouter = new Hono<{ Variables: AppVariables }>()
 			return err(c, 'User not found.', 404);
 		}
 
-		const session = c.get('session');
-		const sessionUserId = Number(session.get('userId'));
+		const sessionUserId = c.get('session').get('userId')!;
 
 		if (sessionUserId !== user.id) {
 			return err(c, 'You can only update your own profile.', 401);

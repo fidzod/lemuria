@@ -1,6 +1,8 @@
 import { AccentColors, FRIEND_REQUEST_STATUSES } from '@lemuria/types';
 import { z } from 'zod';
 
+const nanoIdSchema = z.string().length(10);
+
 export const usernameSchema = z
 	.string()
 	.min(3, 'Username must be at least 3 characters')
@@ -26,7 +28,7 @@ export const loginSchema = z.object({
 });
 
 export const createFriendRequestSchema = z.object({
-	toUserId: z.number()
+	toUserId: nanoIdSchema
 });
 
 export const respondToFriendRequestSchema = z.object({
@@ -53,7 +55,7 @@ export const postSchema = z
 	.object({
 		textContent: z.string().min(1).optional(),
 		media: z.array(imageFile).max(8).optional(),
-		parentId: z.number().optional()
+		parentId: nanoIdSchema.optional()
 	})
 	.refine((d) => d.textContent || (d.media?.length ?? 0) > 0, {
 		message: 'Posts cannot be empty'

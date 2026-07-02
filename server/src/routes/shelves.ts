@@ -13,10 +13,9 @@ import { and, eq, sql } from 'drizzle-orm';
 
 export const shelvesRouter = new Hono()
 
-	// GET /api/v1/shelves/:userId - Get shelf shelf items
+	// GET /api/v1/shelves/:userId - Get shelf items
 	.get('/:userId', async (c) => {
-		const userId = Number(c.req.param('userId'));
-		if (isNaN(userId)) return err(c, 'Invalid user Id.');
+		const userId = c.req.param('userId');
 		const [user] = await db.select().from(users).where(eq(users.id, userId));
 		if (user === undefined) return err(c, 'User not found.', 404);
 
@@ -78,7 +77,7 @@ export const shelvesRouter = new Hono()
 
 	// POST /api/v1/shelves - Add an item to your shelves
 	.post('/', requireAuth, zValidator('json', addShelfItemSchema), async (c) => {
-		const userId = c.get('session').get('userId') as number;
+		const userId = c.get('session').get('userId')!;
 
 		const { type, externalId, title, subtitle, coverUrl } = c.req.valid('json');
 
@@ -171,8 +170,8 @@ export const shelvesRouter = new Hono()
 
 	// DELETE /api/v1/shelves/id - Delete an item from your shelves
 	.delete('/:id', requireAuth, async (c) => {
-		const userId = c.get('session').get('userId') as number;
-		const id = Number(c.req.param('id'));
+		const userId = c.get('session').get('userId')!;
+		const id = c.req.param('id');
 
 		let result: ShelfItemRow | undefined;
 		try {
@@ -200,5 +199,5 @@ export const shelvesRouter = new Hono()
 		}
 
 		if (result === undefined) return err(c, 'Failed to remove item.');
-		return ok<{ id: number }>(c, { id: result.id });
+		return ok<{ id: string }>(c, { id: result.id });
 	});
